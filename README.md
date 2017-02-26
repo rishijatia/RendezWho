@@ -9,7 +9,10 @@ Spring 2017 CS 411 Project.
 Technologies used:
 
 -> JavaScript
+
 -> Django
--> MySQL.
+
+-> MySQL
+
 
 
