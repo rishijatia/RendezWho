@@ -16,7 +16,7 @@ class Schedule_Entry(models.Model):
 class Location(models.Model):
     coordinate = models.CharField(primary_key=True,max_length=50)
     name = models.CharField(max_length=50)
-
+'''
 class Meeting(models.Model):
     privacy = models.BooleanField()
     meetingID = models.BigAutoField(primary_key=True)
@@ -41,4 +41,4 @@ class LocatedAt (models.Model):
 
 class isAt (models.Model):
     meetingID = models.ForeignKey('Meeting.meetingID')
-    coordinate = models.ForeignKey('Location.coordinate')
+    coordinate = models.ForeignKey('Location.coordinate')'''
