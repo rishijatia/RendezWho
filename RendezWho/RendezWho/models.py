@@ -26,21 +26,20 @@ class Meeting(models.Model):
 class ParticipantOf(models.Model):
     userID = models.ForeignKey('User.userID')
     meetingID = models.ForeignKey('Meeting.meetingID')
-
 class Connection(models.Model):
     userID1 = models.ForeignKey('User.userID')
     userID2 = models.ForeignKey('User.userID')
-
 class Has (models.Model):
     userID = models.ForeignKey('User.userID')
     entryID = models.ForeignKey('User.entryID')
-
 class LocatedAt (models.Model):
     entryID = models.ForeignKey('User.entryID')
     coordinate = models.ForeignKey('Location.coordinate')
-
 class isAt (models.Model):
     meetingID = models.ForeignKey('Meeting.meetingID')
     coordinate = models.ForeignKey('Location.coordinate')
+<<<<<<< HEAD:RendezWho/models.py
+=======
 
+>>>>>>> origin/master:RendezWho/RendezWho/models.py
 """
