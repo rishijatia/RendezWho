@@ -31,7 +31,6 @@ def signup(request):
     user.save()
     user_app = UserApp()
     user_app.user=user
-    user_app.requests=[]
     user_app.save()
     return HttpResponseRedirect("/login/")
   else:
@@ -82,13 +81,22 @@ def friend_profile(request):
 @login_required
 def view_newsfeed(request):
   if request.user.is_authenticated():
+    requests=Schedule_Entry.objects.all()
+    send_list=[]
+    for req in requests:
+      temp = {}
+      #print req.owner_not.username
+      temp['id'] = req.entryID
+      temp['title']=req.activity
+      temp['time']=req.time
+      temp['date']=req.date
+      temp['requestee']=req.has.user.username
+      #temp['location']=req.located.name
+      send_list.append(temp)
     if request.method=="POST":
-      title_of_meeting = request.POST['title']
-      radio = request.POST['type']
-      send_list=[]
       return render(request, 'newsfeed.html',{'requestList':send_list})
     else:
-      return render(request, 'newsfeed.html',{'requestList':[]})
+      return render(request, 'newsfeed.html',{'requestList':send_list})
   else:
     return render(request,'login.html')
 
@@ -102,7 +110,44 @@ def view_connections(request):
 @login_required
 def send_match_request(request):
   if request.user.is_authenticated():
-    return render(request, 'request.html')
+    if request.method=='POST':
+      title_of_meeting = request.POST['title']
+      radio = request.POST['type']
+      person_uname = request.POST['person']
+      location_m = request.POST['location']
+      date= request.POST['date']
+      time = request.POST['time']
+      user=User.objects.filter(username=person_uname)
+      if not user:
+        return HttpResponse("User does not exist.")
+      u_app=UserApp.objects.filter(user=user)
+      inst=None
+      for insta in u_app:
+        inst=insta
+        break
+      loc = Location(coordinate=location_m,name=location_m)
+      loc.save()
+      entry = Schedule_Entry(activity=title_of_meeting,time=time,date=date)
+      entry.owner=UserApp(user=request.user)
+      entry.has=inst
+      entry.located_at=loc
+      entry.save()
+      requests=Schedule_Entry.objects.filter(owner__user=request.user)
+      send_list=[]
+      for req in requests:
+        temp = {}
+        #print req.owner_not.username
+        temp['id'] = req.entryID
+        temp['title']=req.activity
+        temp['time']=req.time
+        temp['date']=req.date
+        temp['requestee']=req.has.user.username
+        #temp['location']=req.located.name
+        send_list.append(temp)
+      print send_list
+      return render(request, 'newsfeed.html',{'requestList':send_list})
+    else:
+      return render(request,'request.html')
   else:
     return render(request,'login.html')
 
