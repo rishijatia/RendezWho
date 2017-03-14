@@ -52,9 +52,15 @@
     </div>
     <br><br><br>
     <button class="add ui fluid large teal  button"> New Request </button>
+    <div class="ui header large">Pending Request</div>
     {% for requestL in requestList %}
         <div>
-            <div class="header">{{requestL.title}}</div>
+            <div class="ui header medium">{{requestL.title}}</div>
+            <form class="ui form attached fluid compact" action="/deleteRequest/" method="post">
+                <input type="text" name="requestID" value={{ requestL.id }}>
+                <button class="ui fluid button submit ">Delete</button>
+            </form>
+            <button class="ui button teal fluid"><a href="#">Edit</a></button>
         </div>
     {% endfor %}
     <div class="ui modal">
