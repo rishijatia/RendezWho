@@ -2,9 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Search Page</title>
+    <title>Search</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'temp.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'semantic/dist/semantic.min.css' %}" />
+    <script   src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="{% static 'semantic/dist/semantic.min.js' %}"></script>
 </head>
 <body>
-Search Page
+    <script>
+        $(document)
+        .ready(function() {
+            $('.ui.form')
+                .form({
+                    fields: {
+                    }
+                });
+        });
+</script>
+<div class="signupStyle">
+<div class="ui main container">
+    <div class="ui fixed inverted main menu">
+          <div class="ui main container">
+                <a ng-href="#/" class="title item">LOGO</a>
+                <div class="right menu">
+                    <div class="ui simple dropdown item">
+                        <i class="user icon"></i>{{user.first_name}} {{user.last_name}}
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a class="item" href="/userprofile">
+                                <i class="search icon"></i> My profile
+                            </a>
+                            <a class="item" href="/search">
+                                <i class="search icon"></i> Search
+                            </a>
+                            <a class="item" href="/logout">
+                                <i class="ellipsis horizontal icon"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+          </div>
+    </div>
+    <br><br><br>
+    <div class="ui left page stackable grid auth">
+        <div class="row middle aligned content">
+            <div class="column sixteen wide">
+                <h4 class="ui block top"><span class="signlogp1">Search</span></h4>
+                <br>
+                <form class="ui form attached fluid segment compact" action="/search/" method = "post" style="background-color: rgba(255,255,255,0.35);">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class="ui inverted">Search by username, email or name</label>
+                        <textarea name="description" rows="1"></textarea>
+                    </div>
+                    <button class="ui fluid large teal submit button" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
+        {% for obj in users %}
+            <div class="ui vertical clearing segment padded">
+                <div class="ui left floated content">
+                    <div class="ui huge  header">{{obj.first_name}} {{obj.last_name}}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
 </body>
 </html>
+
