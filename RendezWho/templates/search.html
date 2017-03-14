@@ -18,6 +18,8 @@
                     fields: {
                     }
                 });
+            $('.ui.radio.checkbox')
+                .checkbox();
         });
 </script>
 <div class="signupStyle">
@@ -54,7 +56,28 @@
                     {% csrf_token %}
                     <div class="field">
                         <label class="ui inverted">Search by username, email or name</label>
-                        <textarea name="description" rows="1"></textarea>
+                        <textarea name="searchquery" rows="1"></textarea>
+                        <div class="inline fields">
+                            <label for="fruit">Search by:</label>
+                            <div class="field">
+                              <div class="ui radio checkbox">
+                                <input type="radio" name="type" checked="" tabindex="0" class="hidden">
+                                <label>Name</label>
+                              </div>
+                            </div>
+                            <div class="field">
+                              <div class="ui radio checkbox">
+                                <input type="radio" name="type" tabindex="0" class="hidden">
+                                <label>Email</label>
+                              </div>
+                            </div>
+                            <div class="field">
+                              <div class="ui radio checkbox">
+                                <input type="radio" name="type" tabindex="0" class="hidden">
+                                <label>Username</label>
+                              </div>
+                            </div>
+                        </div>
                     </div>
                     <button class="ui fluid large teal submit button" type="submit">Submit</button>
                 </form>
