@@ -58,35 +58,57 @@ def Login(request):
   
 
 @login_required
-def logout(request):
-    return render(request, 'logout.html')
+def Logout(request):
+  if request.user.is_authenticated():
+    logout(request)
+    return HttpResponseRedirect('/login/')
+  else:
+    return render(request,'login.html')
 
 @login_required
 def my_profile(request):
+  if request.user.is_authenticated():
     return render(request, 'myProfile.html')
+  else:
+    return render(request,'login.html')
 
 @login_required
 def friend_profile(request):
+  if request.user.is_authenticated():
     return render(request, 'friendProfile.html')
+  else:
+    return render(request,'login.html')
 
 @login_required
 def view_newsfeed(request):
+  if request.user.is_authenticated():
     return render(request, 'newsfeed.html')
+  else:
+    return render(request,'login.html')
 
 @login_required
 def view_connections(request):
+  if request.user.is_authenticated():
     return render(request, 'connections.html')
+  else:
+    return render(request,'login.html')
 
 @login_required
 def send_match_request(request):
+  if request.user.is_authenticated():
     return render(request, 'request.html')
+  else:
+    return render(request,'login.html')
 
 def search(request):
   if request.user.is_authenticated():
-    return render(request, 'search.html')
+    return render(request, 'search.html',{'users':[]})
   else:
     return render(request,'login.html')
 
 @login_required
 def settings(request):
+  if request.user.is_authenticated():
     return render(request, 'settings.html')
+  else:
+    return render(request,'login.html')
