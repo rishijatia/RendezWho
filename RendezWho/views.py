@@ -104,26 +104,26 @@ def search(request):
   if request.user.is_authenticated():
     if request.method=='POST':
       query = request.POST['searchquery']
-      isName = request.POST.get('name_type')
-      isEmail = request.POST.get('email_type')
-      isUsername = request.POST.get('username_type')
+      radio = request.POST['type']
       concerned_users=None
-      if isName:
+      if radio=='name_type':
         f_name=query.split(' ')[0]
         second_name=query.split(' ')[1]
-        concerned_users=User.objects.get(first_name=f_name,last_name=second_name)
-      elif isEmail:
-        concerned_user=User.objects.get(email=query)
+        concerned_users=User.objects.filter(first_name__icontains=f_name,last_name__icontains=second_name)
+      elif radio=='email_type':
+        concerned_user=User.objects.filter(email__icontains=query)
       else:
-        concerned_users=User(username=query)
-      print concerned_users
+        concerned_users=User.objects.filter(username__icontains=query)
       search_list=[]
-      for ser in concerned_users:
-        dictionary = {}
-        dictionary['first_name']=ser.first_name
-        dictionary['last_name']=ser.last_name
-        search_list.append(dictionary)
-      print search_list
+      if concerned_users:
+        for ser in concerned_users:
+          dictionary = {}
+          print ser.email
+          dictionary['first_name']=ser.first_name
+          dictionary['last_name']=ser.last_name
+          search_list.append(dictionary)
+      else:
+        search_list=[{'first_name':'No User','last_name':'Found'}]
       return render(request, 'search.html',{'users':search_list})
     else:
       return render(request, 'search.html',{'users':[]})
