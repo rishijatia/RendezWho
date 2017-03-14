@@ -17,12 +17,11 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from . import views
 
-
 urlpatterns = [
-    url(r'^$',views.login),
-    url(r'^login/$',views.login)
+    url(r'^$',views.)
     url(r'^signup/$',views.signup),
     url("^soc/", include("social_django.urls", namespace="social")),
+    url(r'^login/$',views.login),
     url(r'^myProfile/$',views.my_profile),
     url(r'^friendProfile/$',views.friend_profile),
     url(r'^newsfeed/$',views.view_newsfeed),
