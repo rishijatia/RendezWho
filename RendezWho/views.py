@@ -82,7 +82,13 @@ def friend_profile(request):
 @login_required
 def view_newsfeed(request):
   if request.user.is_authenticated():
-    return render(request, 'newsfeed.html')
+    if request.method=="POST":
+      title_of_meeting = request.POST['title']
+      radio = request.POST['type']
+      send_list=[]
+      return render(request, 'newsfeed.html',{'requestList':send_list})
+    else:
+      return render(request, 'newsfeed.html',{'requestList':[]})
   else:
     return render(request,'login.html')
 
@@ -118,7 +124,6 @@ def search(request):
       if concerned_users:
         for ser in concerned_users:
           dictionary = {}
-          print ser.email
           dictionary['first_name']=ser.first_name
           dictionary['last_name']=ser.last_name
           search_list.append(dictionary)
