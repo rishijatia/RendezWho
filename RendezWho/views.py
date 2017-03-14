@@ -81,9 +81,11 @@ def view_connections(request):
 def send_match_request(request):
     return render(request, 'request.html')
 
-@login_required
 def search(request):
+  if request.user.is_authenticated():
     return render(request, 'search.html')
+  else:
+    return render(request,'login.html')
 
 @login_required
 def settings(request):
