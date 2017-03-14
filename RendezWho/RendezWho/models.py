@@ -38,8 +38,4 @@ class LocatedAt (models.Model):
 class isAt (models.Model):
     meetingID = models.ForeignKey('Meeting.meetingID')
     coordinate = models.ForeignKey('Location.coordinate')
-<<<<<<< HEAD:RendezWho/models.py
-=======
-
->>>>>>> origin/master:RendezWho/RendezWho/models.py
 """
