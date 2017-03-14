@@ -76,7 +76,8 @@
             </div>
             <div class="column six wide"><!--
         <h4 class="ui block top attached header">Login</h4> -->
-                <form class="ui form attached fluid segment compact" action="/login/" method = "post" style="background-color: rgba(255,255,255,0.35);">
+                <form class="ui form attached fluid segment compact" action="/signup/" method = "post" style="background-color: rgba(255,255,255,0.35);">
+                {% csrf_token %}
                     <div class="field">
                         <div class="ui left icon input">
                             <i class="user icon"></i>
@@ -114,6 +115,7 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>
 
