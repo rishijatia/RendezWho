@@ -4,15 +4,39 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
-
-def home(request):
-    return render(request,'home.html')
+from .models import *
 
 def signup(request):
-    return render(request, 'signup.html')
-
+    if request.method == 'POST':
+        username = request.POST['username']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        password = request.POST['password']
+        new_user = User.objects.create_user(username,email,password)
+        new_user.is_active = True
+        new_user.first_name=first_name
+        new_user.last_name=last_name
+        new_user.save()
+        user_app = UserApp()
+        user_app.user=new_user
+        user_app.requests=[]
+        return HttpResponseRedirect("/login/")
+        
 def login(request):
-    return render(request, 'login.html')
+    if request.method =='POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username,password=password)
+        if user:
+            if user.is_active:
+                login(request,user)
+                return render(request,'newsfeed.html')
+            else:
+                return render(request,'signup.html')
+        else:
+            return  render(request,'signup.html')
+
 
 @login_required
 def logout(request):

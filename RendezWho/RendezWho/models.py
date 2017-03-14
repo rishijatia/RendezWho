@@ -1,11 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class User(models.Model):
-    name = models.CharField(max_length=50)
-    userID = models.BigAutoField(primary_key=True)
-    password = models.CharField(max_length=50)
+class UserApp(models.Model):
+    user = models.OneToOneField(User,primary_key=True)
     requests = models.CharField(max_length=1000)
-    email = models.CharField(max_length=50)
 
 class Schedule_Entry(models.Model):
     entryID = models.BigAutoField(primary_key=True)
