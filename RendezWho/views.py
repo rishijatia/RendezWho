@@ -83,7 +83,7 @@ def send_match_request(request):
 
 def search(request):
   if request.user.is_authenticated():
-    return render(request, 'search.html')
+    return render(request, 'search.html',{'users':[]})
   else:
     return render(request,'login.html')
 
