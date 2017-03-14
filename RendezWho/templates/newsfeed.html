@@ -52,6 +52,11 @@
     </div>
     <br><br><br>
     <button class="add ui fluid large teal  button"> New Request </button>
+    {% for requestL in requestList %}
+        <div>
+            <div class="header">requestL.title</div>
+        </div>
+    {% endfor %}
     <div class="ui modal">
       <i class="close icon"></i>
       <div class="header">
