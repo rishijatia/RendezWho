@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^signup/$',views.signup),
     url("^soc/", include("social_django.urls", namespace="social")),
     url(r'^login/$',views.Login),
+    url(r'^logout/$',views.Logout),
     url(r'^myProfile/$',views.my_profile),
     url(r'^friendProfile/$',views.friend_profile),
     url(r'^newsfeed/$',views.view_newsfeed),

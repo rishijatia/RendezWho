@@ -40,9 +40,9 @@ def signup(request):
           
 def Login(request):
   if request.method =='POST':
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username,password=password)
+    user_name = request.POST['username']
+    pass_word = request.POST['password']
+    user = authenticate(username=user_name,password=pass_word)
     if user:
       if user.is_active:
         login(request,user)
@@ -102,7 +102,31 @@ def send_match_request(request):
 
 def search(request):
   if request.user.is_authenticated():
-    return render(request, 'search.html',{'users':[]})
+    if request.method=='POST':
+      query = request.POST['searchquery']
+      isName = request.POST.get('name_type')
+      isEmail = request.POST.get('email_type')
+      isUsername = request.POST.get('username_type')
+      concerned_users=None
+      if isName:
+        f_name=query.split(' ')[0]
+        second_name=query.split(' ')[1]
+        concerned_users=User.objects.get(first_name=f_name,last_name=second_name)
+      elif isEmail:
+        concerned_user=User.objects.get(email=query)
+      else:
+        concerned_users=User(username=query)
+      print concerned_users
+      search_list=[]
+      for ser in concerned_users:
+        dictionary = {}
+        dictionary['first_name']=ser.first_name
+        dictionary['last_name']=ser.last_name
+        search_list.append(dictionary)
+      print search_list
+      return render(request, 'search.html',{'users':search_list})
+    else:
+      return render(request, 'search.html',{'users':[]})
   else:
     return render(request,'login.html')
 
