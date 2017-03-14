@@ -18,7 +18,7 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    url(r'^$',views.)
+    url(r'^$',views.login),
     url(r'^signup/$',views.signup),
     url("^soc/", include("social_django.urls", namespace="social")),
     url(r'^login/$',views.login),
