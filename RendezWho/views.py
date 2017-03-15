@@ -186,9 +186,6 @@ def search(request):
           concerned_users=User.objects.filter(first_name__icontains=query)
           if not concerned_users:
             concerned_users=User.objects.filter(last_name__icontains=query)
-     """ elif radio=='email_type':
-        concerned_user=User.objects.filter(email__icontains=query)
-    """
       else:
         concerned_users=User.objects.filter(username__icontains=query)
       search_list=[]
