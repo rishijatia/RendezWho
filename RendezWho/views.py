@@ -139,6 +139,7 @@ def editRequest(request,scheduleID):
   if request.user.is_authenticated():
     if request.method=='POST':
       unformatted_date=request.POST['date']
+      formatted_date = parser.parse(unformatted_date).strftime("%Y:%m:%d")
       Schedule_Entry.objects.filter(entryID=scheduleID).update(activity=request.POST['title'],time=request.POST['time'],date=formatted_date)
       return HttpResponseRedirect('/newsfeed/')
     else:
