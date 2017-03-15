@@ -11,21 +11,24 @@
 </head>
 <body>
 <div>
-    <div class="ui centered page  padded grid auth" style="height:100%;">
-        <div class="row content">
-            <div class="ui header huge clear"> Oops! Looks like you made a wrong turn!</div>
-            <div>
-            {% if messages %}
-                <ul class="messages">
-                {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            <br>
-            </div>
-            <div class="clear">
-               <a href="/newsfeed"><button class="ui button">Go Back</button></a>
+    <div class="ui centered page grid stackable padded auth" style="height:100%;">
+        <div class="row middle aligned content">
+            <div class="column ten wide">
+                <div class="ui header huge"> Oops! Looks like you made a wrong turn!</div>
+                <br>
+                <div>
+                {% if messages %}
+                    <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <br>
+                </div>
+                <div>
+                   <a href="/newsfeed"><button class="ui button">Go Back</button></a>
+                </div>
             </div>
         </div>
     </div>
