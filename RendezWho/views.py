@@ -50,9 +50,9 @@ def Login(request):
         login(request,user)
         return HttpResponseRedirect('/newsfeed/')
       else:
-        return HttpResponse("Sorry something went wrong")
+        return render(request,'error.html')
     else:
-      return HttpResponse("Sorry something went wrong 2")
+      return render(request,'error.html')
   else:
     return render(request, 'login.html')
 
@@ -104,7 +104,7 @@ def view_newsfeed(request):
       temp['title']=req.activity
       temp['time']=req.time
       temp['date']=req.date
-      temp['requestee']=req.has.user.username
+      temp['requestee']=req.owner.user.username
       #temp['location']=req.located_at.name
       request_list.append(temp)
     if request.method=="POST":
@@ -165,7 +165,7 @@ def send_match_request(request):
       time = request.POST['time']
       user=User.objects.filter(username=person_uname)
       if not user:
-        return HttpResponse("User does not exist.")
+        return render(request,'error.html')
       u_app=UserApp.objects.filter(user=user)
       inst=None
       for insta in u_app:
@@ -205,12 +205,13 @@ def search(request):
           dictionary = {}
           dictionary['first_name']=ser.first_name
           dictionary['last_name']=ser.last_name
+          dictionary['email']=ser.email
           search_list.append(dictionary)
       else:
-        search_list=[{'first_name':'No User','last_name':'Found'}]
-      return render(request, 'search.html',{'users':search_list})
+        search_list=[]
+      return render(request, 'search.html',{'users':search_list,'flag':1})
     else:
-      return render(request, 'search.html',{'users':[]})
+      return render(request, 'search.html',{'users':[],'flag':0})
   else:
     return render(request,'login.html')
 
