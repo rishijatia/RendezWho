@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^connections/$',views.view_connections),
     url(r'^matchRequest/$',views.send_match_request),
     url(r'^search/$',views.search),
+    url(r'^deleteRequest/$',views.deleteRequest),
     url(r'^settings/$',views.settings),
 ]
 #commit

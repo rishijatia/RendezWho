@@ -45,7 +45,7 @@ def Login(request):
     if user:
       if user.is_active:
         login(request,user)
-        return render(request,'newsfeed.html')
+        return HttpResponseRedirect('/newsfeed/')
       else:
         return HttpResponse("Sorry something went wrong")
     else:
@@ -56,7 +56,7 @@ def Login(request):
 
   
 
-@login_required
+ 
 def Logout(request):
   if request.user.is_authenticated():
     logout(request)
@@ -64,34 +64,33 @@ def Logout(request):
   else:
     return render(request,'login.html')
 
-@login_required
+ 
 def my_profile(request):
   if request.user.is_authenticated():
     return render(request, 'myProfile.html')
   else:
     return render(request,'login.html')
 
-@login_required
+ 
 def friend_profile(request):
   if request.user.is_authenticated():
     return render(request, 'friendProfile.html')
   else:
     return render(request,'login.html')
 
-@login_required
+ 
 def view_newsfeed(request):
   if request.user.is_authenticated():
-    requests=Schedule_Entry.objects.all()
+    requests=Schedule_Entry.objects.filter(owner__user=request.user)
     send_list=[]
     for req in requests:
       temp = {}
-      #print req.owner_not.username
       temp['id'] = req.entryID
       temp['title']=req.activity
       temp['time']=req.time
       temp['date']=req.date
       temp['requestee']=req.has.user.username
-      #temp['location']=req.located.name
+      #temp['location']=req.located_at.name
       send_list.append(temp)
     if request.method=="POST":
       return render(request, 'newsfeed.html',{'requestList':send_list})
@@ -100,14 +99,23 @@ def view_newsfeed(request):
   else:
     return render(request,'login.html')
 
-@login_required
 def view_connections(request):
   if request.user.is_authenticated():
     return render(request, 'connections.html')
   else:
     return render(request,'login.html')
 
-@login_required
+def deleteRequest(request):
+  if request.user.is_authenticated():
+    if request.method=='POST':
+      request_id=request.POST['requestID']
+      Schedule_Entry.objects.filter(entryID=request_id).delete()
+      return HttpResponseRedirect('/newsfeed/')
+    else:
+      return HttpResponseRedirect('/newsfeed/')
+  else:
+    return render(request,'login.html')
+
 def send_match_request(request):
   if request.user.is_authenticated():
     if request.method=='POST':
@@ -132,20 +140,7 @@ def send_match_request(request):
       entry.has=inst
       entry.located_at=loc
       entry.save()
-      requests=Schedule_Entry.objects.filter(owner__user=request.user)
-      send_list=[]
-      for req in requests:
-        temp = {}
-        #print req.owner_not.username
-        temp['id'] = req.entryID
-        temp['title']=req.activity
-        temp['time']=req.time
-        temp['date']=req.date
-        temp['requestee']=req.has.user.username
-        #temp['location']=req.located.name
-        send_list.append(temp)
-      print send_list
-      return render(request, 'newsfeed.html',{'requestList':send_list})
+      return HttpResponseRedirect('/newsfeed/')
     else:
       return render(request,'request.html')
   else:
@@ -180,7 +175,7 @@ def search(request):
   else:
     return render(request,'login.html')
 
-@login_required
+ 
 def settings(request):
   if request.user.is_authenticated():
     return render(request, 'settings.html')
