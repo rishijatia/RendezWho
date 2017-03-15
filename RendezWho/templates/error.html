@@ -10,24 +10,27 @@
     <script src="{% static 'semantic/dist/semantic.min.js' %}"></script>
 </head>
 <body>
-<div>
+<div style="height:90%;">
     <div class="ui centered page grid stackable padded auth" style="height:100%;">
         <div class="row middle aligned content">
             <div class="column ten wide">
-                <div class="ui header huge"> Oops! Looks like you made a wrong turn!</div>
+                <div class="ui header huge centered"> Oops! Looks like you made a wrong turn!</div>
                 <br>
-                <div>
+                <div class="ui centered">
                 {% if messages %}
-                    <ul class="messages">
-                    {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                    {% endfor %}
-                </ul>
+                    <div class="ui error message">
+                        <div class="header">
+                            There were some errors with your submission
+                        </div>
+                        {% for message in messages %}
+                            <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                        {% endfor %}
+                    </div>
                 {% endif %}
-                <br>
                 </div>
-                <div>
-                   <a href="/newsfeed"><button class="ui button">Go Back</button></a>
+                <br>
+                <div class="ui centered grid">
+                   <a href="/newsfeed"><div class="ui button centered">Go Back</div></a>
                 </div>
             </div>
         </div>
