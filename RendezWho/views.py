@@ -116,20 +116,19 @@ def deleteRequest(request):
   else:
     return render(request,'login.html')
 
-def editRequest(request,scheduleID=None):
+def editRequest(request,scheduleID):
   if request.user.is_authenticated():
     if request.method=='POST':
-      
       return HttpResponseRedirect('/newsfeed/')
     else:
       objs=Schedule_Entry.objects.filter(entryID=scheduleID)
       schedule={}
       for entry in objs:
-        schedule['title']=objs.activity
-        schedule['time']=objs.time
-        schedule['date']=objs.date
-        schedule['person']=objs.has.user.username
-      return render(request,'/editPage/',{"schedule":schedule})
+        schedule['title']=entry.activity
+        schedule['time']=entry.time
+        schedule['date']=entry.date
+        schedule['person']=entry.has.user.username
+      return render(request,'edit_page.html',{"schedule":schedule})
   else:
     return render(request,'login.html')
 

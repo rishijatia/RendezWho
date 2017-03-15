@@ -57,10 +57,11 @@
         <div>
             <div class="ui header medium">{{requestL.title}}</div>
             <form class="ui form attached fluid compact" action="/deleteRequest/" method="post">
+                {% csrf_token %}
                 <input type="text" name="requestID" value="{{ requestL.id }}" style="display:none">
                 <button class="ui fluid button submit ">Delete</button>
             </form>
-            <button class="ui button teal fluid"><a href="/editRequest/{{ requestL.id }}">Edit</a></button>
+            <a href="{% url 'editRequest' requestL.id %}"><button class="ui button teal fluid">Edit</button></a>
         </div>
     {% endfor %}
     <div class="ui modal">

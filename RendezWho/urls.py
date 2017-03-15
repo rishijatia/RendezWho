@@ -28,9 +28,9 @@ urlpatterns = [
     url(r'^newsfeed/$',views.view_newsfeed),
     url(r'^connections/$',views.view_connections),
     url(r'^matchRequest/$',views.send_match_request),
-    url(r'^search/$',views.search),
+    url(r'^search/$',views.search,name='search'),
     url(r'^deleteRequest/$',views.deleteRequest),
     url(r'^settings/$',views.settings),
-    url(r'^editRequest/(?P<scheduleID>{0,9}+)/$',views.editRequest)
+    url(r'^editRequest/(?P<scheduleID>[0-9]+)/$',views.editRequest,name='editRequest')
 ]
 #commit
