@@ -38,9 +38,9 @@
         });
 </script>
 <div class="login">
-    <div ng-controller="MenuCtrl" class="ui fixed inverted main menu">
+    <div class="ui fixed inverted main menu">
         <div class="ui main container">
-            <a ng-href="/login" class="title item">LOGO</a>
+            <a href="/login" class="title item">RendezWho?</a>
             <div class="right menu">
                 <div class="item">
                     <a href="/signup"><i class="user icon"></i>Sign up</a>
@@ -48,11 +48,11 @@
             </div>
         </div>
     </div>
-    <div class="ui centered page stackable padded grid auth">
+    <div class="ui centered page stackable padded grid auth" style="height:90%">
         <div class="row middle aligned content">
-            <div class="column eight wide left floated" class="bottomalign">
+            <!--<div class="column eight wide left floated" class="bottomalign">
                  <h1 class="signlog">RendezWho?</h1>
-            </div>
+            </div>-->
             <div class="column six wide"><!--
         <h4 class="ui block top attached header">Login</h4> -->
                 <form class="ui form attached fluid segment compact" action="/login/" method = "post" style="background-color: rgba(255,255,255,0.35);">
