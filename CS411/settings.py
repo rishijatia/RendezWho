@@ -115,8 +115,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
