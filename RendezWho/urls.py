@@ -31,5 +31,6 @@ urlpatterns = [
     url(r'^search/$',views.search),
     url(r'^deleteRequest/$',views.deleteRequest),
     url(r'^settings/$',views.settings),
+    url(r'^editRequest/(?P<scheduleID>{0,9}+)/$',views.editRequest)
 ]
 #commit
