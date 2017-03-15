@@ -52,11 +52,11 @@
     </div>
     <br><br><br>
       <div class="content">
-          <form class="ui form attached fluid segment compact" action="/editRequest/{{ schedule.id }}" method="post" style="background-color: rgba(255,255,255,0.35);">
+          <form class="ui form attached fluid segment compact" action="{% url 'editRequest' schedule.id %}" method="post" style="background-color: rgba(255,255,255,0.35);">
               {% csrf_token %}
               <div class="field">
                   <label class="ui inverted">Title</label>
-                  <textarea name="title" rows="1" value="{{ schedule.title }}"></textarea>
+                  <textarea name="title" rows="1">{{ schedule.title }}</textarea>
               </div>
               <div class="inline fields">
                   <label for="fruit">Privacy</label>
@@ -75,11 +75,11 @@
               </div>
               <div class="field">
                   <label class="ui inverted">To</label>
-                  <textarea name="person" rows="1" value="{{ schedule.person }}"></textarea>
+                  <textarea name="person" rows="1" >{{ schedule.person }}</textarea>
               </div>
               <div class="field">
                   <label class="ui inverted">Location</label>
-                  <textarea name="location" rows="1" value="{{ schedule.location }}"></textarea>
+                  <textarea name="location" rows="1">{{ schedule.location }}</textarea>
               </div>
               <div class="field">
                   <label class="ui inverted">Date</label>
@@ -87,7 +87,7 @@
               </div>
               <div class="field">
                   <label class="ui inverted">Time</label>
-                  <textarea name="time" rows="1" value="{{ schedule.time }}"></textarea>
+                  <textarea name="time" rows="1" >{{ schedule.time }}</textarea>
               </div>
               <button class="ui fluid large teal submit button" type="submit">Submit</button>
           </form>
@@ -96,4 +96,3 @@
 </div>
 </body>
 </html>
-

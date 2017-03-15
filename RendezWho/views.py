@@ -7,6 +7,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from forms import Signup
 from models import *
+from dateutil import parser
+
 def home(request):
     return render(request,'home.html')
 
@@ -119,15 +121,22 @@ def deleteRequest(request):
 def editRequest(request,scheduleID):
   if request.user.is_authenticated():
     if request.method=='POST':
+      unformatted_date=request.POST['date']
+      formatted_date= parser.parse(unformatted_date).strftime('%Y-%m-%d')
+      print formatted_date
+      Schedule_Entry.objects.filter(entryID=scheduleID).update(activity=request.POST['title'],time=request.POST['time'],date=formatted_date)
       return HttpResponseRedirect('/newsfeed/')
     else:
       objs=Schedule_Entry.objects.filter(entryID=scheduleID)
       schedule={}
       for entry in objs:
         schedule['title']=entry.activity
+        schedule['id']=entry.entryID
         schedule['time']=entry.time
         schedule['date']=entry.date
         schedule['person']=entry.has.user.username
+        schedule['location']="UIUC"
+      print schedule
       return render(request,'edit_page.html',{"schedule":schedule})
   else:
     return render(request,'login.html')
