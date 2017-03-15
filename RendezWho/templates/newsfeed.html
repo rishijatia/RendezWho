@@ -57,10 +57,10 @@
         <div>
             <div class="ui header medium">{{requestL.title}}</div>
             <form class="ui form attached fluid compact" action="/deleteRequest/" method="post">
-                <input type="text" name="requestID" value={{ requestL.id }}>
+                <input type="text" name="requestID" value="{{ requestL.id }}" style="display:none">
                 <button class="ui fluid button submit ">Delete</button>
             </form>
-            <button class="ui button teal fluid"><a href="#">Edit</a></button>
+            <button class="ui button teal fluid"><a href="/editRequest/{{ requestL.id }}">Edit</a></button>
         </div>
     {% endfor %}
     <div class="ui modal">
