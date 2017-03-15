@@ -51,10 +51,10 @@ def Login(request):
         login(request,user)
         return HttpResponseRedirect('/newsfeed/')
       else:
-        messages.add_message(request,messages.ERROR,"Incorrect Credentials.")
+        messages.add_message(request,messages.ERROR,"We did not recognize your username or password")
         return render(request,'error.html')
     else:
-      messages.add_message(request,messages.ERROR,"Your account does not exist.")
+      messages.add_message(request,messages.ERROR,"We did not recognize your username or password.")
       return render(request,'error.html')
   else:
     return render(request, 'login.html')
