@@ -178,7 +178,7 @@ def search(request):
       radio = request.POST['type']
       concerned_users=None
       if radio=='name_type':
-        if '' in query:
+        if ' ' in query:
           f_name=query.split(' ')[0]
           second_name=query.split(' ')[1]
           concerned_users=User.objects.filter(first_name__icontains=f_name,last_name__icontains=second_name)
