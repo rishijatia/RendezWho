@@ -81,6 +81,7 @@
                 </form>
             </div>
             <br>
+            {% if flag == 1 %}
             <div class="ui header">Search Results</div>
             <div class="ui divided items">
                 {% for obj in users %}
@@ -89,7 +90,7 @@
                       <div class="header">{{ obj.first_name }} {{ obj.last_name }}</div>
                       <br>
                       <div class="meta left floated">
-                        <span class="cinema">email</span>
+                        <span class="cinema">{{ obj.email }}</span>
                       </div>
                         <a href = "#/"><div class="ui right floated button disabled">
                             <i class="add user icon"></i> Connect
@@ -100,6 +101,8 @@
                     <div class="ui header small">No matching users found</div>
                 {% endfor %}
             </div>
+            {% endif %}
+
         </div>
     </div>
 </div>
