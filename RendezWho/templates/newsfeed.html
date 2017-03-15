@@ -64,7 +64,7 @@
             <a href="{% url 'editRequest' requestL.id %}"><button class="ui button teal fluid">Edit</button></a>
         </div>
     {% endfor %}
-    <div class="ui header large">Pending Requests</div>
+    <div class="ui header large">Invitations</div>
     {% for requestL in requestList %}
         <div>
             <div class="ui header medium">{{requestL.title}}</div>
