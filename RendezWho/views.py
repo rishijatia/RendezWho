@@ -10,6 +10,7 @@ from models import *
 from dateutil import parser
 from django.db.models import Q
 from django.contrib import messages
+import datetime
 
 def home(request):
     return render(request,'home.html')
@@ -93,7 +94,7 @@ def view_newsfeed(request):
     for req in requests:
       temp = {}
       temp['id'] = req.entryID
-      temp['title']=req.activity
+      temp['title']=req.activity   
       temp['time']=req.time
       temp['date']=req.date
       temp['requestee']=req.has.user.username
@@ -139,6 +140,9 @@ def editRequest(request,scheduleID):
     if request.method=='POST':
       unformatted_date=request.POST['date']
       formatted_date= parser.parse(unformatted_date).strftime('%Y-%m-%d')
+      time_stuff_hr = parser.parse(request.POST['time']).hour
+      time_stuff_min = parser.parse(request.POST['time']).minute
+      formatted_time = datetime.time(time_stuff_hr,time_stuff_min)
       print formatted_date
       Schedule_Entry.objects.filter(entryID=scheduleID).update(activity=request.POST['title'],time=request.POST['time'],date=formatted_date)
       return HttpResponseRedirect('/newsfeed/')
@@ -148,7 +152,7 @@ def editRequest(request,scheduleID):
       for entry in objs:
         schedule['title']=entry.activity
         schedule['id']=entry.entryID
-        schedule['time']=entry.time
+        schedule['time']=formatted_time
         schedule['date']=entry.date
         schedule['person']=entry.has.user.username
         schedule['location']="UIUC"
@@ -165,7 +169,10 @@ def send_match_request(request):
       person_uname = request.POST['person']
       location_m = request.POST['location']
       date= request.POST['date']
-      time = request.POST['time']
+      time_stuff_hr = parser.parse(request.POST['time']).hour
+      time_stuff_min = parser.parse(request.POST['time']).minute
+      formatted_time = datetime.time(time_stuff_hr,time_stuff_min)
+      time = formatted_time
       user=User.objects.filter(username=person_uname)
       if not user:
         messages.add_message(request,messages.ERROR,"The requestee does not exist.")
