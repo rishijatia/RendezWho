@@ -178,11 +178,17 @@ def search(request):
       radio = request.POST['type']
       concerned_users=None
       if radio=='name_type':
-        f_name=query.split(' ')[0]
-        second_name=query.split(' ')[1]
-        concerned_users=User.objects.filter(first_name__icontains=f_name,last_name__icontains=second_name)
-      elif radio=='email_type':
+        if '' in query:
+          f_name=query.split(' ')[0]
+          second_name=query.split(' ')[1]
+          concerned_users=User.objects.filter(first_name__icontains=f_name,last_name__icontains=second_name)
+        else:
+          concerned_users=User.objects.filter(first_name__icontains=query)
+          if not concerned_users:
+            concerned_users=User.objects.filter(last_name__icontains=query)
+     """ elif radio=='email_type':
         concerned_user=User.objects.filter(email__icontains=query)
+    """
       else:
         concerned_users=User.objects.filter(username__icontains=query)
       search_list=[]
