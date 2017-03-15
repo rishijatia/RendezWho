@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from forms import Signup
 from models import *
 from dateutil import parser
+from django.db.models import Q
 
 def home(request):
     return render(request,'home.html')
@@ -183,9 +184,7 @@ def search(request):
           second_name=query.split(' ')[1]
           concerned_users=User.objects.filter(first_name__icontains=f_name,last_name__icontains=second_name)
         else:
-          concerned_users=User.objects.filter(first_name__icontains=query)
-          if not concerned_users:
-            concerned_users=User.objects.filter(last_name__icontains=query)
+          concerned_users=User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
       else:
         concerned_users=User.objects.filter(username__icontains=query)
       search_list=[]
