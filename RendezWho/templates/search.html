@@ -26,14 +26,14 @@
 <div class="ui main container">
     <div class="ui fixed inverted main menu">
           <div class="ui main container">
-                <a ng-href="#/" class="title item">LOGO</a>
+                <a href="/newsfeed" class="title item">RendezWho?</a>
                 <div class="right menu">
                     <div class="ui simple dropdown item">
                         <i class="user icon"></i>{{user.first_name}} {{user.last_name}}
                         <i class="dropdown icon"></i>
                         <div class="menu">
                             <a class="item" href="/userprofile">
-                                <i class="search icon"></i> My profile
+                                <i class="user icon"></i> My profile
                             </a>
                             <a class="item" href="/search">
                                 <i class="search icon"></i> Search
@@ -47,16 +47,15 @@
           </div>
     </div>
     <br><br><br>
-    <div class="ui left page stackable grid auth">
-        <div class="row middle aligned content">
+    <div class="ui page auth">
+        <div class="row middle content">
             <div class="column sixteen wide">
-                <h4 class="ui block top"><span class="signlogp1">Search</span></h4>
-                <br>
                 <form class="ui form attached fluid segment compact" action="/search/" method = "post" style="background-color: rgba(255,255,255,0.35);">
                     {% csrf_token %}
                     <div class="field">
                         <label class="ui inverted">Search by username, email or name</label>
                         <textarea name="searchquery" rows="1"></textarea>
+                    </div>
                         <div class="inline fields">
                             <label for="fruit">Search by:</label>
                             <div class="field">
@@ -65,12 +64,12 @@
                                 <label>Name</label>
                               </div>
                             </div>
-                            <div class="field">
+                            <!--<div class="field">
                               <div class="ui radio checkbox">
                                 <input type="radio" name="type" value="email_type" tabindex="0" class="hidden">
                                 <label>Email</label>
                               </div>
-                            </div>
+                            </div>-->
                             <div class="field">
                               <div class="ui radio checkbox">
                                 <input type="radio" name="type" value="username_type" tabindex="0" class="hidden">
@@ -78,20 +77,30 @@
                               </div>
                             </div>
                         </div>
-                    </div>
                     <button class="ui fluid large teal submit button" type="submit">Submit</button>
                 </form>
             </div>
-        </div>
-    </div>
-    <div>
-        {% for obj in users %}
-            <div class="ui vertical clearing segment padded">
-                <div class="ui left floated content">
-                    <div class="ui huge  header">{{obj.first_name}} {{obj.last_name}}</div>
-                </div>
+            <br>
+            <div class="ui header">Search Results</div>
+            <div class="ui divided items">
+                {% for obj in users %}
+                <div class="item">
+                    <div class="content">
+                      <div class="header">{{ obj.first_name }} {{ obj.last_name }}</div>
+                      <br>
+                      <div class="meta left floated">
+                        <span class="cinema">email</span>
+                      </div>
+                        <a href = "#/"><div class="ui right floated button disabled">
+                            <i class="add user icon"></i> Connect
+                        </div></a>
+                    </div>
+                  </div>
+                  {% empty %}
+                    <div class="ui header small">No matching users found</div>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
     </div>
 </div>
 </div>

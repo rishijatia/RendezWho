@@ -30,14 +30,14 @@
 <div class="ui main container">
     <div class="ui fixed inverted main menu">
           <div class="ui main container">
-                <a ng-href="#/" class="title item">LOGO</a>
+                <a href="/newsfeed" class="title item">RendezWho?</a>
                 <div class="right menu">
                     <div class="ui simple dropdown item">
                         <i class="user icon"></i>{{user.first_name}} {{user.last_name}}
                         <i class="dropdown icon"></i>
                         <div class="menu">
                             <a class="item" href="/userprofile">
-                                <i class="search icon"></i> My profile
+                                <i class="user icon"></i> My profile
                             </a>
                             <a class="item" href="/search">
                                 <i class="search icon"></i> Search
@@ -51,27 +51,59 @@
           </div>
     </div>
     <br><br><br>
-    <button class="add ui fluid large teal  button"> New Request </button>
+    <div class="ui huge header center aligned">Welcome {{ user.first_name }}!</div>
+    <br>
+    <button class="add ui right floated large teal  button"> <i class="write icon"></i> New Request </button>
     <div class="ui header large">Pending Requests</div>
-    {% for requestL in ownerList %}
-        <div>
-            <div class="ui header medium">{{requestL.title}}</div>
-            <form class="ui form attached fluid compact" action="/deleteRequest/" method="post">
+    <div class="ui divided items">
+        {% for requestL in ownerList %}
+          <div class="item">
+            <div class="content">
+              <div class="header">{{ requestL.title }}</div>
+              <br>
+              <div class="meta left floated">
+                <span class="cinema"><b>Invited:</b> {{ requestL.requestee }}</span>
+                <span class="cinema"><b>Date:</b> {{ requestL.date }}</span>
+                <span class="cinema"><b>Time:</b> {{ requestL.time }}</span>
+              </div>
+                <a href = "{% url 'editRequest' requestL.id %}"><div class="ui right floated button">
+                    <i class="edit icon"></i> Edit
+                </div></a>
+                <form class="ui form attached fluid compact right floated" action="/deleteRequest/" method="post">
                 {% csrf_token %}
                 <input type="text" name="requestID" value="{{ requestL.id }}" style="display:none">
-                <button class="ui fluid button submit ">Delete</button>
-            </form>
-            <a href="{% url 'editRequest' requestL.id %}"><button class="ui button teal fluid">Edit</button></a>
-        </div>
-    {% endfor %}
+                <button class="ui button submit right floated "><i class="remove icon"></i> Delete</button>
+                 </form>
+            </div>
+          </div>
+            {% empty %}
+            <div class="ui header small"> No pending requests </div>
+        {% endfor %}
+    </div>
     <div class="ui header large">Invitations</div>
-    {% for requestL in requestList %}
-        <div>
-            <div class="ui header medium">{{requestL.title}}</div>
-            <button class="ui fluid button disabled"> Accept </button>
-            <button class="ui fluid button disabled"> Reject </button>
-        </div>
-    {% endfor %}
+    <div class="ui divided items">
+        {% for requestL in requestList %}
+        <div class="item">
+            <div class="content">
+              <div class="header">{{ requestL.title }}</div>
+              <br>
+              <div class="meta left floated">
+                <span class="cinema"><b>Invited by:</b> {{ requestL.requestee }}</span>
+                <span class="cinema"><b>Date:</b> {{ requestL.date }}</span>
+                <span class="cinema"><b>Time:</b> {{ requestL.time }}</span>
+              </div>
+                <a href = "#/"><div class="ui right floated button disabled">
+                    <i class="checkmark icon"></i> Accept
+                </div></a>
+                <a href = "#/"><div class="ui right floated button disabled">
+                    <i class="remove icon"></i> Reject
+                </div></a>
+            </div>
+          </div>
+          {% empty %}
+            <div class="ui header small">No pending invitations</div>
+        {% endfor %}
+    </div>
     <div class="ui modal">
       <i class="close icon"></i>
       <div class="header">
