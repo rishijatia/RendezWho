@@ -1,1 +1,1 @@
-web: gunicorn manage.py run_gunicorn
+web: gunicorn RendezWho.wsgi
