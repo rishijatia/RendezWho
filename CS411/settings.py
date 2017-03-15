@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 #commit
 INSTALLED_APPS = [
     'RendezWho',
-    'social_django',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
