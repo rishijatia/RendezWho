@@ -173,7 +173,7 @@ def send_match_request(request):
       time_stuff_min = parser.parse(request.POST['time']).minute
       formatted_time = datetime.time(time_stuff_hr,time_stuff_min)
       time = formatted_time
-      primt request.POST['time'],time,time_stuff_min,time_stuff_hr
+      print request.POST['time'],time,time_stuff_min,time_stuff_hr
       user=User.objects.filter(username=person_uname)
       if not user:
         messages.add_message(request,messages.ERROR,"The requestee does not exist.")
