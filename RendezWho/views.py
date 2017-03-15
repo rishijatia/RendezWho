@@ -139,11 +139,6 @@ def editRequest(request,scheduleID):
   if request.user.is_authenticated():
     if request.method=='POST':
       unformatted_date=request.POST['date']
-      formatted_date= parser.parse(unformatted_date).strftime('%Y-%m-%d')
-      time_stuff_hr = parser.parse(request.POST['time']).hour
-      time_stuff_min = parser.parse(request.POST['time']).minute
-      formatted_time = datetime.time(time_stuff_hr,time_stuff_min)
-      print formatted_date
       Schedule_Entry.objects.filter(entryID=scheduleID).update(activity=request.POST['title'],time=request.POST['time'],date=formatted_date)
       return HttpResponseRedirect('/newsfeed/')
     else:
@@ -152,7 +147,7 @@ def editRequest(request,scheduleID):
       for entry in objs:
         schedule['title']=entry.activity
         schedule['id']=entry.entryID
-        schedule['time']=formatted_time
+        schedule['time']=entry.time
         schedule['date']=entry.date
         schedule['person']=entry.has.user.username
         schedule['location']="UIUC"
