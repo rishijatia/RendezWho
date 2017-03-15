@@ -86,6 +86,7 @@ def view_newsfeed(request):
   if request.user.is_authenticated():
     requests=Schedule_Entry.objects.filter(owner__user=request.user)
     send_list=[]
+    request_list=[]
     for req in requests:
       temp = {}
       temp['id'] = req.entryID
@@ -95,10 +96,21 @@ def view_newsfeed(request):
       temp['requestee']=req.has.user.username
       #temp['location']=req.located_at.name
       send_list.append(temp)
+    r_requests=Schedule_Entry.objects.filter(has__user=request.user)
+    request_list=[]
+    for req in r_requests:
+      temp = {}
+      temp['id'] = req.entryID
+      temp['title']=req.activity
+      temp['time']=req.time
+      temp['date']=req.date
+      temp['requestee']=req.has.user.username
+      #temp['location']=req.located_at.name
+      request_list.append(temp)
     if request.method=="POST":
-      return render(request, 'newsfeed.html',{'requestList':send_list})
+      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list})
     else:
-      return render(request, 'newsfeed.html',{'requestList':send_list})
+      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list})
   else:
     return render(request,'login.html')
 
