@@ -87,7 +87,7 @@ def friend_profile(request):
  
 def view_newsfeed(request):
   if request.user.is_authenticated():
-    requests=Schedule_Entry.objects.filter(owner__user=request.user)
+    requests=Schedule_Entry.objects.filter(owner__user=request.user).order_by('purpose')
     send_list=[]
     request_list=[]
     for req in requests:
@@ -99,7 +99,7 @@ def view_newsfeed(request):
       temp['requestee']=req.has.user.username
       #temp['location']=req.located_at.name
       send_list.append(temp)
-    r_requests=Schedule_Entry.objects.filter(has__user=request.user)
+    r_requests=Schedule_Entry.objects.filter(has__user=request.user).order_by('purpose')
     request_list=[]
     for req in r_requests:
       temp = {}
@@ -198,11 +198,11 @@ def search(request):
         if ' ' in query:
           f_name=query.split(' ')[0]
           second_name=query.split(' ')[1]
-          concerned_users=User.objects.filter(first_name__icontains=f_name,last_name__icontains=second_name)
+          concerned_users=User.objects.filter(first_name__icontains=f_name,last_name__icontains=second_name).order_by('first_name')
         else:
-          concerned_users=User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
+          concerned_users=User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query)).order_by('first_name')
       else:
-        concerned_users=User.objects.filter(username__icontains=query)
+        concerned_users=User.objects.filter(username__icontains=query).order_by('first_name')
       search_list=[]
       if concerned_users:
         for ser in concerned_users:
