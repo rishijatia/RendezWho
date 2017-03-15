@@ -1,1 +1,1 @@
-web: gunicorn RendezWho.wsgi
+web: gunicorn CS411.wsgi
