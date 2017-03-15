@@ -115,18 +115,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '724908526045-384kh93peudbareb8b2ogphm7dp0911l.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '2LiJlvyV1V17HyzF9AqQYDoR'
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend')
-SOCIAL_AUTH_PIPELINE = (
-    'myapp.pipeline.load_user',
-    'social_core.pipeline.social_auth.social_user',
-    'social_core.pipeline.social_auth.associate_user',
-    'social_core.pipeline.social_auth.load_extra_data',
-    'social_core.pipeline.user.user_details',
-)
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
