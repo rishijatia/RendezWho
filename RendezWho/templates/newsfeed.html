@@ -64,7 +64,7 @@
               <div class="meta left floated">
                 <span class="cinema"><b>Invited:</b> {{ requestL.requestee }}</span>
                 <span class="cinema"><b>Date:</b> {{ requestL.date }}</span>
-                <span class="cinema"><b>Time:</b> {{ requestL.time }}</span>
+                <!--<span class="cinema"><b>Time:</b> {{ requestL.time }}</span>-->
               </div>
                 <a href = "{% url 'editRequest' requestL.id %}"><div class="ui right floated button">
                     <i class="edit icon"></i> Edit
@@ -90,7 +90,7 @@
               <div class="meta left floated">
                 <span class="cinema"><b>Invited by:</b> {{ requestL.requestee }}</span>
                 <span class="cinema"><b>Date:</b> {{ requestL.date }}</span>
-                <span class="cinema"><b>Time:</b> {{ requestL.time }}</span>
+               <!-- <span class="cinema"><b>Time:</b> {{ requestL.time }}</span> -->
               </div>
                 <a href = "#/"><div class="ui right floated button disabled">
                     <i class="checkmark icon"></i> Accept
