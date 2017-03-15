@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'RendezWho.urls'
+ROOT_URLCONF = 'CS411.urls'
 
 TEMPLATES = [
     {
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'RendezWho.wsgi.application'
+WSGI_APPLICATION = 'CS411.wsgi.application'
 
 
 # Database
