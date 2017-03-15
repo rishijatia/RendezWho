@@ -87,7 +87,7 @@ def friend_profile(request):
  
 def view_newsfeed(request):
   if request.user.is_authenticated():
-    requests=Schedule_Entry.objects.filter(owner__user=request.user).order_by('purpose')
+    requests=Schedule_Entry.objects.filter(owner__user=request.user).order_by('activity')
     send_list=[]
     request_list=[]
     for req in requests:
@@ -99,7 +99,7 @@ def view_newsfeed(request):
       temp['requestee']=req.has.user.username
       #temp['location']=req.located_at.name
       send_list.append(temp)
-    r_requests=Schedule_Entry.objects.filter(has__user=request.user).order_by('purpose')
+    r_requests=Schedule_Entry.objects.filter(has__user=request.user).order_by('activity')
     request_list=[]
     for req in r_requests:
       temp = {}
