@@ -15,21 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
-from . import views
+import RendezWho.urls
 
-urlpatterns = [
-    url(r'^$',views.Login),
-    url(r'^signup/$',views.signup),
-    url(r'^login/$',views.Login),
-    url(r'^logout/$',views.Logout),
-    url(r'^myProfile/$',views.my_profile),
-    url(r'^friendProfile/$',views.friend_profile),
-    url(r'^newsfeed/$',views.view_newsfeed),
-    url(r'^connections/$',views.view_connections),
-    url(r'^matchRequest/$',views.send_match_request),
-    url(r'^search/$',views.search,name='search'),
-    url(r'^deleteRequest/$',views.deleteRequest),
-    url(r'^settings/$',views.settings),
-    url(r'^editRequest/(?P<scheduleID>[0-9]+)/$',views.editRequest,name='editRequest')
+urlpatterns=[
+url(r'^',include(RendezWho.urls)),
 ]
 #commit
