@@ -9,6 +9,7 @@ from forms import Signup
 from models import *
 from dateutil import parser
 from django.db.models import Q
+from django.contrib import messages
 
 def home(request):
     return render(request,'home.html')
@@ -50,8 +51,10 @@ def Login(request):
         login(request,user)
         return HttpResponseRedirect('/newsfeed/')
       else:
+        messages.add_message(request,messages.ERROR,"Incorrect Credentials.")
         return render(request,'error.html')
     else:
+      messages.add_message(request,messages.ERROR,"Your account does not exist.")
       return render(request,'error.html')
   else:
     return render(request, 'login.html')
@@ -165,6 +168,7 @@ def send_match_request(request):
       time = request.POST['time']
       user=User.objects.filter(username=person_uname)
       if not user:
+        messages.add_message(request,messages.ERROR,"The requestee does not exist.")
         return render(request,'error.html')
       u_app=UserApp.objects.filter(user=user)
       inst=None
