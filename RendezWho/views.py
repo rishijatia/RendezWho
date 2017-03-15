@@ -210,6 +210,7 @@ def search(request):
           dictionary['first_name']=ser.first_name
           dictionary['last_name']=ser.last_name
           dictionary['email']=ser.email
+          dictionary['username']=ser.username
           search_list.append(dictionary)
       else:
         search_list=[]
