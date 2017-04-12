@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Log In</title>
+</head>
+<body>
+<p>Hello {{ user.get_full_name|default:user.username}}! </p>
+<ul>{% for item in items %}
+    <li>{{item}}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>

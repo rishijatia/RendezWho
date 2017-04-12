@@ -11,6 +11,7 @@ from dateutil import parser
 from django.db.models import Q
 from django.contrib import messages
 import datetime
+import requests
 
 def home(request):
     return render(request,'home.html')
@@ -47,6 +48,7 @@ def Login(request):
     user_name = request.POST['username']
     pass_word = request.POST['password']
     user = authenticate(username=user_name,password=pass_word)
+    print(request.path)
     if user:
       if user.is_active:
         login(request,user)
@@ -60,8 +62,16 @@ def Login(request):
   else:
     return render(request, 'login.html')
 
-
-  
+def listCalendar(request):
+  user_id = request.user.social_auth.get(provider='google-oauth2')
+  response = requests.get(
+    'https://www.googleapis.com/calendar/v3/calendars/primary/events',
+    params={'access_token':user_id.extra_data['access_token']}
+  )
+  list_to_give=[]
+  for item in response.json()['items']:
+    list_to_give.append(item['summary'])
+  return render(request,'gc.html',{'items':list_to_give})
 
  
 def Logout(request):

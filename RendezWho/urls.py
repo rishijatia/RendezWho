@@ -30,6 +30,11 @@ urlpatterns = [
     url(r'^search/$',views.search,name='search'),
     url(r'^deleteRequest/$',views.deleteRequest),
     url(r'^settings/$',views.settings),
-    url(r'^editRequest/(?P<scheduleID>[0-9]+)/$',views.editRequest,name='editRequest')
+    url(r'^editRequest/(?P<scheduleID>[0-9]+)/$',views.editRequest,name='editRequest'),
+    url(r'^admin/',include(admin.site.urls)),
+    url('',include('social_django.urls',namespace='social')),
+    url('',include('django.contrib.auth.urls',namespace='auth')),
+    url('^gc/$',views.listCalendar,name='listCalendar'),
+
 ]
 #commit
