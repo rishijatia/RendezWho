@@ -116,7 +116,7 @@ def view_newsfeed(request):
       temp = {}
       temp['id'] = req.entryID
       temp['title']=req.activity
-      temp['time']=req.time
+      temp['time']=req.start_time
       temp['date']=req.date
       temp['requestee']=req.owner.user.username
       #temp['location']=req.located_at.name
@@ -158,7 +158,7 @@ def editRequest(request,scheduleID):
       for entry in objs:
         schedule['title']=entry.activity
         schedule['id']=entry.entryID
-        schedule['time']=entry.time
+        schedule['time']=entry.start_time
         schedule['date']=entry.date
         schedule['person']=entry.has.user.username
         schedule['location']="UIUC"
