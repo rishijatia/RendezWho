@@ -17,7 +17,7 @@ class Schedule_Entry(models.Model):
     start_time = models.TimeField(auto_now_add=True,blank=True)
     end_time = models.TimeField(auto_now_add=True, blank=True)
     date = models.DateField(auto_now_add=True, blank=True)
-    located = models.ForeignKey(Location,related_name='loc')
+    located = models.ForeignKey(Location,related_name='loc',default=Location.DEFAULT_PK)
     owner = models.ForeignKey(UserApp,related_name="owns")
 
 class Meeting(models.Model):
