@@ -105,7 +105,7 @@ def view_newsfeed(request):
       temp = {}
       temp['id'] = req.entryID
       temp['title']=req.activity   
-      temp['time']=req.time
+      temp['time']=req.start_time
       temp['date']=req.date
       temp['requestee']=req.has.user.username
       #temp['location']=req.located_at.name
