@@ -13,7 +13,7 @@ class Schedule_Entry(models.Model):
     start_time = models.TimeField(auto_now_add=True,blank=True)
     end_time = models.TimeField(auto_now_add=True, blank=True)
     date = models.DateField(auto_now_add=True, blank=True)
-    located = models.CharField(primary_key=True,max_length=50)
+    located = models.CharField(max_length=50)
     owner = models.ForeignKey(UserApp,related_name="owns")
 
 class Meeting(models.Model):
@@ -24,5 +24,5 @@ class Meeting(models.Model):
     start_time = models.TimeField(auto_now_add=True, blank=True)
     date = models.DateField(auto_now_add=True, blank=True)
     participants = models.ManyToManyField(UserApp,related_name="participants")
-    is_at = models.CharField(primary_key=True,max_length=50)
+    is_at = models.CharField(max_length=50)
     end_time = models.TimeField(auto_now_add=True, blank=True)
