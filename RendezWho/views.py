@@ -210,7 +210,7 @@ def send_match_request(request):
 def create_connection(request):
   if request.user.is_authenticated():
     if request.method =='POST':
-      requestee = User.objects.filter(user__username=request.POST['connectwith'])
+      requestee = User.objects.filter(username=request.POST['connectwith'])
       cr = CRequest (reqSender=request.user,reqReceiver=requestee)
       return HttpResponseRedirect('/newsfeed/')
 
