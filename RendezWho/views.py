@@ -123,7 +123,7 @@ def view_newsfeed(request):
       temp['requestee']=req.participants.user.username
       #temp['location']=req.located_at.name
       request_list.append(temp)
-    friend_requests=Crequest.objects.filter(reqReceiver=request.user)
+    friend_requests=CRequest.objects.filter(reqReceiver=request.user)
     for req in friend_requests:
       temp={}
       temp['name']=req.reqSender.username
