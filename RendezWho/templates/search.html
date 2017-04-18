@@ -92,9 +92,12 @@
                       <div class="meta left floated">
                         <span class="cinema">{{ obj.email }} </span><span class="cinema"> {{ obj.username }}</span>
                       </div>
-                        <a href = "#/"><div class="ui right floated button disabled">
-                            <i class="add user icon"></i> Connect
-                        </div></a>
+                        <form class="ui form" action="/newsfeed/" method = "post">
+                            <input type="text" name="connectwith" value ={{ obj.id }} style="display:none">
+                            <button class="ui right floated button" type="submit">
+                                <i class="add user icon"></i> Connect
+                            </button>
+                        </form>
                     </div>
                   </div>
                   {% empty %}
