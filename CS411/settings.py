@@ -99,18 +99,9 @@ WSGI_APPLICATION = 'CS411.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-"""DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+db_url = 'postgres://django:django123@localhost/django'
+DATABASES =  {'default':  dj_database_url.config(default=db_url) } 
 DATABASES['default'].update(db_from_env)
-"""
-deflt='sqlite://' + BASE_DIR + 'db.sqlite3'
-DATABASES={}
-DATABASES['default']=dj_database_url.config(default=deflt)
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 

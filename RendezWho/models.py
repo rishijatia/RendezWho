@@ -17,10 +17,10 @@ class Schedule_Entry(models.Model):
     owner = models.ForeignKey(UserApp,related_name="owns")
 
 class Meeting(models.Model):
+    meetingID = models.BigAutoField(primary_key=True)
     privacy = models.BooleanField()
     approved = models.BooleanField(default=False)
     requester = models.ForeignKey(UserApp, related_name="rqsts")
-    meetingID = models.BigAutoField(primary_key=True)
     start_time = models.TimeField(auto_now_add=True, blank=True)
     date = models.DateField(auto_now_add=True, blank=True)
     participants = models.ManyToManyField(UserApp,related_name="participants")
