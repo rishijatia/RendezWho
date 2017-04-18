@@ -123,9 +123,7 @@ def view_newsfeed(request):
       temp['requestee']=req.participants.user.username
       #temp['location']=req.located_at.name
       request_list.append(temp)
-    print(request.user)
     friend_requests=CRequest.objects.filter(reqReceiver__username__icontains=request.user.username)
-    print(friend_requests)
     for req in friend_requests:
       temp={}
       temp['name']=req.reqSender.username
@@ -213,8 +211,8 @@ def create_connection(request):
   if request.user.is_authenticated():
     if request.method =='POST':
       requestee = User.objects.filter(username=request.POST['connectwith'])
-      print requestee[0]
       cr = CRequest (reqSender=request.user,reqReceiver=requestee[0])
+      cr.save()
       return HttpResponseRedirect('/newsfeed/')
 
 def search(request):
