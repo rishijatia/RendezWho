@@ -98,9 +98,9 @@ def friend_profile(request):
 
  
 def view_newsfeed(request):
-  print "HELLOOOO2",request
   if request.user.is_authenticated():
-    print "HELLOOOO",request
+    for stuff in request:
+      print stuff 
     requests=Meeting.objects.filter(requester__user=request.user).order_by('description')
     send_list=[]
     request_list=[]
@@ -125,10 +125,8 @@ def view_newsfeed(request):
       #temp['location']=req.located_at.name
       request_list.append(temp)
     if request.method=="POST":
-      print "HELLOOOO3",request
       return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list})
     else:
-      print "HELLOOOO4",request
       return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list})
   else:
     return render(request,'login.html')
