@@ -7,6 +7,13 @@ class UserApp(models.Model):
     user = models.OneToOneField(User,primary_key=True)
     connections = models.ManyToManyField('self',related_name='friends')
 
+class CRequest(models.Model):
+    DEFAULT_PK=1
+    reqSender = models.OneToOneField(User,related_name="sender")
+    reqReceiver = models.OneToOneField(User,related_name="receiver")
+    class Meta:
+        unique_together = (("reqSender","reqReceiver"),)
+
 class Schedule_Entry(models.Model):
     entryID = models.BigAutoField(primary_key=True)
     activity = models.CharField(max_length=50)
