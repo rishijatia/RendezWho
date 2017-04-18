@@ -94,7 +94,7 @@
                       </div>
                         <form class="ui form" action="/newsfeed/" method = "post">
                             {% csrf_token %}
-                            <input type="text" name="connectwith" value ="{{ obj.id }}" style="display:none">
+                            <input type="text" name="connectwith" value ="{{ obj.username }}" style="display:none">
                             <button class="ui right floated button" type="submit">
                                 <i class="add user icon"></i> Connect
                             </button>
