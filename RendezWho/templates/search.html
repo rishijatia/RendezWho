@@ -92,7 +92,7 @@
                       <div class="meta left floated">
                         <span class="cinema">{{ obj.email }} </span><span class="cinema"> {{ obj.username }}</span>
                       </div>
-                        <form class="ui form" action="/newsfeed/" method = "post">
+                        <form class="ui form" action="/makeConnections/" method = "post">
                             {% csrf_token %}
                             <input type="text" name="connectwith" value ="{{ obj.username }}" style="display:none">
                             <button class="ui right floated button" type="submit">
