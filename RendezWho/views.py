@@ -215,10 +215,13 @@ def create_connection(request):
   if request.user.is_authenticated():
     if request.method =='POST':
       requestee = User.objects.filter(username=request.POST['connectwith'])
-      cr = CRequest (reqSender=request.user,reqReceiver=requestee[0])
-      cr.save()
-      print(cr,requestee[0],requestee[0].username)
-      return HttpResponseRedirect('/newsfeed/')
+      if requeste==request.user:
+        return HttpResponseRedirect('/newsfeed/')
+      else:
+        cr = CRequest (reqSender=request.user,reqReceiver=requestee[0])
+        cr.save()
+        print(cr,requestee[0],requestee[0].username)
+        return HttpResponseRedirect('/newsfeed/')
 
 def search(request):
   if request.user.is_authenticated():
