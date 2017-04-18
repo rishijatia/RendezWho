@@ -111,7 +111,7 @@ def view_newsfeed(request):
       temp['requestee']=req.requester.user.username
       #temp['location']=req.located_at.name
       send_list.append(temp)
-    r_requests=Meeting.objects.filter(resquester__user=request.user).order_by('description')
+    r_requests=Meeting.objects.filter(requester__user=request.user).order_by('description')
     request_list=[]
     for req in r_requests:
       temp = {}
