@@ -99,7 +99,7 @@ def friend_profile(request):
  
 def view_newsfeed(request):
   if request.user.is_authenticated():
-    requests=Meeting.objects.filter(owner__user=request.user).order_by('description')
+    requests=Meeting.objects.filter(requester__user=request.user).order_by('description')
     send_list=[]
     request_list=[]
     for req in requests:
