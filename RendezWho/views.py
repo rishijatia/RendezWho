@@ -123,7 +123,11 @@ def view_newsfeed(request):
       temp['requestee']=req.participants.user.username
       #temp['location']=req.located_at.name
       request_list.append(temp)
+    elems = CRequest.objects.all()
+    print elems
+    print request.user
     friend_requests=CRequest.objects.filter(reqReceiver__username__icontains=request.user.username)
+    print friend_requests
     for req in friend_requests:
       temp={}
       temp['name']=req.reqSender.username
@@ -195,7 +199,6 @@ def send_match_request(request):
       for insta in u_app:
         inst=insta
         break
-      loc.save()
       entry = Meeting(description=title_of_meeting,start_time=time,date=date)
       entry.requester=UserApp(user=request.user)
       entry.participants=inst
@@ -213,6 +216,7 @@ def create_connection(request):
       requestee = User.objects.filter(username=request.POST['connectwith'])
       cr = CRequest (reqSender=request.user,reqReceiver=requestee[0])
       cr.save()
+      print(cr,requestee[0],requestee[0].username)
       return HttpResponseRedirect('/newsfeed/')
 
 def search(request):
