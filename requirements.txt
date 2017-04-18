@@ -14,8 +14,6 @@ fuzzywuzzy==0.14.0
 geopy==1.11.0
 google-api-python-client==1.6.2
 gunicorn==19.7.0
-hti==0.1.0
-htitools==1.2
 httplib2==0.10.3
 itsdangerous==0.24
 Jinja2==2.8
