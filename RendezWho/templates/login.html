@@ -41,11 +41,11 @@
     <div class="ui fixed inverted main menu">
         <div class="ui main container">
             <a href="/login" class="title item">RendezWho?</a>
-            <div class="right menu">
+            <!--<div class="right menu">
                 <div class="item">
                     <a href="/signup"><i class="user icon"></i>Sign up</a>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="ui centered page stackable padded grid auth" style="height:90%">
@@ -55,29 +55,13 @@
             </div>-->
             <div class="column six wide"><!--
         <h4 class="ui block top attached header">Login</h4> -->
-                <form class="ui form attached fluid segment compact" action="/login/" method = "post" style="background-color: rgba(255,255,255,0.35);">
-                {% csrf_token %}
-                    <div class="field">
-                        <div class="ui left icon input">
-                            <i class="user icon"></i>
-                            <input type="text" name = "username" placeholder="Username">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                            <i class="lock icon"></i>
-                            <input type="password" name = "password" placeholder="Password">
-                        </div>
-                    </div>
-                    <div class="ui fluid large teal submit button">Login</div>
-                    <div class="ui error message"></div>
-                </form>
+               <a href="{% url 'social:begin' 'google-oauth2' %}?next=http://rendezwho-project.herokuapp.com/newsfeed/"><div class="ui button teal large">Login with Google</div></a>
             </div>
         </div>
     </div>
-    <div>
+    <!--<div>
         <a href="{% url 'social:begin' 'google-oauth2' %}?next=http://rendezwho-project.herokuapp.com/newsfeed/">Login with Google</a>
-    </div>
+    </div>-->
 </div>
 </body>
 </html>
