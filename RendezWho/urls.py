@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^deleteRequest/$',views.deleteRequest),
     url(r'^settings/$',views.settings),
     url(r'^editRequest/(?P<scheduleID>[0-9]+)/$',views.editRequest,name='editRequest'),
+    url(r'^makeConnections/$',views.create_connection,name='makeConnection'),
     url(r'^admin/',include(admin.site.urls)),
     url('',include('social_django.urls',namespace='social')),
     url('',include('django.contrib.auth.urls',namespace='auth')),
