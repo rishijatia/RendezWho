@@ -131,7 +131,7 @@ def view_newsfeed(request):
     for req in friend_requests:
       temp={}
       temp['name']=req.reqSender.username
-    print temp
+      friend_r.append(temp)
     if request.method=="POST":
       return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r})
     else:
