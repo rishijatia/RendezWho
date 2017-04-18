@@ -47,7 +47,6 @@ six==1.10.0
 social-auth-app-django==1.1.0
 social-auth-core==1.2.0
 static3==0.7.0
-tat==1.0
 twitter==1.17.1
 twython==3.4.0
 uritemplate==3.0.0
