@@ -101,6 +101,7 @@ def view_newsfeed(request):
   if request.user.is_authenticated():
     requests=Meeting.objects.filter(requester__user=request.user).order_by('description')
     send_list=[]
+    friend_r=[]
     request_list=[]
     for req in requests:
       temp = {}
@@ -122,10 +123,14 @@ def view_newsfeed(request):
       temp['requestee']=req.participants.user.username
       #temp['location']=req.located_at.name
       request_list.append(temp)
+    friend_requests=Crequest.objects.filter(reqReceiver=request.user)
+    for req in friend_requests:
+      temp={}
+      temp['name']=req.reqSender.username
     if request.method=="POST":
-      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list})
+      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r})
     else:
-      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list})
+      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r})
   else:
     return render(request,'login.html')
 
@@ -201,6 +206,13 @@ def send_match_request(request):
       return render(request,'request.html')
   else:
     return render(request,'login.html')
+
+def create_connection(request):
+  if request.user.is_authenticated():
+    if request.method =='POST':
+      requestee = User.objects.filter(user__username=request.POST['connectwith'])
+      cr = Crequest (reqSender=request.user,reqReceiver=requestee)
+      return HttpResponseRedirect('/newsfeed/')
 
 def search(request):
   if request.user.is_authenticated():
