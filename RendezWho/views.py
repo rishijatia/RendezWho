@@ -192,7 +192,7 @@ def send_match_request(request):
         break
       loc.save()
       entry = Meeting(description=title_of_meeting,start_time=time,date=date)
-      entry.owner=UserApp(user=request.user)
+      entry.requester=UserApp(user=request.user)
       entry.participants=inst
       entry.located_at=loc
       entry.save()
