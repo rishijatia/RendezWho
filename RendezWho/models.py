@@ -18,6 +18,7 @@ class Schedule_Entry(models.Model):
 
 class Meeting(models.Model):
     meetingID = models.BigAutoField(primary_key=True)
+    description = models.CharField(max_length=50,blank=True)
     privacy = models.BooleanField()
     approved = models.BooleanField(default=False)
     requester = models.ForeignKey(UserApp, related_name="rqsts")

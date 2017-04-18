@@ -16,6 +16,7 @@ import requests
 def home(request):
     return render(request,'home.html')
 
+# TO REMOVE
 def signup(request):
   if request.method == 'POST':
     """
@@ -98,27 +99,27 @@ def friend_profile(request):
  
 def view_newsfeed(request):
   if request.user.is_authenticated():
-    requests=Schedule_Entry.objects.filter(owner__user=request.user).order_by('activity')
+    requests=Meeting.objects.filter(owner__user=request.user).order_by('description')
     send_list=[]
     request_list=[]
     for req in requests:
       temp = {}
-      temp['id'] = req.entryID
-      temp['title']=req.activity   
+      temp['id'] = req.meetingID
+      temp['title']=req.description   
       temp['time']=req.start_time
       temp['date']=req.date
-      temp['requestee']=req.has.user.username
+      temp['requestee']=req.requester.user.username
       #temp['location']=req.located_at.name
       send_list.append(temp)
-    r_requests=Schedule_Entry.objects.filter(has__user=request.user).order_by('activity')
+    r_requests=Meeting.objects.filter(resquester__user=request.user).order_by('description')
     request_list=[]
     for req in r_requests:
       temp = {}
-      temp['id'] = req.entryID
-      temp['title']=req.activity
+      temp['id'] = req.meetingID
+      temp['title']=req.description
       temp['time']=req.start_time
       temp['date']=req.date
-      temp['requestee']=req.owner.user.username
+      temp['requestee']=req.participants.user.username
       #temp['location']=req.located_at.name
       request_list.append(temp)
     if request.method=="POST":
@@ -138,7 +139,7 @@ def deleteRequest(request):
   if request.user.is_authenticated():
     if request.method=='POST':
       request_id=request.POST['requestID']
-      Schedule_Entry.objects.filter(entryID=request_id).delete()
+      Meeting.objects.filter(meetingID=request_id).delete()
       return HttpResponseRedirect('/newsfeed/')
     else:
       return HttpResponseRedirect('/newsfeed/')
@@ -150,17 +151,17 @@ def editRequest(request,scheduleID):
     if request.method=='POST':
       unformatted_date=request.POST['date']
       formatted_date = parser.parse(unformatted_date).strftime("%Y-%m-%d")
-      Schedule_Entry.objects.filter(entryID=scheduleID).update(activity=request.POST['title'],time=request.POST['time'],date=formatted_date)
+      Meeting.objects.filter(meetingID=scheduleID).update(description=request.POST['title'],start_time=request.POST['time'],date=formatted_date)
       return HttpResponseRedirect('/newsfeed/')
     else:
-      objs=Schedule_Entry.objects.filter(entryID=scheduleID)
+      objs=Meeting.objects.filter(meetingID=scheduleID)
       schedule={}
       for entry in objs:
-        schedule['title']=entry.activity
-        schedule['id']=entry.entryID
+        schedule['title']=entry.description
+        schedule['id']=entry.meetingID
         schedule['time']=entry.start_time
         schedule['date']=entry.date
-        schedule['person']=entry.has.user.username
+        schedule['person']=entry.participants.user.username
         schedule['location']="UIUC"
       print schedule
       return render(request,'edit_page.html',{"schedule":schedule})
@@ -189,11 +190,10 @@ def send_match_request(request):
       for insta in u_app:
         inst=insta
         break
-      loc = Location(coordinate=location_m,name=location_m)
       loc.save()
-      entry = Schedule_Entry(activity=title_of_meeting,time=time,date=date)
+      entry = Meeting(description=title_of_meeting,start_time=time,date=date)
       entry.owner=UserApp(user=request.user)
-      entry.has=inst
+      entry.participants=inst
       entry.located_at=loc
       entry.save()
       return HttpResponseRedirect('/newsfeed/')
