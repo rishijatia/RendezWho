@@ -242,6 +242,7 @@ def reject(request):
   if request.user.is_authenticated():
     if request.method=='POST':
       username1=request.POST['other_name']
+      print username1 , "DASASD"
       CRequest.objects.filter(reqSender=User.objects.filter(username=username1)[0],reqReceiver=request.user).delete()
       return HttpResponseRedirect('/newsfeed/')
 
