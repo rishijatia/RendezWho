@@ -17,6 +17,12 @@ import requests
 def home(request):
     return render(request,'home.html')
 
+def createUser(request):
+  user_exists = UserApp.objects.filter(user=request.user)
+  if len(user_exists)==0:
+    uapp = UserApp(user=request.user)
+    uapp.save()
+  return HttpResponseRedirect("/newsfeed/")
 # TO REMOVE
 def signup(request):
   if request.method == 'POST':
