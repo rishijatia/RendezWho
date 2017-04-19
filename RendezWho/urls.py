@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^accept/$',views.accept,name='accept'),
     url(r'^reject/$',views.reject,name='reject'),
     url(r'^search/$',views.search,name='search'),
-    url(r'^createUser/$',views.createUser,name='create')
+    url(r'^createUser/$',views.createUser,name='create'),
     url(r'^deleteRequest/$',views.deleteRequest),
     url(r'^settings/$',views.settings),
     url(r'^editRequest/(?P<scheduleID>[0-9]+)/$',views.editRequest,name='editRequest'),
