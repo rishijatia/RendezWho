@@ -22,6 +22,13 @@ def createUser(request):
   if len(user_exists)==0:
     uapp = UserApp(user=request.user)
     uapp.save()
+  user_id = request.user.social_auth.get(provider='google-oauth2')
+  response = requests.get(
+    'https://www.googleapis.com/calendar/v3/calendars/primary/events',
+    params={'access_token':user_id.extra_data['access_token'],'timeMin':datetime.datetime.now()}
+  )
+  for item in response.json()['items']:
+    print item['summary']
   return HttpResponseRedirect("/newsfeed/")
 # TO REMOVE
 def signup(request):
@@ -227,7 +234,6 @@ def create_connection(request):
       else:
         cr = CRequest (reqSender=request.user,reqReceiver=requestee[0])
         cr.save()
-        print(cr,requestee[0],requestee[0].username)
         return HttpResponseRedirect('/newsfeed/')
 
 def accept(request):
@@ -235,8 +241,6 @@ def accept(request):
     if request.method=='POST':
       username1=request.POST['other_name']
       curr_user=request.user.username
-      for items in UserApp.objects.all():
-        print items.user,"P"
       userapp1 = UserApp.objects.filter(user__username=curr_user)[0]
       userapp2=UserApp.objects.filter(user__username=username1)[0]
       userapp1.connections.add(userapp2)
@@ -250,7 +254,6 @@ def reject(request):
   if request.user.is_authenticated():
     if request.method=='POST':
       username1=request.POST['other_name']
-      print username1 , "DASASD"
       CRequest.objects.filter(reqSender=User.objects.filter(username=username1)[0],reqReceiver=request.user).delete()
       return HttpResponseRedirect('/newsfeed/')
 
