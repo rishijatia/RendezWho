@@ -235,16 +235,16 @@ def accept(request):
       userapp2.connections.add(userapp1)
       userapp1.save()
       userapp2.save()
-      CRequest.objects.filter(reqSender=User.filter(username=username1)[0],reqReceiver=request.user).delete()
+      CRequest.objects.filter(reqSender=User.objects.filter(username=username1)[0],reqReceiver=request.user).delete()
       return HttpResponseRedirect('/newsfeed/')
 
 def reject(request):
   if request.user.is_authenticated():
     if request.method=='POST':
       username1=request.POST['other_name']
-      CRequest.objects.filter(reqSender=User.filter(username=username1)[0],reqReceiver=request.user).delete()
+      CRequest.objects.filter(reqSender=User.objects.filter(username=username1)[0],reqReceiver=request.user).delete()
       return HttpResponseRedirect('/newsfeed/')
-      
+
 def search(request):
   if request.user.is_authenticated():
     if request.method=='POST':
