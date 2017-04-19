@@ -25,7 +25,7 @@ def createUser(request):
   user_id = request.user.social_auth.get(provider='google-oauth2')
   response = requests.get(
     'https://www.googleapis.com/calendar/v3/calendars/primary/events',
-    params={'access_token':user_id.extra_data['access_token'],'timeMin':datetime.datetime.now()}
+    params={'access_token':user_id.extra_data['access_token'],'timeMin':datetime.datetime.now().isoformat()}
   )
   for item in response.json()['items']:
     print item['summary']
