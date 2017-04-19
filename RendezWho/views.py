@@ -13,6 +13,18 @@ from django.contrib import messages
 import datetime
 import requests
 
+from django.db import connection, transaction
+
+def reset(request):
+
+     cursor = connection.cursor()
+
+     cursor.execute("SELECT setval(CRequest_id_seq', (SELECT MAX(id) FROM CRequest)+1)")
+
+     success = simplejson.dumps({'success':'success',})
+
+     return HttpResponse(success, mimetype='application/json') 
+
 def home(request):
     return render(request,'home.html')
 
