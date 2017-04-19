@@ -12,7 +12,7 @@ class CRequest(models.Model):
     reqSender = models.OneToOneField(User,related_name="sender")
     reqReceiver = models.OneToOneField(User,related_name="receiver")
     class Meta:
-        unique_together = (("reqSender","reqReceiver"),)
+        unique_together = ["reqSender","reqReceiver"]
 
 class Schedule_Entry(models.Model):
     entryID = models.BigAutoField(primary_key=True)
