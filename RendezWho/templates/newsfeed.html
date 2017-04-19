@@ -111,16 +111,24 @@
             <div class="content">
               <div class="header">{{ connection.name }}</div>
               <br>
-                <a href = "#/"><div class="ui right floated button disabled">
-                    <i class="checkmark icon"></i> Accept
-                </div></a>
-                <a href = "#/"><div class="ui right floated button disabled">
-                    <i class="remove icon"></i> Reject
-                </div></a>
+                <form method="post" action="/accept" class="ui form">
+                    {% csrf_token %}
+                    <input type="text" value="connection.name" style="display: none;">
+                    <button class="ui right floated button " type="submit">
+                        <i class="checkmark icon"></i> Accept
+                    </button>
+                </form>
+                <form method="post" action="/reject" class="ui form">
+                    {% csrf_token %}
+                    <input type="text" value="connection.name" style="display: none;">
+                    <button class="ui right floated button " type="submit">
+                        <i class="remove icon"></i> Reject
+                    </button>
+                </form>
             </div>
           </div>
           {% empty %}
-            <div class="ui header small">No pending invitations</div>
+            <div class="ui header small">No connection requests</div>
         {% endfor %}
     </div>
     <div class="ui modal">
