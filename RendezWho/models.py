@@ -3,16 +3,15 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 class UserApp(models.Model):
-    DEFAULT_PK=1
     user = models.OneToOneField(User,primary_key=True)
     connections = models.ManyToManyField('self',related_name='friends')
 
 class CRequest(models.Model):
-    DEFAULT_PK=1
-    reqSender = models.OneToOneField(User,related_name="sender")
-    reqReceiver = models.OneToOneField(User,related_name="receiver")
+    reqID = models.BigAutoField(primary_key=True)
+    reqSender = models.ForeignKey(User,related_name="sender")
+    reqReceiver = models.ForeignKey(User,related_name="receiver")
     class Meta:
-        unique_together = (("reqSender","reqReceiver"),)
+        unique_together = ['reqSender','reqReceiver']
 
 class Schedule_Entry(models.Model):
     entryID = models.BigAutoField(primary_key=True)

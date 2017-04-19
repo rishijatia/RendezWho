@@ -12,6 +12,7 @@ from django.db.models import Q
 from django.contrib import messages
 import datetime
 import requests
+ 
 
 def home(request):
     return render(request,'home.html')
@@ -123,10 +124,15 @@ def view_newsfeed(request):
       temp['requestee']=req.participants.user.username
       #temp['location']=req.located_at.name
       request_list.append(temp)
-    friend_requests=Crequest.objects.filter(reqReceiver=request.user)
+    elems = CRequest.objects.all()
+    print elems
+    print request.user
+    friend_requests=CRequest.objects.filter(reqReceiver__username__icontains=request.user.username)
+    print friend_requests
     for req in friend_requests:
       temp={}
       temp['name']=req.reqSender.username
+      friend_r.append(temp)
     if request.method=="POST":
       return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r})
     else:
@@ -195,7 +201,6 @@ def send_match_request(request):
       for insta in u_app:
         inst=insta
         break
-      loc.save()
       entry = Meeting(description=title_of_meeting,start_time=time,date=date)
       entry.requester=UserApp(user=request.user)
       entry.participants=inst
@@ -210,9 +215,14 @@ def send_match_request(request):
 def create_connection(request):
   if request.user.is_authenticated():
     if request.method =='POST':
-      requestee = User.objects.filter(user__username=request.POST['connectwith'])
-      cr = Crequest (reqSender=request.user,reqReceiver=requestee)
-      return HttpResponseRedirect('/newsfeed/')
+      requestee = User.objects.filter(username=request.POST['connectwith'])
+      if requestee==request.user:
+        return HttpResponseRedirect('/newsfeed/')
+      else:
+        cr = CRequest (reqSender=request.user,reqReceiver=requestee[0])
+        cr.save()
+        print(cr,requestee[0],requestee[0].username)
+        return HttpResponseRedirect('/newsfeed/')
 
 def search(request):
   if request.user.is_authenticated():
