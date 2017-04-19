@@ -27,6 +27,7 @@ def createUser(request):
     'https://www.googleapis.com/calendar/v3/calendars/primary/events',
     params={'access_token':user_id.extra_data['access_token'],'timeMin':datetime.datetime.now().isoformat()}
   )
+  print response.text
   for item in response.json()['items']:
     print item['summary']
   return HttpResponseRedirect("/newsfeed/")
