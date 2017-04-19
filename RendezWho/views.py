@@ -22,13 +22,14 @@ def createUser(request):
   if len(user_exists)==0:
     uapp = UserApp(user=request.user)
     uapp.save()
-  user_id = request.user.social_auth.get(provider='google-oauth2')
-  formatted_time = datetime.datetime.now().isoformat()
-  formatted_time=formatted_time[:formatted_time.rfind('.')]
+  user_id = request.user.social_auth.filter(provider='google-oauth2')[0]
+  #formatted_time = datetime.datetime.now().isoformat()
+  #formatted_time=formatted_time[:formatted_time.rfind('.')]
+  formatted_time = "2017-10-02T23:30:00+05:30"
   #dict2 = {'start': {'dateTime':formatted_time,'timeZone':''}}
   response = requests.get(
     'https://www.googleapis.com/calendar/v3/calendars/primary/events',
-    params={'access_token':user_id.extra_data['access_token']}
+    params={'access_token':user_id.extra_data['access_token'], 'maxTime': formatted_time}
   )
   for item in response.json()['items']:
     print item['summary']
