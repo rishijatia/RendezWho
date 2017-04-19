@@ -3,12 +3,11 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 class UserApp(models.Model):
-    DEFAULT_PK=1
     user = models.OneToOneField(User,primary_key=True)
     connections = models.ManyToManyField('self',related_name='friends')
 
 class CRequest(models.Model):
-    DEFAULT_PK=1
+    reqID = models.BigAutoField(primary_key=True)
     reqSender = models.OneToOneField(User,related_name="sender")
     reqReceiver = models.OneToOneField(User,related_name="receiver")
 
