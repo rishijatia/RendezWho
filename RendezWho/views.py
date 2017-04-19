@@ -19,7 +19,7 @@ def reset(request):
 
      cursor = connection.cursor()
 
-     cursor.execute("SELECT setval(CRequest_id_seq', (SELECT MAX(id) FROM CRequest)+1)")
+     cursor.execute("SELECT setval('CRequest_id_seq', (SELECT MAX(id) FROM CRequest)+1)")
 
      success = simplejson.dumps({'success':'success',})
 
