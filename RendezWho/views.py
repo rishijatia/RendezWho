@@ -215,7 +215,7 @@ def create_connection(request):
   if request.user.is_authenticated():
     if request.method =='POST':
       requestee = User.objects.filter(username=request.POST['connectwith'])
-      if requeste==request.user:
+      if requestee==request.user:
         return HttpResponseRedirect('/newsfeed/')
       else:
         cr = CRequest (reqSender=request.user,reqReceiver=requestee[0])
