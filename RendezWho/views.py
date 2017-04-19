@@ -28,7 +28,7 @@ def createUser(request):
   #dict2 = {'start': {'dateTime':formatted_time,'timeZone':''}}
   response = requests.get(
     'https://www.googleapis.com/calendar/v3/calendars/primary/events',
-    params={'access_token':user_id.extra_data['access_token'],"minTime":formatted_time}
+    params={'access_token':user_id.extra_data['access_token'],"maxTime":formatted_time}
   )
   print response.text
   for item in response.json()['items']:
