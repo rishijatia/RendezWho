@@ -228,7 +228,7 @@ def accept(request):
   if request.user.is_authenticated():
     if request.method=='POST':
       username1=request.POST['other_name']
-      curr_user=request.user
+      curr_user=request.user.username
       userapp1 = UserApp.objects.filter(user__username=curr_user)[0]
       userapp2=UserApp.objects.filter(user__username=username1)[0]
       userapp1.connections.add(userapp2)
