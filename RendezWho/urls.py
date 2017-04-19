@@ -27,6 +27,8 @@ urlpatterns = [
     url(r'^newsfeed/$',views.view_newsfeed),
     url(r'^connections/$',views.view_connections),
     url(r'^matchRequest/$',views.send_match_request),
+    url(r'^accept/$',views.accept,name='accept'),
+    url(r'^reject/$',views.reject,name='reject'),
     url(r'^search/$',views.search,name='search'),
     url(r'^deleteRequest/$',views.deleteRequest),
     url(r'^settings/$',views.settings),

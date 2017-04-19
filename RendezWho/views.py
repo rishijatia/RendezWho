@@ -224,6 +224,27 @@ def create_connection(request):
         print(cr,requestee[0],requestee[0].username)
         return HttpResponseRedirect('/newsfeed/')
 
+def accept(request):
+  if request.user.is_authenticated():
+    if request.method=='POST':
+      username1=request.POST['other_name']
+      curr_user=req.user
+      userapp1 = UserApp.filter(user=curr_user)[0]
+      userapp2=UserApp.filter(user__username=username1)[0]
+      userapp1.connections.add(userapp2)
+      userapp2.connections.add(userapp1)
+      userapp1.save()
+      userapp2.save()
+      CRequest.objects.filter(reqSender=User.filter(username=username1)[0],reqReceiver=request.user).delete()
+      return HttpResponseRedirect('/newsfeed/')
+
+def reject(request):
+  if request.user.is_authenticated():
+    if request.method=='POST':
+      username1=request.POST['other_name']
+      CRequest.objects.filter(reqSender=User.filter(username=username1)[0],reqReceiver=request.user).delete()
+      return HttpResponseRedirect('/newsfeed/')
+      
 def search(request):
   if request.user.is_authenticated():
     if request.method=='POST':
