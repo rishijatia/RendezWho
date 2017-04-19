@@ -8,8 +8,10 @@ class UserApp(models.Model):
 
 class CRequest(models.Model):
     reqID = models.BigAutoField(primary_key=True)
-    reqSender = models.OneToOneField(User,related_name="sender")
-    reqReceiver = models.OneToOneField(User,related_name="receiver")
+    reqSender = models.ForeignKey(User,related_name="sender")
+    reqReceiver = models.ForeignKey(User,related_name="receiver")
+    class Meta:
+        unique_together = ['reqSender','reqReceiver']
 
 class Schedule_Entry(models.Model):
     entryID = models.BigAutoField(primary_key=True)

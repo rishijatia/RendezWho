@@ -1,0 +1,66 @@
+BEGIN;
+--
+-- Create model CRequest
+--
+CREATE TABLE "RendezWho_crequest" ("reqID" bigserial NOT NULL PRIMARY KEY);
+--
+-- Create model Meeting
+--
+CREATE TABLE "RendezWho_meeting" ("meetingID" bigserial NOT NULL PRIMARY KEY, "description" varchar(50) NOT NULL, "privacy" boolean NOT NULL, "approved" boolean NOT NULL, "start_time" time NOT NULL, "date" date NOT NULL, "is_at" varchar(50) NOT NULL, "end_time" time NOT NULL);
+--
+-- Create model Schedule_Entry
+--
+CREATE TABLE "RendezWho_schedule_entry" ("entryID" bigserial NOT NULL PRIMARY KEY, "activity" varchar(50) NOT NULL, "start_time" time NOT NULL, "end_time" time NOT NULL, "date" date NOT NULL, "located" varchar(50) NOT NULL);
+--
+-- Create model UserApp
+--
+CREATE TABLE "RendezWho_userapp" ("user_id" integer NOT NULL PRIMARY KEY);
+CREATE TABLE "RendezWho_userapp_connections" ("id" serial NOT NULL PRIMARY KEY, "from_userapp_id" integer NOT NULL, "to_userapp_id" integer NOT NULL);
+--
+-- Add field owner to schedule_entry
+--
+ALTER TABLE "RendezWho_schedule_entry" ADD COLUMN "owner_id" integer NOT NULL;
+ALTER TABLE "RendezWho_schedule_entry" ALTER COLUMN "owner_id" DROP DEFAULT;
+--
+-- Add field participants to meeting
+--
+CREATE TABLE "RendezWho_meeting_participants" ("id" serial NOT NULL PRIMARY KEY, "meeting_id" bigint NOT NULL, "userapp_id" integer NOT NULL);
+--
+-- Add field requester to meeting
+--
+ALTER TABLE "RendezWho_meeting" ADD COLUMN "requester_id" integer NOT NULL;
+ALTER TABLE "RendezWho_meeting" ALTER COLUMN "requester_id" DROP DEFAULT;
+--
+-- Add field reqReceiver to crequest
+--
+ALTER TABLE "RendezWho_crequest" ADD COLUMN "reqReceiver_id" integer NOT NULL;
+ALTER TABLE "RendezWho_crequest" ALTER COLUMN "reqReceiver_id" DROP DEFAULT;
+--
+-- Add field reqSender to crequest
+--
+ALTER TABLE "RendezWho_crequest" ADD COLUMN "reqSender_id" integer NOT NULL;
+ALTER TABLE "RendezWho_crequest" ALTER COLUMN "reqSender_id" DROP DEFAULT;
+--
+-- Alter unique_together for crequest (1 constraint(s))
+--
+ALTER TABLE "RendezWho_crequest" ADD CONSTRAINT "RendezWho_crequest_reqSender_id_34342ea1_uniq" UNIQUE ("reqSender_id", "reqReceiver_id");
+ALTER TABLE "RendezWho_userapp" ADD CONSTRAINT "RendezWho_userapp_user_id_ea09cfb5_fk_auth_user_id" FOREIGN KEY ("user_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "RendezWho_userapp_connections" ADD CONSTRAINT "RendezWho_from_userapp_id_4c7f1d0f_fk_RendezWho_userapp_user_id" FOREIGN KEY ("from_userapp_id") REFERENCES "RendezWho_userapp" ("user_id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "RendezWho_userapp_connections" ADD CONSTRAINT "RendezWho_u_to_userapp_id_fc845f32_fk_RendezWho_userapp_user_id" FOREIGN KEY ("to_userapp_id") REFERENCES "RendezWho_userapp" ("user_id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "RendezWho_userapp_connections" ADD CONSTRAINT "RendezWho_userapp_connections_from_userapp_id_7ce46cc7_uniq" UNIQUE ("from_userapp_id", "to_userapp_id");
+CREATE INDEX "RendezWho_userapp_connections_663437d2" ON "RendezWho_userapp_connections" ("from_userapp_id");
+CREATE INDEX "RendezWho_userapp_connections_7a354a68" ON "RendezWho_userapp_connections" ("to_userapp_id");
+CREATE INDEX "RendezWho_schedule_entry_5e7b1936" ON "RendezWho_schedule_entry" ("owner_id");
+ALTER TABLE "RendezWho_schedule_entry" ADD CONSTRAINT "RendezWho_schedu_owner_id_f244d6a0_fk_RendezWho_userapp_user_id" FOREIGN KEY ("owner_id") REFERENCES "RendezWho_userapp" ("user_id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "RendezWho_meeting_participants" ADD CONSTRAINT "RendezWho_me_meeting_id_45efe95c_fk_RendezWho_meeting_meetingID" FOREIGN KEY ("meeting_id") REFERENCES "RendezWho_meeting" ("meetingID") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "RendezWho_meeting_participants" ADD CONSTRAINT "RendezWho_meet_userapp_id_3b6c562f_fk_RendezWho_userapp_user_id" FOREIGN KEY ("userapp_id") REFERENCES "RendezWho_userapp" ("user_id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "RendezWho_meeting_participants" ADD CONSTRAINT "RendezWho_meeting_participants_meeting_id_1c685e86_uniq" UNIQUE ("meeting_id", "userapp_id");
+CREATE INDEX "RendezWho_meeting_participants_383440d3" ON "RendezWho_meeting_participants" ("meeting_id");
+CREATE INDEX "RendezWho_meeting_participants_b23cf108" ON "RendezWho_meeting_participants" ("userapp_id");
+CREATE INDEX "RendezWho_meeting_573f8683" ON "RendezWho_meeting" ("requester_id");
+ALTER TABLE "RendezWho_meeting" ADD CONSTRAINT "RendezWho_me_requester_id_91e38c59_fk_RendezWho_userapp_user_id" FOREIGN KEY ("requester_id") REFERENCES "RendezWho_userapp" ("user_id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "RendezWho_crequest_327f335a" ON "RendezWho_crequest" ("reqReceiver_id");
+ALTER TABLE "RendezWho_crequest" ADD CONSTRAINT "RendezWho_crequest_reqReceiver_id_c1e428f8_fk_auth_user_id" FOREIGN KEY ("reqReceiver_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "RendezWho_crequest_60d6a967" ON "RendezWho_crequest" ("reqSender_id");
+ALTER TABLE "RendezWho_crequest" ADD CONSTRAINT "RendezWho_crequest_reqSender_id_5b0b0d44_fk_auth_user_id" FOREIGN KEY ("reqSender_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+COMMIT;
