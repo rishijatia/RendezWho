@@ -33,9 +33,18 @@ def createUser(request):
   )
   todays_date = datetime.datetime.now()
   todays_date=datetime.datetime.today().strftime('%Y-%d-%m')
+  todays_datetime = datetime.datetime.now().isoformat()
+  todays_datetime = todays_datetime[:todays_datetime.rfind('.')]
   for item in response.json()['items']:
-    event_date = item['end']['date']
-    if event_date > todays_date:
+    flag=True
+    if 'date' in item['end']:
+      event_date = item['end']['date']
+      flag = event_date < todays_date
+    else:
+      event_date = item['end']['dateTime']
+      flag = event_date < todays_datetime
+      
+    if flag:
       e_activity = item['description']
       start_time=None
       end_time=None
