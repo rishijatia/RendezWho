@@ -43,9 +43,14 @@ def createUser(request):
     else:
       event_date = item['end']['dateTime']
       flag = event_date < todays_datetime
-      
+
     if flag:
-      e_activity = item['description']
+      e_activity='No Description'
+      if 'description' in item:
+        e_activity = item['description']
+      else:
+        if 'summary' in item:
+          e_activity=item['summary']
       start_time=None
       end_time=None
       flag1=0
