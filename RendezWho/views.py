@@ -46,11 +46,11 @@ def createUser(request):
 
     if flag:
       e_activity='No Description'
-      if 'description' in item:
-        e_activity = item['description']
+      if 'summary' in item:
+        e_activity = item['summary']
       else:
-        if 'summary' in item:
-          e_activity=item['summary']
+        if 'description' in item:
+          e_activity=item['description'][:50]
       start_time=None
       end_time=None
       flag1=0
