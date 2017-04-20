@@ -23,15 +23,15 @@ def createUser(request):
     uapp = UserApp(user=request.user)
     uapp.save()
   user_id = request.user.social_auth.filter(provider='google-oauth2')[0]
-  formatted_time = datetime.datetime.now().isoformat()
-  formatted_time=formatted_time[:formatted_time.rfind('.')]
-  #formatted_time = "2020-01-31T23:30:00+05:30"
+  ##formatted_time = datetime.datetime.now().isoformat()
+  ##formatted_time=formatted_time[:formatted_time.rfind('.')]
+  formatted_time = "2020-01-31T23:30:00+05:30"
   #dict2 = {'start': {'dateTime':formatted_time,'timeZone':''}}
   response = requests.get(
     'https://www.googleapis.com/calendar/v3/calendars/primary/events',
     params={'access_token':user_id.extra_data['access_token'], 'minTime': formatted_time}
   )
-  """
+  
   todays_date = datetime.datetime.now()
   todays_date=datetime.datetime.today().strftime('%Y-%d-%m')
   todays_datetime = datetime.datetime.now().isoformat()
@@ -81,7 +81,7 @@ def createUser(request):
       else:
         sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,date=date,located=located,owner=owner)
       sche_entry.save()
-  """
+  
   return HttpResponseRedirect('/newsfeed/')
 
 
