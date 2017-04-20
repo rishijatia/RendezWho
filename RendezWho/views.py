@@ -31,10 +31,10 @@ def createUser(request):
     'https://www.googleapis.com/calendar/v3/calendars/primary/events',
     params={'access_token':user_id.extra_data['access_token'], 'minTime': formatted_time}
   )
-  todays_date = datetime.datetime.now().isoformat()
-  todays_date=todays_date[:todays_date.rfind('.')]
+  todays_date = datetime.datetime.now()
+  todays_date=datetime.datetime.today().strftime('%Y-%d-%m')
   for item in response.json()['items']:
-    event_date = item['start']['dateTime']
+    event_date = item['end']['date']
     if event_date > todays_date:
       e_activity = item['description']
       start_time=None
