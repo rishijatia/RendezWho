@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'temp.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'semantic/dist/semantic.min.css' %}" />
+    <script   src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="{% static 'semantic/dist/semantic.min.js' %}"></script>
+</head>
+<body>
+<script>
+    $(document)
+        .ready(function() {
+            $('.ui.form')
+                .form({
+                    fields: {
+                        username: {
+                            identifier: 'username',
+                            rules: [{
+                                type: 'empty',
+                                prompt: 'Please enter your username'
+                            }]
+                        },
+                        password: {
+                            identifier: 'password',
+                            rules: [{
+                                type: 'empty',
+                                prompt: 'Please enter your password'
+                            }, {
+                                type: 'length[8]',
+                                prompt: 'Your password must be at least 8 characters'
+                            }]
+                        }
+                    }
+                });
+        });
+</script>
+<div class="login">
+    <div class="ui fixed inverted main menu">
+        <div class="ui main container" style="width:100%">
+            <a href="/login" class="title item">RendezWho?</a>
+            <!--<div class="right menu">
+                <div class="item">
+                    <a href="/signup"><i class="user icon"></i>Sign up</a>
+                </div>
+            </div>-->
+        </div>
+    </div>
+    <div class="ui centered page stackable padded grid auth" style="height:90%">
+        <div class="row middle aligned content">
+            <!--<div class="column eight wide left floated" class="bottomalign">
+                 <h1 class="signlog">RendezWho?</h1>
+            </div>-->
+            <div class="column fourteen wide"><!--
+        <h4 class="ui block top attached header">Login</h4> -->
+                <div class="ui huge header" style="font-size: 10vh"> RendezWho?</div>
+                <div class="ui huge header"> A place to schedule meetings with friends, coworkers and acquintances...</div>
+                <br><br>
+               <a href="{% url 'social:begin' 'google-oauth2' %}?next=http://rendezwho-project.herokuapp.com/create/"><div class="ui button teal large">Login with Google</div></a>
+
+            </div>
+        </div>
+    </div>
+    <!--<div>
+        <a href="{% url 'social:begin' 'google-oauth2' %}?next=http://rendezwho-project.herokuapp.com/newsfeed/">Login with Google</a>
+    </div>-->
+</div>
+</body>
+</html>

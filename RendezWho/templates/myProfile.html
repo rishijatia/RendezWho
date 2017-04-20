@@ -2,9 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Profile</title>
+    <title>Search</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'temp.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'semantic/dist/semantic.min.css' %}" />
+    <script   src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="{% static 'typed.js/js/typed.js' %}"></script>
+    <script src="{% static 'semantic/dist/semantic.min.js' %}"></script>
 </head>
-<body>
-my Profile Page
+<body style="height:100%">
+    <script>
+        $(document)
+        .ready(function() {
+            $('.ui.form')
+                .form({
+                    fields: {
+                    }
+                });
+            $('.ui.radio.checkbox')
+                .checkbox();
+            $(function(){
+                $("#welcome").typed({
+                    strings: ["Welcome {{ user.first_name }}!"],
+                    typeSpeed: 40
+                });
+            });
+            $('.menu .item').tab();
+        });
+</script>
+<div class="signupStyle" style="height:100%">
+    <div class="ui main container " style="margin:0">
+        <div class="ui fixed inverted main menu">
+              <div class="ui main container " style="width:100%">
+                    <a href="/newsfeed" class="title item">RendezWho?</a>
+                    <div class="right menu">
+                        <div class="ui simple dropdown item">
+                            <i class="user icon"></i>{{user.first_name}} {{user.last_name}}
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <a class="item" href="/myProfile">
+                                    <i class="user icon"></i> My profile
+                                </a>
+                                <a class="item" href="/search">
+                                    <i class="search icon"></i> Search
+                                </a>
+                                <a class="item" href="/logout">
+                                    <i class="ellipsis horizontal icon"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+        </div>
+    </div>
+    <div class="ui stackable three column grid padded" style="height:100%">
+        <div class="nine wide column" style="background-image: url('{% static "media/notes.jpg" %}'); background-size:cover; height: 100%;">
+            <div class="ui huge header left aligned" style="margin-top:74%; color:white; font-size: 4vw;" id="welcome" >  </div>
+        </div>
+        <div class="seven wide column">
+            <br>
+            <br>
+            <div class="ui top attached tabular menu">
+              <a class="item active" data-tab="first" style="width:50%">Connections</a>
+              <a class="item" data-tab="second" style="width:50%">Scheduled Meetings</a>
+            </div>
+            <div class="ui bottom attached tab segment active" data-tab="first" style="height:85%; overflow: scroll;">
+              First
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="second" style="height:85%; overflow: scroll;">
+              Second
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
