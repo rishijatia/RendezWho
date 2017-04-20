@@ -39,23 +39,26 @@ def createUser(request):
       e_activity = item['description']
       start_time=None
       end_time=None
-      flag=0
-      if item['start']['dateTime']:
+      flag1=0
+      flag2=0
+      if 'dateTime' in item['start']:
         start_time=item['start']['dateTime']
       else:
-        flag=1
-      if item['end']['dateTime']:
+        flag1=1
+      if 'dateTime' in item['end']:
         end_time=item['end']['dateTime']
       else:
-        flag=2
+        flag2=1
       date = item['start']['date']
       located = item['location']
       owner = UserApp.objects.filter(user=request.user)[0]
       sche_entry=None
-      if flag==0:
+      if flag1==0 and flag2==0 :
         sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,end_time=end_time,date=date,located=located,owner=owner)
-      elif flag==2:
+      elif flag1==1 and flag2==1:
         sche_entry = Schedule_Entry(activity=e_activity,date=date,located=located,owner=owner)
+      elif flag1==1:
+        sche_entry = Schedule_Entry(activity=e_activity,end_time=end_time,date=date,located=located,owner=owner)
       else:
         sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,date=date,located=located,owner=owner)
       sche_entry.save()
