@@ -39,14 +39,25 @@ def createUser(request):
       e_activity = item['description']
       start_time=None
       end_time=None
+      flag=0
       if item['start']['dateTime']:
         start_time=item['start']['dateTime']
+      else:
+        flag=1
       if item['end']['dateTime']:
         end_time=item['end']['dateTime']
+      else:
+        flag=2
       date = item['start']['date']
       located = item['location']
       owner = UserApp.objects.filter(user=request.user)[0]
-      sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,end_time=end_time,date=date,located=located,owner=owner)
+      sche_entry=None
+      if flag==0:
+        sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,end_time=end_time,date=date,located=located,owner=owner)
+      elif flag==2:
+        sche_entry = Schedule_Entry(activity=e_activity,date=date,located=located,owner=owner)
+      else:
+        sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,date=date,located=located,owner=owner)
       sche_entry.save()
   return HttpResponseRedirect('/newsfeed/')
 
