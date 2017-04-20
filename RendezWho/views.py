@@ -37,8 +37,12 @@ def createUser(request):
     event_date = item['start']['dateTime']
     if event_date > todays_date:
       e_activity = item['description']
-      start_time=item['start']['dateTime']
-      end_time=item['end']['dateTime']
+      start_time=None
+      end_time=None
+      if item['start']['dateTime']:
+        start_time=item['start']['dateTime']
+      if item['end']['dateTime']:
+        end_time=item['end']['dateTime']
       date = item['start']['date']
       located = item['location']
       owner = UserApp.objects.filter(user=request.user)[0]
