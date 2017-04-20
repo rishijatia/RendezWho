@@ -25,15 +25,28 @@ def createUser(request):
   user_id = request.user.social_auth.filter(provider='google-oauth2')[1]
   #formatted_time = datetime.datetime.now().isoformat()
   #formatted_time=formatted_time[:formatted_time.rfind('.')]
-  formatted_time = "2017-06-30T23:30:00+05:30"
+  formatted_time = "2020-01-31T23:30:00+05:30"
   #dict2 = {'start': {'dateTime':formatted_time,'timeZone':''}}
   response = requests.get(
     'https://www.googleapis.com/calendar/v3/calendars/primary/events',
     params={'access_token':user_id.extra_data['access_token'], 'minTime': formatted_time}
   )
+  todays_date = datetime.datetime.now().isoformat()
+  todays_date=todays_date[:todays_date.rfind('.')]
   for item in response.json()['items']:
-    print item['summary']
-  return HttpResponseRedirect("/newsfeed/")
+    event_date = item['start']['dateTime']
+    if event_date > todays_date:
+      e_activity = item['description']
+      start_time=item['start']['dateTime']
+      end_time=item['end']['dateTime']
+      date = item['start']['date']
+      located = item['location']
+      owner = UserApp.objects.filter(user=request.user)[0]
+      sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,end_time=end_time,date=date,located=located,owner=owner)
+      sche_entry.save()
+  return HttpResponseRedirect('/newsfeed/')
+
+
 # TO REMOVE
 def signup(request):
   if request.method == 'POST':
