@@ -15,21 +15,21 @@ class CRequest(models.Model):
 
 class Schedule_Entry(models.Model):
     entryID = models.BigAutoField(primary_key=True)
-    activity = models.CharField(max_length=50)
+    activity = models.CharField(max_length=500)
     start_time = models.TimeField(auto_now_add=True,blank=True)
     end_time = models.TimeField(auto_now_add=True, blank=True)
     date = models.DateField(auto_now_add=True, blank=True)
-    located = models.CharField(max_length=50)
+    located = models.CharField(max_length=500)
     owner = models.ForeignKey(UserApp,related_name="owns")
 
 class Meeting(models.Model):
     meetingID = models.BigAutoField(primary_key=True)
-    description = models.CharField(max_length=50,blank=True)
+    description = models.CharField(max_length=500,blank=True)
     privacy = models.BooleanField()
     approved = models.BooleanField(default=False)
     requester = models.ForeignKey(UserApp, related_name="rqsts")
     start_time = models.TimeField(auto_now_add=True, blank=True)
     date = models.DateField(auto_now_add=True, blank=True)
     participants = models.ManyToManyField(UserApp,related_name="participants")
-    is_at = models.CharField(max_length=50)
+    is_at = models.CharField(max_length=500)
     end_time = models.TimeField(auto_now_add=True, blank=True)
