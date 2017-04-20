@@ -66,7 +66,9 @@ def createUser(request):
       date=None
       if 'date' in item['start']:
         date = item['start']['date']
-      located = item['location']
+      location = 'No Location'
+      if 'location' in item:
+        located = item['location']
       owner = UserApp.objects.filter(user=request.user)[0]
       sche_entry=None
       if flag1==0 and flag2==0 :
