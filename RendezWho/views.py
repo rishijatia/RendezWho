@@ -279,14 +279,17 @@ def suggestions_algorithm(request):
       person_uname = request.POST['person']
       p_user = User.objects.filter(username=person_uname)[0]
       location_m = request.POST['location']
-      dates_arr = [request.POST['date1'],request.POST['date2'],request.POST['date3']]
+      d1=request.POST['date1']
+      d2=request.POST['date2']
+      d3=request.POST['date3']
+      dates_arr = [d1,d2,d3]
       time_list=[]
       time_list_morning = ['T06:00','T06:30','T07:00','T07:30','T08:00','T08:30','T09:00','T09:30','T10:00',
         'T10:30','T11:00','T11:30']
       time_list_afternoon = ['T12:00','T12:30','T13:00','T13:30','T14:00','T14:30','T15:00','T15:30','T16:00','T16:30']
       time_list_evening = ['T17:00','T17:30','T18:00','T18:30','T19:00','T19:30','T20:00','T20:30','T21:00','T21:30','T22:00']
       time_list_all = time_list_morning+time_list_afternoon+time_list_evening
-      available_times=[]
+      available_times={}
       flag=1
       for date in dates_arr:
         var = 'time' + str(flag)
@@ -300,6 +303,7 @@ def suggestions_algorithm(request):
         else:
           time_list=time_list_all
         flag+=1
+        temp_arr=[]
         formatted_date = date.split('/')
         formatted_date=formatted_date[2]+'-'+formatted_date[0]+'-'+formatted_date[1]
         spl=formatted_date.split('-')
@@ -313,9 +317,10 @@ def suggestions_algorithm(request):
             query = Schedule_Entry.objects.filter((Q(owner__user=request.user) | Q(owner__user=p_user)) & 
               (Q(start_time__lte=date_time) & Q(end_time__gte=date_time)))
             if len(query)==0:
-              available_times.append(str(date) + ' ' + str(date_time))
-      print "Available at: " , available_times
-      return HttpResponseRedirect('/newsfeed/')
+              temp_arr.append(str(date_time))
+        available_times[date]=temp_arr
+      #print "Available at: " , available_times
+      return render(request,'suggestions.html',{'requesting_user':person_uname,'date1':d1,'times1':available_times[d1],'date2':d2,'times2':available_times[d2],'date3':d3,'times3':available_times[d3],'location':location_m,'title':title})
 
 def send_match_request(request):
   if request.user.is_authenticated():
