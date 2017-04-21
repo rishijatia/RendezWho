@@ -156,7 +156,7 @@ def Login(request):
 def listCalendar(request):
   usr = request.user
   u_app = UserApp.objects.filter(user=usr)[0]
-  entries = Schedule_Entry.objects.filter(owner=u_app)
+  entries = Schedule_Entry.objects.all()
   list_to_give=[]
   for item in entries:
     val = str(item.activity) + ' ' + str(item.start_time) + ' ' + str(item.end_time)
