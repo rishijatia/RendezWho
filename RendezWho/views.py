@@ -320,7 +320,7 @@ def suggestions_algorithm(request):
               temp_arr.append(str(date_time))
         available_times[date]=temp_arr
       #print "Available at: " , available_times
-      return render(request,'suggestions.html',{'requesting_user':person_uname,'date1':d1,'times1':available_times[d1],'date2':d2,'times2':available_times[d2],'date3':d3,'times3':available_times[d3],'location':location_m,'title':title})
+      return render(request,'suggestions.html',{'requesting_user':person_uname,'date1':d1,'times1':available_times[d1],'date2':d2,'times2':available_times[d2],'date3':d3,'times3':available_times[d3],'location':location_m,'title':title_of_meeting})
 
 def send_match_request(request):
   if request.user.is_authenticated():
@@ -332,7 +332,7 @@ def send_match_request(request):
       date = dateTime.split('T')[0]
       formatted_date = date.split('/')
       date_in_date=datetime.date(int(spl[0]),int(spl[1]),int(spl[2])) 
-      startTime= datetime.datetime.strptime(dateTime,'%Y/%m/%dT%H:%M')
+      startTime= datetime.datetime.strptime(dateTime,'%m/%d/%YT%H:%M')
       endTime= startTime + datetime.timedelta(hours=1)
       user=User.objects.filter(username=person_uname)
       if not user:
