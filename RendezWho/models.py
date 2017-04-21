@@ -16,8 +16,8 @@ class CRequest(models.Model):
 class Schedule_Entry(models.Model):
     entryID = models.BigAutoField(primary_key=True)
     activity = models.CharField(max_length=500)
-    start_time = models.DateTimeField(blank=True)
-    end_time = models.DateTimeField(blank=True)
+    start_time = models.DateTimeField(blank=True,null=True)
+    end_time = models.DateTimeField(blank=True,null=True)
     date = models.DateField(blank=True,null=True)
     located = models.CharField(max_length=500)
     owner = models.ForeignKey(UserApp,related_name="owns")
