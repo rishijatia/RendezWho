@@ -31,7 +31,8 @@ def createUser(request):
     'https://www.googleapis.com/calendar/v3/calendars/primary/events',
     params={'access_token':user_id.extra_data['access_token'], 'minTime': formatted_time}
   )
-  
+  u_app = UserApp.objects.filter(user=request.user)[0]
+  Schedule_Entry.objects.filter(owner=u_app).delete()
   todays_date = datetime.datetime.now()
   todays_date=datetime.datetime.today().strftime('%Y-%m-%d')
   todays_date=datetime.datetime.strptime(todays_date,'%Y-%m-%d')
