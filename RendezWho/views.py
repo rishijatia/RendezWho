@@ -275,11 +275,8 @@ def suggestions_algorithm(request):
       person_uname = request.POST['person']
       location_m = request.POST['location']
       date= request.POST['date']
-      time_stuff_hr = parser.parse(request.POST['time']).hour
-      time_stuff_min = parser.parse(request.POST['time']).minute
-      formatted_time = datetime.time(time_stuff_hr,time_stuff_min)
-      time = formatted_time
-      print request.POST['time'],time,time_stuff_min,time_stuff_hr
+      print date
+
       return HttpResponseRedirect('/newsfeed/')
 
 def send_match_request(request):
