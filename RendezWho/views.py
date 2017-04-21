@@ -224,7 +224,7 @@ def view_newsfeed(request):
     connections_list = []
     for obj in UserApp.objects.filter(user=request.user):
       for unames in obj.connections.all():
-        connections_list.append(unames)
+        connections_list.append(unames.username)
     if request.method=="POST":
       return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r,'connections':connections_list})
     else:
