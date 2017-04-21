@@ -33,24 +33,24 @@ def createUser(request):
   )
   
   todays_date = datetime.datetime.now()
-  todays_date=datetime.datetime.today().strftime('%Y-%d-%m')
-  todays_date=datetime.datetime.strptime(todays_date,'%Y-%d-%m')
+  todays_date=datetime.datetime.today().strftime('%Y-%m-%d')
+  todays_date=datetime.datetime.strptime(todays_date,'%Y-%m-%d')
   todays_datetime = str(datetime.datetime.now().isoformat())
   if 'Z' or '.' in todays_datetime:
     todays_datetime=todays_datetime[:todays_datetime.rfind(':')]
-  todays_datetime=datetime.datetime.strptime(todays_datetime,'%Y-%d-%mT%H:%M')
+  todays_datetime=datetime.datetime.strptime(todays_datetime,'%Y-%m-%dT%H:%M')
   #todays_datetime = todays_datetime[:todays_datetime.rfind('.')]
   for item in response.json()['items']:
     flag=True
     if 'date' in item['end']:
       event_date = item['end']['date']
-      event_date = datetime.datetime.strptime(event_date,'%Y-%d-%m')
+      event_date = datetime.datetime.strptime(event_date,'%Y-%m-%d')
       flag = event_date < todays_date
     else:
       event_date = item['end']['dateTime']
       if 'Z' or '.' in event_date:
         event_date=event_date[:event_date.rfind(':')]
-      event_date= datetime.datetime.strptime(event_date,'%Y-%d-%mT%H:%M')
+      event_date= datetime.datetime.strptime(event_date,'%Y-%m-%dT%H:%M')
       flag = event_date < todays_datetime
 
     if flag:
