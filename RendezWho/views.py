@@ -338,10 +338,9 @@ def send_match_request(request):
       if not user:
         messages.add_message(request,messages.ERROR,"The requestee does not exist.")
         return render(request,'error.html')
-      entry = Meeting(description=title_of_meeting,start_time=startTime,end_time=endTime,date=date_in_date,approved=0,is_at=location_m,privacy=False)
+      entry = Meeting(description=title_of_meeting,start_time=startTime,end_time=endTime,date=date_in_date,approved=0,requester=UserApp.objects.filter(user=request.user)[0],is_at=location_m,privacy=False)
       entry.save()
       entry.participants=UserApp.objects.filter(user__username=person_uname)[0]
-      entry.requester=UserApp(user=request.user)
       entry.save()
       return HttpResponseRedirect('/newsfeed/')
     else:
