@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Suggestions</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'temp.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'semantic/dist/semantic.min.css' %}" />
+    <script   src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="{% static 'semantic/dist/semantic.min.js' %}"></script>
+</head>
+<body>
+    <script>
+        $(document)
+        .ready(function() {
+            $('.ui.form')
+                .form({
+                    fields: {
+                    }
+                });
+            $('.ui.radio.checkbox')
+                .checkbox();
+        });
+</script>
+<div class="signupStyle">
+<div class="ui main container">
+    <div class="ui fixed inverted main menu">
+          <div class="ui main container" style="width:100%">
+                <a href="/newsfeed" class="title item">RendezWho?</a>
+                <div class="right menu">
+                    <div class="ui simple dropdown item">
+                        <i class="user icon"></i>{{user.first_name}} {{user.last_name}}
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a class="item" href="/myProfile">
+                                <i class="user icon"></i> My profile
+                            </a>
+                            <a class="item" href="/search">
+                                <i class="search icon"></i> Search
+                            </a>
+                            <a class="item" href="/logout">
+                                <i class="ellipsis horizontal icon"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+          </div>
+    </div>
+    <br><br><br>
+    <div class="ui page auth">
+        <div class="row middle content">
+            <div class="column sixteen wide">
+                <form class="ui form attached fluid segment compact" action="/matchRequest/" method = "post" style="background-color: rgba(255,255,255,0.35);">
+                    {% csrf_token %}
+                    <div class="ui huge header">{{ title }}</div>
+                    <div class="ui medium header">{{ requesting_user }}</div>
+                    <div class="ui medium header">{{ location }}</div>
+                    <input type="hidden" name="title" value="{{ title }}">
+                    <input type="hidden" name="requesting_user" value="{{ requesting_user }}">
+                    <input type="hidden" name="location" value="{{ location }}">
+                    <div class="ui medium header">{{ d1 }}</div>
+                    <label for="fruit">Suggested times:</label>
+                    {% for time in times1 %}
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="dateTime" value="{{ d1 }}T{{ time }}" checked="" tabindex="0" class="hidden">
+                                <label>{{ time }}</label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="ui medium header">{{ d2 }}</div>
+                    <label for="fruit">Suggested times:</label>
+                    {% for time in times2 %}
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="dateTime" value="{{ d2 }}T{{ time }}" checked="" tabindex="0" class="hidden">
+                                <label>{{ time }}</label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="ui medium header">{{ d3 }}</div>
+                    <label for="fruit">Suggested times:</label>
+                    {% for time in times3 %}
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="dateTime" value="{{ d3 }}T{{ time }}" checked="" tabindex="0" class="hidden">
+                                <label>{{ time }}</label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <button class="ui fluid large teal submit button" type="submit">Send Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
