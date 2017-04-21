@@ -134,24 +134,27 @@ def signup(request):
     return render(request, "signup.html", {'form': signup_form})
           
 def Login(request):
-  if request.method =='POST':
-    user_name = request.POST['username']
-    pass_word = request.POST['password']
-    user = authenticate(username=user_name,password=pass_word)
-    #print(request.path)
-    print (user_name)
-    if user:
-      if user.is_active:
-        login(request,user)
-        return HttpResponseRedirect('/newsfeed/')
+  if request.user.is_authenticated():
+    return HttpResponseRedirect('/newsfeed/')
+  else:
+    if request.method =='POST':
+      user_name = request.POST['username']
+      pass_word = request.POST['password']
+      user = authenticate(username=user_name,password=pass_word)
+      #print(request.path)
+      print (user_name)
+      if user:
+        if user.is_active:
+          login(request,user)
+          return HttpResponseRedirect('/newsfeed/')
+        else:
+          messages.add_message(request,messages.ERROR,"We did not recognize your username or password")
+          return render(request,'error.html')
       else:
-        messages.add_message(request,messages.ERROR,"We did not recognize your username or password")
+        messages.add_message(request,messages.ERROR,"We did not recognize your username or password.")
         return render(request,'error.html')
     else:
-      messages.add_message(request,messages.ERROR,"We did not recognize your username or password.")
-      return render(request,'error.html')
-  else:
-    return render(request, 'login.html')
+      return render(request, 'login.html')
 
 def listCalendar(request):
   usr = request.user
