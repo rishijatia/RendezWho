@@ -154,7 +154,7 @@
                                     <i class="checkmark icon"></i> Accept
                                 </button>
                             </form>
-                            <form method="post" action="/reject" class="ui form">
+                            <form method="post" action="/reject/" class="ui form">
                                 {% csrf_token %}
                                 <input type="text" value="connection.name" style="display: none;">
                                 <button class="ui right floated button " type="submit">
