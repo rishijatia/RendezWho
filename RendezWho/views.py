@@ -290,6 +290,8 @@ def suggestions_algorithm(request):
             (Q(start_time__lt=date_time) & Q(end_time__gte=date_time)))
           if len(query)==0:
             available_times.append(str(date_time))
+          else:
+            print query[0]
       print "Available at: " , available_times
       return HttpResponseRedirect('/newsfeed/')
 
