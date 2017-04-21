@@ -58,32 +58,32 @@
                     <input type="hidden" name="title" value="{{ title }}">
                     <input type="hidden" name="requesting_user" value="{{ requesting_user }}">
                     <input type="hidden" name="location" value="{{ location }}">
-                    <div class="ui medium header">{{ d1 }}</div>
+                    <div class="ui medium header">{{ date1 }}</div>
                     <label for="fruit">Suggested times:</label>
                     {% for time in times1 %}
                         <div class="field">
                             <div class="ui radio checkbox">
-                                <input type="radio" name="dateTime" value="{{ d1 }}T{{ time }}" checked="" tabindex="0" class="hidden">
+                                <input type="radio" name="dateTime" value="{{ date1 }}T{{ time }}" checked="" tabindex="0" class="hidden">
                                 <label>{{ time }}</label>
                             </div>
                         </div>
                     {% endfor %}
-                    <div class="ui medium header">{{ d2 }}</div>
+                    <div class="ui medium header">{{ date2 }}</div>
                     <label for="fruit">Suggested times:</label>
                     {% for time in times2 %}
                         <div class="field">
                             <div class="ui radio checkbox">
-                                <input type="radio" name="dateTime" value="{{ d2 }}T{{ time }}" checked="" tabindex="0" class="hidden">
+                                <input type="radio" name="dateTime" value="{{ date2 }}T{{ time }}" checked="" tabindex="0" class="hidden">
                                 <label>{{ time }}</label>
                             </div>
                         </div>
                     {% endfor %}
-                    <div class="ui medium header">{{ d3 }}</div>
+                    <div class="ui medium header">{{ date3 }}</div>
                     <label for="fruit">Suggested times:</label>
                     {% for time in times3 %}
                         <div class="field">
                             <div class="ui radio checkbox">
-                                <input type="radio" name="dateTime" value="{{ d3 }}T{{ time }}" checked="" tabindex="0" class="hidden">
+                                <input type="radio" name="dateTime" value="{{ date3 }}T{{ time }}" checked="" tabindex="0" class="hidden">
                                 <label>{{ time }}</label>
                             </div>
                         </div>

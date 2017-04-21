@@ -317,7 +317,7 @@ def suggestions_algorithm(request):
             query = Schedule_Entry.objects.filter((Q(owner__user=request.user) | Q(owner__user=p_user)) & 
               (Q(start_time__lte=date_time) & Q(end_time__gte=date_time)))
             if len(query)==0:
-              temp_arr.append(str(date_time))
+              temp_arr.append(str(times))
         available_times[date]=temp_arr
       #print "Available at: " , available_times
       return render(request,'suggestions.html',{'requesting_user':person_uname,'date1':d1,'times1':available_times[d1],'date2':d2,'times2':available_times[d2],'date3':d3,'times3':available_times[d3],'location':location_m,'title':title_of_meeting})
