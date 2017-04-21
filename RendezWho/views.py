@@ -216,18 +216,19 @@ def view_newsfeed(request):
       #temp['location']=req.located_at.name
       request_list.append(temp)
     elems = CRequest.objects.all()
-    print elems
-    print request.user
     friend_requests=CRequest.objects.filter(reqReceiver__username__icontains=request.user.username)
-    print friend_requests
     for req in friend_requests:
       temp={}
       temp['name']=req.reqSender.username
       friend_r.append(temp)
+    connections_list = []
+    for obj in UserApp.objects.filter(user=request.user):
+      for unames in obj.connections.all():
+        connections_list.append(unames)
     if request.method=="POST":
-      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r})
+      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r,'connections':connections_list})
     else:
-      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r})
+      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r,'connections':connections_list})
   else:
     return render(request,'login.html')
 
@@ -299,8 +300,7 @@ def suggestions_algorithm(request):
         formatted_date = date.split('/')
         formatted_date=formatted_date[2]+'-'+formatted_date[0]+'-'+formatted_date[1]
         spl=formatted_date.split('-')
-        date_in_date=datetime.date(int(spl[0]),int(spl[1]),int(spl[2]))
-        
+        date_in_date=datetime.date(int(spl[0]),int(spl[1]),int(spl[2]))  
         whole_day_gone=Schedule_Entry.objects.filter(owner__user=request.user,start_time__isnull=True,end_time__isnull=True,date=date_in_date)
         if len(whole_day_gone)==0:
           for times in time_list:
@@ -310,8 +310,6 @@ def suggestions_algorithm(request):
               (Q(start_time__lte=date_time) & Q(end_time__gte=date_time)))
             if len(query)==0:
               available_times.append(str(date) + ' ' + str(date_time))
-            else:
-              print query[0]
       print "Available at: " , available_times
       return HttpResponseRedirect('/newsfeed/')
 
