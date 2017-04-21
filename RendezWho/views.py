@@ -275,12 +275,25 @@ def suggestions_algorithm(request):
     if request.method == 'POST':
       title_of_meeting = request.POST['title']
       radio = request.POST['type']
+      t_d = request.POST['time']
       person_uname = request.POST['person']
       p_user = User.objects.filter(username=person_uname)[0]
       location_m = request.POST['location']
       dates_arr = [request.POST['date1'],request.POST['date2'],request.POST['date3']]
+      time_list=[]
       time_list_morning = ['T06:00','T06:30','T07:00','T07:30','T08:00','T08:30','T09:00','T09:30','T10:00',
-        'T10:30','T11:00','T11:30','T12:00']
+        'T10:30','T11:00','T11:30']
+      time_list_afternoon = ['T12:00','T12:30','T13:00','T13:30','T14:00','T14:30','T15:00','T15:30','T16:00','T16:30']
+      time_list_evening = ['T17:00','T17:30','T18:00','T18:30','T19:00','T19:30','T20:00','T20:30','T21:00','T21:30','T22:00']
+      time_list_all = time_list_morning+time_list_afternoon+time_list_evening
+      if t_d == 'morning':
+        time_list=time_list_morning
+      elif t_d == 'afternoon':
+        time_list=time_list_afternoon
+      elif t_d == 'evening':
+        time_list=time_list_evening
+      else:
+        time_list=time_list_all
       for date in dates_arr:
         formatted_date = date.split('/')
         formatted_date=formatted_date[2]+'-'+formatted_date[0]+'-'+formatted_date[1]
@@ -289,7 +302,7 @@ def suggestions_algorithm(request):
         available_times=[]
         whole_day_gone=Schedule_Entry.objects.filter(owner__user=request.user,start_time__isnull=True,end_time__isnull=True,date=date_in_date)
         if len(whole_day_gone)==0:
-          for times in time_list_morning:
+          for times in time_list:
             date_time=formatted_date+times
             date_time=datetime.datetime.strptime(date_time,'%Y-%m-%dT%H:%M')
             query = Schedule_Entry.objects.filter((Q(owner__user=request.user) | Q(owner__user=p_user)) & 
