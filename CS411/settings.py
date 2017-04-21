@@ -136,6 +136,7 @@ USE_L10N = True
 USE_TZ = True
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '522860969064-qg3liitd7mqa5qsdoov9mri5rnfnmimp.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'JyfNSf4Owb53XikA0gesG6yT'
+SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {'prompt': 'select_account'}
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
