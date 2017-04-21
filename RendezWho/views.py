@@ -304,7 +304,7 @@ def suggestions_algorithm(request):
         formatted_date=formatted_date[2]+'-'+formatted_date[0]+'-'+formatted_date[1]
         spl=formatted_date.split('-')
         date_in_date=datetime.date(int(spl[0]),int(spl[1]),int(spl[2]))  
-        whole_day_gone=Schedule_Entry.objects.filter(owner__user=request.user,start_time__isnull=True,end_time__isnull=True,date=date_in_date)
+        whole_day_gone=Schedule_Entry.objects.filter(Q(owner__user=request.user) | Q(owner__user=p_user) & (Q(start_time__isnull=True) & Q(end_time__isnull=True) & Q(date=date_in_date)))
         if len(whole_day_gone)==0:
           for times in time_list:
             date_time=formatted_date+times
