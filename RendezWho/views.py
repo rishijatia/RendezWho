@@ -276,7 +276,6 @@ def suggestions_algorithm(request):
     if request.method == 'POST':
       title_of_meeting = request.POST['title']
       radio = request.POST['type']
-      t_d = request.POST['time']
       person_uname = request.POST['person']
       p_user = User.objects.filter(username=person_uname)[0]
       location_m = request.POST['location']
