@@ -73,7 +73,7 @@ def createUser(request):
       owner = UserApp.objects.filter(user=request.user)[0]
       sche_entry=None
       if flag1==0 and flag2==0 :
-        query = Schedule_Entry.objects.filter(activity=e_activity,start_time=start_time,end_time=end_time,date=date,located=located,owner=owner)
+        query = Schedule_Entry.objects.filter(activity=e_activity,start_time=start_time,end_time=end_time,located=located,owner=owner)
         if len(query)==0:
           sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,end_time=end_time,date=date,located=located,owner=owner)
           sche_entry.save()
@@ -83,12 +83,12 @@ def createUser(request):
           sche_entry = Schedule_Entry(activity=e_activity,date=date,located=located,owner=owner)
           sche_entry.save()
       elif flag1==1:
-        query=Schedule_Entry.objects.filter(activity=e_activity,end_time=end_time,date=date,located=located,owner=owner)
+        query=Schedule_Entry.objects.filter(activity=e_activity,end_time=end_time,located=located,owner=owner)
         if len(query)==0:
           sche_entry = Schedule_Entry(activity=e_activity,end_time=end_time,date=date,located=located,owner=owner)
           sche_entry.save()
       else:
-        query=Schedule_Entry.objects.filter(activity=e_activity,start_time=start_time,date=date,located=located,owner=owner)
+        query=Schedule_Entry.objects.filter(activity=e_activity,start_time=start_time,located=located,owner=owner)
         if len(query)==0:
           sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,date=date,located=located,owner=owner)
           sche_entry.save()
