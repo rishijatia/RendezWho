@@ -191,7 +191,7 @@ def friend_profile(request):
  
 def view_newsfeed(request):
   if request.user.is_authenticated():
-    requests=Meeting.objects.filter(requester__user=request.user).order_by('description').delete()
+    requests=Meeting.objects.filter(requester__user=request.user).order_by('description')
     send_list=[]
     friend_r=[]
     request_list=[]
@@ -204,7 +204,7 @@ def view_newsfeed(request):
       temp['requestee']=req.requester.user.username
       #temp['location']=req.located_at.name
       send_list.append(temp)
-    r_requests=Meeting.objects.filter(requester__user=request.user).order_by('description').delete()
+    r_requests=Meeting.objects.filter(requester__user=request.user).order_by('description')
     request_list=[]
     for req in r_requests:
       temp = {}
