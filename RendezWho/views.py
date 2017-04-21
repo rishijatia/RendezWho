@@ -142,7 +142,6 @@ def Login(request):
       pass_word = request.POST['password']
       user = authenticate(username=user_name,password=pass_word)
       #print(request.path)
-      print (user_name)
       if user:
         if user.is_active:
           login(request,user)
@@ -170,6 +169,7 @@ def listCalendar(request):
 def Logout(request):
   if request.user.is_authenticated():
     logout(request)
+    request.session.flush()
     return HttpResponseRedirect('/login/')
   else:
     return render(request,'login.html')
