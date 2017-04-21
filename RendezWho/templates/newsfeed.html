@@ -200,12 +200,43 @@
                   <textarea name="location" rows="1"></textarea>
               </div>
               <div class="field">
-                  <label class="ui inverted">Date</label>
-                  <input type="text" name="date" id="datepicker">
+                  <label class="ui inverted">Date 1</label>
+                  <input type="text" name="date1" id="datepicker">
               </div>
               <div class="field">
-                  <label class="ui inverted">Time</label>
-                  <textarea name="time" rows="1"></textarea>
+                  <label class="ui inverted">Date 2</label>
+                  <input type="text" name="date2" id="datepicker">
+              </div>
+              <div class="field">
+                  <label class="ui inverted">Date 3</label>
+                  <input type="text" name="date3" id="datepicker">
+              </div>
+              <div class="inline fields">
+                 <label for="fruit">Time Period</label>
+                  <div class="field">
+                      <div class="ui radio checkbox">
+                          <input type="radio" name="time" value="morning" checked="" tabindex="0" class="hidden">
+                          <label>Morning</label>
+                      </div>
+                  </div>
+                  <div class="field">
+                      <div class="ui radio checkbox">
+                          <input type="radio" name="time" value="afternoon" tabindex="0" class="hidden">
+                          <label>Afternoon</label>
+                      </div>
+                  </div>
+                  <div class="field">
+                      <div class="ui radio checkbox">
+                          <input type="radio" name="time" value="evening" tabindex="0" class="hidden">
+                          <label>Evening</label>
+                      </div>
+                  </div>
+                  <div class="field">
+                      <div class="ui radio checkbox">
+                          <input type="radio" name="time" value="all" tabindex="0" class="hidden">
+                          <label>All</label>
+                      </div>
+                  </div>
               </div>
               <button class="ui fluid large teal submit button" type="submit">Suggest</button>
           </form>
