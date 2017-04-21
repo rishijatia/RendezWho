@@ -212,7 +212,7 @@ def view_newsfeed(request):
       temp['title']=req.description
       temp['time']=req.start_time
       temp['date']=req.date
-      temp['requestee']=req.participants.user.username
+      temp['requestee']=req.participants
       #temp['location']=req.located_at.name
       request_list.append(temp)
     elems = CRequest.objects.all()
