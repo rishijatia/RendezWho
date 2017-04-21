@@ -267,6 +267,21 @@ def editRequest(request,scheduleID):
   else:
     return render(request,'login.html')
 
+def suggestions_algorithm(request):
+  if request.user.is_authenticated():
+    if request.method == 'POST':
+      title_of_meeting = request.POST['title']
+      radio = request.POST['type']
+      person_uname = request.POST['person']
+      location_m = request.POST['location']
+      date= request.POST['date']
+      time_stuff_hr = parser.parse(request.POST['time']).hour
+      time_stuff_min = parser.parse(request.POST['time']).minute
+      formatted_time = datetime.time(time_stuff_hr,time_stuff_min)
+      time = formatted_time
+      print request.POST['time'],time,time_stuff_min,time_stuff_hr
+      return HttpResponseRedirect('/newsfeed/')
+
 def send_match_request(request):
   if request.user.is_authenticated():
     if request.method=='POST':

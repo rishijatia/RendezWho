@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^friendProfile/$',views.friend_profile),
     url(r'^newsfeed/$',views.view_newsfeed),
     url(r'^connections/$',views.view_connections),
-    url(r'^matchRequest/$',views.send_match_request),
+    url(r'^matchRequest/$',views.suggestions_algorithm),
     url(r'^accept/$',views.accept,name='accept'),
     url(r'^reject/$',views.reject,name='reject'),
     url(r'^search/$',views.search,name='search'),
