@@ -278,25 +278,26 @@ def suggestions_algorithm(request):
       person_uname = request.POST['person']
       p_user = User.objects.filter(username=person_uname)[0]
       location_m = request.POST['location']
-      date= request.POST['date']
-      formatted_date = date.split('/')
-      formatted_date=formatted_date[2]+'-'+formatted_date[0]+'-'+formatted_date[1]
+      dates_arr = [request.POST['date1'],request.POST['date2'],request.POST['date3']]
       time_list_morning = ['T06:00','T06:30','T07:00','T07:30','T08:00','T08:30','T09:00','T09:30','T10:00',
-      'T10:30','T11:00','T11:30','T12:00']
-      spl=formatted_date.split('-')
-      date_in_date=datetime.date(int(spl[0]),int(spl[1]),int(spl[2]))
-      available_times=[]
-      whole_day_gone=Schedule_Entry.objects.filter(owner__user=request.user,start_time__isnull=True,end_time__isnull=True,date=date_in_date)
-      if len(whole_day_gone)==0:
-        for times in time_list_morning:
-          date_time=formatted_date+times
-          date_time=datetime.datetime.strptime(date_time,'%Y-%m-%dT%H:%M')
-          query = Schedule_Entry.objects.filter((Q(owner__user=request.user) | Q(owner__user=p_user)) & 
-            (Q(start_time__lte=date_time) & Q(end_time__gte=date_time)))
-          if len(query)==0:
-            available_times.append(str(date_time))
-          else:
-            print query[0]
+        'T10:30','T11:00','T11:30','T12:00']
+      for date in dates_arr:
+        formatted_date = date.split('/')
+        formatted_date=formatted_date[2]+'-'+formatted_date[0]+'-'+formatted_date[1]
+        spl=formatted_date.split('-')
+        date_in_date=datetime.date(int(spl[0]),int(spl[1]),int(spl[2]))
+        available_times=[]
+        whole_day_gone=Schedule_Entry.objects.filter(owner__user=request.user,start_time__isnull=True,end_time__isnull=True,date=date_in_date)
+        if len(whole_day_gone)==0:
+          for times in time_list_morning:
+            date_time=formatted_date+times
+            date_time=datetime.datetime.strptime(date_time,'%Y-%m-%dT%H:%M')
+            query = Schedule_Entry.objects.filter((Q(owner__user=request.user) | Q(owner__user=p_user)) & 
+              (Q(start_time__lte=date_time) & Q(end_time__gte=date_time)))
+            if len(query)==0:
+              available_times.append(str(date) + ' ' + str(date_time))
+            else:
+              print query[0]
       print "Available at: " , available_times
       return HttpResponseRedirect('/newsfeed/')
 
