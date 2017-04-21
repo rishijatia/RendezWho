@@ -287,16 +287,20 @@ def suggestions_algorithm(request):
       time_list_afternoon = ['T12:00','T12:30','T13:00','T13:30','T14:00','T14:30','T15:00','T15:30','T16:00','T16:30']
       time_list_evening = ['T17:00','T17:30','T18:00','T18:30','T19:00','T19:30','T20:00','T20:30','T21:00','T21:30','T22:00']
       time_list_all = time_list_morning+time_list_afternoon+time_list_evening
-      if t_d == 'morning':
-        time_list=time_list_morning
-      elif t_d == 'afternoon':
-        time_list=time_list_afternoon
-      elif t_d == 'evening':
-        time_list=time_list_evening
-      else:
-        time_list=time_list_all
       available_times=[]
+      flag=1
       for date in dates_arr:
+        var = 'time' + str(flag)
+        t_d=request.POST[var]
+        if t_d == 'morning':
+          time_list=time_list_morning
+        elif t_d == 'afternoon':
+          time_list=time_list_afternoon
+        elif t_d == 'evening':
+          time_list=time_list_evening
+        else:
+          time_list=time_list_all
+        flag+=1
         formatted_date = date.split('/')
         formatted_date=formatted_date[2]+'-'+formatted_date[0]+'-'+formatted_date[1]
         spl=formatted_date.split('-')
