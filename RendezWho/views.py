@@ -326,28 +326,21 @@ def send_match_request(request):
   if request.user.is_authenticated():
     if request.method=='POST':
       title_of_meeting = request.POST['title']
-      radio = request.POST['type']
-      person_uname = request.POST['person']
+      person_uname = request.POST['requesting_user']
       location_m = request.POST['location']
-      date= request.POST['date']
-      time_stuff_hr = parser.parse(request.POST['time']).hour
-      time_stuff_min = parser.parse(request.POST['time']).minute
-      formatted_time = datetime.time(time_stuff_hr,time_stuff_min)
-      time = formatted_time
-      print request.POST['time'],time,time_stuff_min,time_stuff_hr
+      dateTime= request.POST['dateTime']
+      date = dateTime.split('T')[0]
+      formatted_date = date.split('/')
+      date_in_date=datetime.date(int(spl[0]),int(spl[1]),int(spl[2])) 
+      startTime= datetime.datetime.strptime(dateTime,'%Y/%m/%dT%H:%M')
+      endTime= startTime + datetime.timedelta(hours=1)
       user=User.objects.filter(username=person_uname)
       if not user:
         messages.add_message(request,messages.ERROR,"The requestee does not exist.")
         return render(request,'error.html')
-      u_app=UserApp.objects.filter(user=user)
-      inst=None
-      for insta in u_app:
-        inst=insta
-        break
-      entry = Meeting(description=title_of_meeting,start_time=time,date=date)
+      entry = Meeting(description=title_of_meeting,start_time=startTime,end_time=endTime,date=date_in_date,approved=0,is_at=location_m,privacy=False)
+      entry.participants=UserApp.objects.filter(user__username=person_uname)[0]
       entry.requester=UserApp(user=request.user)
-      entry.participants=inst
-      entry.located_at=loc
       entry.save()
       return HttpResponseRedirect('/newsfeed/')
     else:
