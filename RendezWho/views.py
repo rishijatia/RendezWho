@@ -134,14 +134,13 @@ def Login(request):
     return render(request, 'login.html')
 
 def listCalendar(request):
-  user_id = request.user.social_auth.get(provider='google-oauth2')
-  response = requests.get(
-    'https://www.googleapis.com/calendar/v3/calendars/primary/events',
-    params={'access_token':user_id.extra_data['access_token']}
-  )
+  usr = request.user
+  u_app = UserApp.objects.filter(user=usr)[0]
+  entries = Schedule_Entry.objects.filter(owner=u_app)
   list_to_give=[]
-  for item in response.json()['items']:
-    list_to_give.append(item['summary'])
+  for item in entries:
+    val = str(item['activity']) + ' ' + str(item['start_time']) + ' ' + str(item['end_time'])
+    list_to_give.append(val)
   return render(request,'gc.html',{'items':list_to_give})
 
  
