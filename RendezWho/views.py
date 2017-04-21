@@ -48,8 +48,7 @@ def createUser(request):
       flag = event_date < todays_date
     else:
       event_date = item['end']['dateTime']
-      if 'Z' or '.' in event_date:
-        event_date=event_date[:event_date.rfind(':')]
+      event_date=event_date[0:16]
       event_date= datetime.datetime.strptime(event_date,'%Y-%m-%dT%H:%M')
       flag = event_date < todays_datetime
 
