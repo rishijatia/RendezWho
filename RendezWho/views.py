@@ -45,12 +45,12 @@ def createUser(request):
     if 'date' in item['end']:
       event_date = item['end']['date']
       event_date = datetime.datetime.strptime(event_date,'%Y-%m-%d')
-      flag = event_date < todays_date
+      flag = event_date > todays_date
     else:
       event_date = item['end']['dateTime']
       event_date=event_date[0:16]
       event_date= datetime.datetime.strptime(event_date,'%Y-%m-%dT%H:%M')
-      flag = event_date < todays_datetime
+      flag = event_date > todays_datetime
 
     if flag:
       e_activity='No Description'
