@@ -331,7 +331,7 @@ def send_match_request(request):
       dateTime= request.POST['dateTime']
       date = dateTime.split('T')[0]
       formatted_date = date.split('/')
-      date_in_date=datetime.date(int(spl[2]),int(spl[0]),int(spl[1])) 
+      date_in_date=datetime.date(int(formatted_date[2]),int(formatted_date[0]),int(formatted_date[1])) 
       startTime= datetime.datetime.strptime(dateTime,'%m/%d/%YT%H:%M')
       endTime= startTime + datetime.timedelta(hours=1)
       user=User.objects.filter(username=person_uname)
