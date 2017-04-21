@@ -281,7 +281,7 @@ def suggestions_algorithm(request):
       time_list_morning = ['T06:00','T06:30','T07:00','T07:30','T08:00','T08:30','T09:00','T09:30','T10:00',
       'T10:30','T11:00','T11:30','T12:00']
       available_times=[]
-      whole_day_gone=Schedule_Entry.objects.filter(owner__user=request.user,start_time__isnull=True,end_time__isnull=True)
+      whole_day_gone=Schedule_Entry.objects.filter(owner__user=request.user,start_time__isnull=True,end_time__isnull=True,date__isnull=False)
       if len(whole_day_gone)==0:
         for times in time_list_morning:
           date_time=formatted_date+times
