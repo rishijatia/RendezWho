@@ -73,14 +73,26 @@ def createUser(request):
       owner = UserApp.objects.filter(user=request.user)[0]
       sche_entry=None
       if flag1==0 and flag2==0 :
-        sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,end_time=end_time,date=date,located=located,owner=owner)
+        query = Schedule_Entry.objects.filter(activity=e_activity,start_time=start_time,end_time=end_time,date=date,located=located,owner=owner)
+        if len(query)==0:
+          sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,end_time=end_time,date=date,located=located,owner=owner)
+          sche_entry.save()
       elif flag1==1 and flag2==1:
-        sche_entry = Schedule_Entry(activity=e_activity,date=date,located=located,owner=owner)
+        query=Schedule_Entry.objects.filter(activity=e_activity,date=date,located=located,owner=owner)
+        if len(query)==0:
+          sche_entry = Schedule_Entry(activity=e_activity,date=date,located=located,owner=owner)
+          sche_entry.save()
       elif flag1==1:
-        sche_entry = Schedule_Entry(activity=e_activity,end_time=end_time,date=date,located=located,owner=owner)
+        query=Schedule_Entry.objects.filter(activity=e_activity,end_time=end_time,date=date,located=located,owner=owner)
+        if len(query)==0:
+          sche_entry = Schedule_Entry(activity=e_activity,end_time=end_time,date=date,located=located,owner=owner)
+          sche_entry.save()
       else:
-        sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,date=date,located=located,owner=owner)
-      sche_entry.save()
+        query=Schedule_Entry.objects.filter(activity=e_activity,start_time=start_time,date=date,located=located,owner=owner)
+        if len(query)==0:
+          sche_entry = Schedule_Entry(activity=e_activity,start_time=start_time,date=date,located=located,owner=owner)
+          sche_entry.save()
+      
   
   return HttpResponseRedirect('/newsfeed/')
 
@@ -139,7 +151,7 @@ def listCalendar(request):
   entries = Schedule_Entry.objects.filter(owner=u_app)
   list_to_give=[]
   for item in entries:
-    val = str(item['activity']) + ' ' + str(item['start_time']) + ' ' + str(item['end_time'])
+    val = str(item.activity) + ' ' + str(item.start_time) + ' ' + str(item.end_time)
     list_to_give.append(val)
   return render(request,'gc.html',{'items':list_to_give})
 
