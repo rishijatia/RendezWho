@@ -287,7 +287,7 @@ def suggestions_algorithm(request):
           date_time=formatted_date+times
           date_time=datetime.datetime.strptime(date_time,'%Y-%m-%dT%H:%M')
           query = Schedule_Entry.objects.filter((Q(owner__user=request.user) | Q(owner__user=p_user)) & 
-            (Q(start_time__lte=date_time) & Q(end_time__gt=date_time)))
+            (Q(start_time__lte=date_time) & Q(end_time__gte=date_time)))
           if len(query)==0:
             available_times.append(str(date_time))
       print "Available at: " , available_times
