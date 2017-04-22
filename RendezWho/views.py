@@ -341,6 +341,7 @@ def send_match_request(request):
       entry = Meeting(description=title_of_meeting,start_time=startTime,end_time=endTime,date=date_in_date,approved=0,requester=UserApp.objects.filter(user=request.user)[0],is_at=location_m,privacy=False)
       entry.save()
       value=UserApp.objects.filter(user__username=person_uname)[0]
+      print(value)
       entry.participants.add(value)
       entry.save()
       return HttpResponseRedirect('/newsfeed/')
