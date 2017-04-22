@@ -207,7 +207,7 @@ def view_newsfeed(request):
     request_list=[]
     for meeting in Meeting.objects.all():
       if any(request.user==usr.user for usr in meeting.participants.all()):
-        for req in r_requests:
+        for req in meeting:
           temp = {}
           temp['id'] = req.meetingID
           temp['title']=req.description
