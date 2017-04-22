@@ -202,20 +202,17 @@ def view_newsfeed(request):
       temp['time']=req.start_time
       temp['date']=req.date
       temp['requestee']=req.requester.user.username
-      #temp['location']=req.located_at.name
       send_list.append(temp)
     request_list=[]
     for meeting in Meeting.objects.all():
       if any(request.user==usr.user for usr in meeting.participants.all()):
-        for req in meeting:
-          temp = {}
-          temp['id'] = req.meetingID
-          temp['title']=req.description
-          temp['time']=req.start_time
-          temp['date']=req.date
-          temp['requestee']=req.participants
-          #temp['location']=req.located_at.name
-          request_list.append(temp)
+        temp = {}
+        temp['id'] = meeting.meetingID
+        temp['title']=meeting.description
+        temp['time']=meeting.start_time
+        temp['date']=meeting.date
+        temp['requestee']=meeting.participants
+        request_list.append(temp)
     elems = CRequest.objects.all()
     friend_requests=CRequest.objects.filter(reqReceiver__username__icontains=request.user.username)
     for req in friend_requests:
