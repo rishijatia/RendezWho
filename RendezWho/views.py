@@ -375,8 +375,13 @@ def acceptRequest(request):
       }
       headers={'Content-Type':'application/json; charset=UTF-8'}
       d={'body':event}
-      response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token']},headers=headers)
-      print (response.json())
+      logging.basicConfig()
+      logging.getLogger().setLevel(logging.DEBUG)
+      requests_log = logging.getLogger("requests.packages.urllib3")
+      requests_log.setLevel(logging.DEBUG)
+      requests_log.propagate = True
+      #response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token']},headers=headers)
+      #print (response.json())
       #if response.json()['error']['code']!=400 or response.json()['error']['code']!=401:
        # Meeting.objects.filter(meetingID=mid).update(approved=True)
       return HttpResponseRedirect('/newsfeed/')
