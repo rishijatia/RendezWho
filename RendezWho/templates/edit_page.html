@@ -17,9 +17,9 @@
      $(document).on('click', '.add', function (e) {
          $('.ui.modal').modal('show');
      });
-
+     var dateToday = new Date();
      $(function(){
-        $( "#datepicker" ).datepicker();
+        $( "#datepicker" ).datepicker({minDate:dateToday});
         });
 
      $('.ui.form').form({fields: {}});

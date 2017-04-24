@@ -50,16 +50,16 @@
     <div class="ui page auth">
         <div class="row middle content">
             <div class="column sixteen wide">
-                <form class="ui form attached fluid segment compact" action="/match/" method = "post" style="background-color: rgba(255,255,255,0.35);">
+                <form class="ui large form attached fluid segment compact" action="/match/" method = "post" style="background-color: rgba(255,255,255,0.35);">
                     {% csrf_token %}
-                    <div class="ui huge header">{{ title }}</div>
-                    <div class="ui medium header">{{ requesting_user }}</div>
-                    <div class="ui medium header">{{ location }}</div>
+                    <div class="ui huge header"><b>Title:</b> {{ title }}</div>
+                    <div class="ui medium header"><b>Requesting:</b> {{ requesting_user }}</div>
+                    <div class="ui medium header"><b>Location:</b> {{ location }}</div>
                     <input type="hidden" name="title" value="{{ title }}">
                     <input type="hidden" name="requesting_user" value="{{ requesting_user }}">
                     <input type="hidden" name="location" value="{{ location }}">
                     <div class="ui medium header">{{ date1 }}</div>
-                    <label for="fruit">Suggested times:</label>
+                    <label for="fruit"><b>Suggested times:</b></label>
                     {% for time in times1 %}
                         <div class="field">
                             <div class="ui radio checkbox">
@@ -70,7 +70,7 @@
                     {% endfor %}
                     {% if date2 != "" %}
                     <div class="ui medium header">{{ date2 }}</div>
-                    <label for="fruit">Suggested times:</label>
+                    <label for="fruit"><b>Suggested times:</b></label>
                     {% for time in times2 %}
                         <div class="field">
                             <div class="ui radio checkbox">
@@ -84,7 +84,7 @@
                     {% endif %}
                     {% if date3 != "" %}
                     <div class="ui medium header">{{ date3 }}</div>
-                    <label for="fruit">Suggested times:</label>
+                    <label for="fruit"><b>Suggested times:</b></label>
                     {% for time in times3 %}
                         <div class="field">
                             <div class="ui radio checkbox">
