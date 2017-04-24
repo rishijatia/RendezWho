@@ -350,8 +350,8 @@ def acceptRequest(request):
       date = meeting.date
       str_start_time = str(date)+"T"+str(s_time)
       str_end_time = str(date)+"T"+str(e_time)
-      start_time=str_start_time+".000Z"
-      end_time=str_end_time+".000Z"
+      start_time=str_start_time+"-07:00"
+      end_time=str_end_time+"-07:00"
       event = {
         'summary' : meeting.description,
         'location' : meeting.is_at,
@@ -368,7 +368,7 @@ def acceptRequest(request):
       d={'body':event}
       response = requests.post(url,params={'access_token':user_id.extra_data['access_token'],'body':event},headers=headers)
       print (response.json())
-      if response.json()['code']!=400 or response.json()['code']!=401:
+      if response.json()['error']['code']!=400 or response.json()['error']['code']!=401:
         Meeting.objects.filter(meetingID=mid).update(approved=True)
       return HttpResponseRedirect('/newsfeed/')
 
