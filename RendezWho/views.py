@@ -241,12 +241,9 @@ def view_newsfeed(request):
     | Q(participants__in=(UserApp.objects.filter(user=request.user).only("connections"))))).order_by('-start_time')[:20]
     for entry in advanced_query:
       temp = {}
-      temp['name1'] = request.user.username
+      temp['name1'] = entry.participants.all()[0].user.username
       requester = entry.requester
-      if len(UserApp.objects.filter(user=request.user,connections__in=[requester]))>0:
-        temp['name2'] = entry.requester
-      else:
-        temp['name2']=entry.participants.all()[0]
+      temp['name2'] = entry.requester.user.username
       temp['location']=entry.is_at
       temp['start_time']=entry.start_time
       temp['end_time']=entry.end_time
