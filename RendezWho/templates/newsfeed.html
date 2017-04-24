@@ -97,21 +97,20 @@
     <div class="ui stackable grid">
             <div class="six column wide" style=" height: 100%; overflow: scroll;">
                 <div class="ui large feed">
+                  {% for news in newsfeed %}
                   <div class="event">
                     <div class="label">
                       <i class="user icon"></i>
                     </div>
                     <div class="content">
                       <div class="summary">
-                        <a class="user">
-                          Elliot Fu
-                        </a> added you as a friend
-                        <div class="date">
-                          1 Hour Ago
-                        </div>
+                        {{ news.name1 }} and {{ news.name2 }} are meeting at {{ news.location }} on {{ news.date }} from {{ news.start_time }} to {{ news.end_time }}.
                       </div>
                     </div>
                   </div>
+                     {% empty %}
+                      <div class="ui header medium"> No newsfeed updates to display :(</div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="ten column wide" style="height: 100%; overflow: scroll">
