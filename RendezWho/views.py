@@ -378,8 +378,16 @@ def acceptRequest(request):
       str_end_time = str(date)+"T"+str(e_time)
       start_time=str_start_time
       end_time=str_end_time
+      start = {
+      'dateTime':str_start_time,
+      'timeZone':'America/Chicago'
+      }
+      end = {
+      'dateTime':str_end_time,
+      'timeZone':'America/Chicago'
+      }
       headers={'Content-Type':'application/json; charset=UTF-8'}
-      d={'end':end,'start':start,'resource':event,'summary':meeting.description,'description':meeting.description,'location' : meeting.is_at}
+      d={'end':end,'start':start,'summary':meeting.description,'description':meeting.description,'location' : meeting.is_at}
       logging.basicConfig()
       logging.getLogger().setLevel(logging.DEBUG)
       requests_log = logging.getLogger("requests.packages.urllib3")
