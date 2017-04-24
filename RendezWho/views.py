@@ -235,6 +235,10 @@ def view_newsfeed(request):
       temp['name']=req.reqSender.username
       friend_r.append(temp)
     connections_list = []
+
+    top_twenty_newsfeed = []
+    advanced_query = Meeting.objects.filter(Q(approved=True) & (Q(requester__in=(UserApp.objects.filter(user=request.user).only("connections"))) 
+    | Q(participants__in=(UserApp.objects.filter(user=request.user).only("connections"))).order_by('-start_time')
     for obj in UserApp.objects.filter(user=request.user):
       for unames in obj.connections.all():
         connections_list.append(unames.user.username)
@@ -383,7 +387,7 @@ def acceptRequest(request):
       #response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token']},headers=headers)
       #print (response.json())
       #if response.json()['error']['code']!=400 or response.json()['error']['code']!=401:
-       # Meeting.objects.filter(meetingID=mid).update(approved=True)
+      Meeting.objects.filter(meetingID=mid).update(approved=True)
       return HttpResponseRedirect('/newsfeed/')
 
 def send_match_request(request):
