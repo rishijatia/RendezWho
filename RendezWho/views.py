@@ -350,17 +350,15 @@ def acceptRequest(request):
       date = meeting.date
       str_start_time = str(date)+"T"+str(s_time)
       str_end_time = str(date)+"T"+str(e_time)
-      start_time= datetime.datetime.strptime(str_start_time[0:len(str_start_time)-3],'%Y-%m-%dT%H:%M')
-      end_time= datetime.datetime.strptime(str_end_time[0:len(str_end_time)-3],'%Y-%m-%dT%H:%M')
+      start_time=str_start_time+".000Z"
+      end_time=str_end_time+".000Z"
       event = {
         'summary' : meeting.description,
         'location' : meeting.is_at,
         'start' : {
-          "date":date,
           'dateTime':start_time,
         },
         'end': {
-          "date":date,
           'dateTime':end_time,
         },
       }
