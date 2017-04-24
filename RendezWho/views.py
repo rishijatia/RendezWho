@@ -376,27 +376,23 @@ def acceptRequest(request):
       date = meeting.date
       str_start_time = str(date)+"T"+str(s_time)
       str_end_time = str(date)+"T"+str(e_time)
-      start_time=str_start_time+"-07:00"
-      end_time=str_end_time+"-07:00"
+      start_time=str_start_time
+      end_time=str_end_time
       event = {
         'summary' : meeting.description,
         'location' : meeting.is_at,
         'end': {
           'dateTime':end_time,
-          'timeZone':'America/Los Angeles',
         },
         'start' : {
           'dateTime':start_time,
-          'timeZone':'America/Los Angeles',
         },
       }
       end = {
           'dateTime':end_time,
-          'timeZone':'America/Los Angeles',
         }
       start = {
           'dateTime':start_time,
-          'timeZone':'America/Los Angeles',
         }
       headers={'Content-Type':'application/json; charset=UTF-8'}
       d={'body':event,'end':end,'start':start,'resource':event}
