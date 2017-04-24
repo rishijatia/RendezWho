@@ -366,10 +366,10 @@ def acceptRequest(request):
       }
       headers={'content-type':'application/json'}
       d={'body':event}
-      response = requests.post(url,params={'access_token':user_id.extra_data['access_token'],'body':event},headers=headers)
+      response = requests.post(url,params={'access_token':user_id.extra_data['access_token'],'body':json.loads(event)},headers=headers)
       print (response.json())
-      if response.json()['error']['code']!=400 or response.json()['error']['code']!=401:
-        Meeting.objects.filter(meetingID=mid).update(approved=True)
+      #if response.json()['error']['code']!=400 or response.json()['error']['code']!=401:
+       # Meeting.objects.filter(meetingID=mid).update(approved=True)
       return HttpResponseRedirect('/newsfeed/')
 
 def send_match_request(request):
