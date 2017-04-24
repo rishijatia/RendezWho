@@ -366,7 +366,7 @@ def acceptRequest(request):
       }
       headers={'content-type':'application/json'}
       d={'body':event}
-      response = requests.post(url,json=d,params={'access_token':user_id.extra_data['access_token']},headers=headers)
+      response = requests.post(url,data=d,params={'access_token':user_id.extra_data['access_token']},headers=headers)
       print (response.json())
       if response.json()['code']==400 or response.json()['code']==401:
         Meeting.objects.filter(meetingID=mid).update(approved=True)
