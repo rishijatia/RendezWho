@@ -355,18 +355,18 @@ def acceptRequest(request):
       event = {
         'summary' : meeting.description,
         'location' : meeting.is_at,
-        'start' : {
-          'dateTime':start_time,
-          'timeZone':'America/Los Angeles',
-        },
         'end': {
           'dateTime':end_time,
+          'timeZone':'America/Los Angeles',
+        },
+        'start' : {
+          'dateTime':start_time,
           'timeZone':'America/Los Angeles',
         },
       }
       headers={'content-type':'application/json'}
       d={'body':event}
-      response = requests.post(url,params={'access_token':user_id.extra_data['access_token'],'body':json.dumps(event)},headers=headers)
+      response = requests.post(url,params={'access_token':user_id.extra_data['access_token'],'data':json.dumps(event)},headers=headers)
       print (response.json())
       #if response.json()['error']['code']!=400 or response.json()['error']['code']!=401:
        # Meeting.objects.filter(meetingID=mid).update(approved=True)
