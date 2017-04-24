@@ -390,6 +390,14 @@ def acceptRequest(request):
           'timeZone':'America/Los Angeles',
         },
       }
+      end = {
+          'dateTime':end_time,
+          'timeZone':'America/Los Angeles',
+        }
+      start = {
+          'dateTime':start_time,
+          'timeZone':'America/Los Angeles',
+        }
       headers={'Content-Type':'application/json; charset=UTF-8'}
       d={'body':event,'end':end,'start':start,'resource':event}
       logging.basicConfig()
