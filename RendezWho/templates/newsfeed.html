@@ -15,18 +15,19 @@
 <body>
 <script>
  $(document).ready(function() {
+    var dateToday = new Date();
      $(document).on('click', '.add', function (e) {
          $('.ui.modal').modal('show');
      });
 
      $(function(){
-        $( "#datepicker1" ).datepicker();
+        $( "#datepicker1" ).datepicker({minDate:dateToday});
         });
      $(function(){
-        $( "#datepicker2" ).datepicker();
+        $( "#datepicker2" ).datepicker({minDate:dateToday});
         });
      $(function(){
-        $( "#datepicker3" ).datepicker();
+        $( "#datepicker3" ).datepicker({minDate:dateToday});
         });
 
      $('.ui.form').form({fields: {}});
