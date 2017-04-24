@@ -365,7 +365,7 @@ def acceptRequest(request):
           'timeZone':'America/Los Angeles',
         },
       }
-      headers={'content-type':'application/json'}
+      headers={'Content-Type':'application/json; charset=UTF-8'}
       d={'body':event}
       response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token']},headers=headers)
       print (response.json())
