@@ -29,6 +29,8 @@ urlpatterns = [
     url(r'^matchRequest/$',views.suggestions_algorithm),
     url(r'^match/$',views.send_match_request),
     url(r'^accept/$',views.accept,name='accept'),
+    url(r'^acceptRequest/$',views.acceptRequest,name='acceptRequest'),
+    url(r'^rejectRequest/$',views.rejectRequest,name='rejectRequest'),
     url(r'^reject/$',views.reject,name='reject'),
     url(r'^search/$',views.search,name='search'),
     url(r'^create/$',views.createUser,name='create'),

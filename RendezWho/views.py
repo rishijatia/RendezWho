@@ -197,22 +197,28 @@ def view_newsfeed(request):
     request_list=[]
     for req in requests:
       temp = {}
-      temp['id'] = req.meetingID
-      temp['title']=req.description   
-      temp['time']=req.start_time
-      temp['date']=req.date
-      temp['requestee']=req.participants.all()[0].user.username
-      send_list.append(temp)
+      if req.approved==True:
+        pass
+      else:
+        temp['id'] = req.meetingID
+        temp['title']=req.description   
+        temp['time']=req.start_time
+        temp['date']=req.date
+        temp['requestee']=req.participants.all()[0].user.username
+        send_list.append(temp)
     request_list=[]
     for meeting in Meeting.objects.all():
       if any(request.user==usr.user for usr in meeting.participants.all()):
         temp = {}
-        temp['id'] = meeting.meetingID
-        temp['title']=meeting.description
-        temp['time']=meeting.start_time
-        temp['date']=meeting.date
-        temp['requestee']=meeting.requester.user.username
-        request_list.append(temp)
+        if meeting.approved ==True:
+          pass
+        else:
+          temp['id'] = meeting.meetingID
+          temp['title']=meeting.description
+          temp['time']=meeting.start_time
+          temp['date']=meeting.date
+          temp['requestee']=meeting.requester.user.username
+          request_list.append(temp)
     elems = CRequest.objects.all()
     friend_requests=CRequest.objects.filter(reqReceiver__username__icontains=request.user.username)
     for req in friend_requests:
@@ -323,6 +329,47 @@ def suggestions_algorithm(request):
         available_times[date]=temp_arr
       #print "Available at: " , available_times
       return render(request,'suggestions.html',{'requesting_user':person_uname,'date1':d1,'times1':available_times[d1],'date2':d2,'times2':available_times[d2],'date3':d3,'times3':available_times[d3],'location':location_m,'title':title_of_meeting})
+
+def rejectRequest(request):
+  if request.user.is_authenticated():
+    if request.method=='POST':
+      mid = request.POST['other_name']
+      Meeting.objects.filter(meetingID=mid).delete()
+      return HttpResponseRedirect('/newsfeed/')
+  else:
+    return HttpResponseRedirect('/login/')
+def acceptRequest(request):
+  if request.user.is_authenticated():
+    if request.method=='POST':
+      mid = request.POST['other_name']
+      meeting = Meeting.objects.filter(meetingID=mid)
+      url = 'https://www.googleapis.com/calendar/v3/calendars/primary/events'
+      user_id = request.user.social_auth.filter(provider='google-oauth2')[0]
+      s_time = meeting.start_time
+      e_time = meeting.end_time
+      date = meeting.date
+      str_start_time = str(date)+"T"+str(s_time)
+      str_end_time = str(date)+"T"+str(e_time)
+      start_time= datetime.datetime.strptime(str_start_time,'%m/%d/%YT%H:%M')
+      end_time= datetime.datetime.strptime(str_end_time,'%m/%d/%YT%H:%M')
+      event =
+      {
+      'summary':meeting.description,
+      'location':meeting.is_at,
+      'start':
+      {
+      "date":date,
+      'dateTime':start_time,
+      },
+      'end':
+      {
+      "date":date
+      'dateTime':end_time,
+      }
+      }
+      response = requests.post(url,data={'access_token':user_id.extra_data['access_token'],'body':event})
+      Meeting.objects.filter(meetingID=mid).update(approved=True)
+      return HttpResponseRedirect('/newsfeed/')
 
 def send_match_request(request):
   if request.user.is_authenticated():

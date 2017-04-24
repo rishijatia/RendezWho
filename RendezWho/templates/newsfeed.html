@@ -129,12 +129,20 @@
                             <span class="cinema"><b>Date:</b> {{ requestL.date }}</span>
                            <!-- <span class="cinema"><b>Time:</b> {{ requestL.time }}</span> -->
                           </div>
-                            <a href = "#/"><div class="ui right floated button disabled">
-                                <i class="checkmark icon"></i> Accept
-                            </div></a>
-                            <a href = "#/"><div class="ui right floated button disabled">
-                                <i class="remove icon"></i> Reject
-                            </div></a>
+                            <form method="post" action="/acceptRequest/" class="ui form">
+                                {% csrf_token %}
+                                <input type="text" name="other_name" value="{{requestL.id}}" style="display: none;">
+                                <button class="ui right floated button " type="submit">
+                                    <i class="checkmark icon"></i> Accept
+                                </button>
+                            </form>
+                            <form method="post" action="/rejectRequest/" class="ui form">
+                                {% csrf_token %}
+                                <input type="text" name="other_name" value="{{requestL.id}}" style="display: none;">
+                                <button class="ui right floated button" type="submit">
+                                    <i class="remove icon"></i> Reject
+                                </button>
+                            </form>
                         </div>
                       </div>
                       {% empty %}
@@ -158,7 +166,7 @@
                             <form method="post" action="/reject/" class="ui form">
                                 {% csrf_token %}
                                 <input type="text" name="other_name" value="{{connection.name}}" style="display: none;">
-                                <button class="ui right floated button " type="submit">
+                                <button class="ui right floated button" type="submit">
                                     <i class="remove icon"></i> Reject
                                 </button>
                             </form>
