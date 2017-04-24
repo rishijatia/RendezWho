@@ -404,7 +404,7 @@ def acceptRequest(request):
       response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token'],'end':end,'start':start,'resource':event},headers=headers)
       print (response.json())
       #if response.json()['error']['code']!=400 or response.json()['error']['code']!=401:
-      Meeting.objects.filter(meetingID=mid).update(approved=True)
+     # Meeting.objects.filter(meetingID=mid).update(approved=True)
       return HttpResponseRedirect('/newsfeed/')
 
 def send_match_request(request):
