@@ -357,9 +357,11 @@ def acceptRequest(request):
         'location' : meeting.is_at,
         'start' : {
           'dateTime':start_time,
+          'timeZone':'America/Los Angeles',
         },
         'end': {
           'dateTime':end_time,
+          'timeZone':'America/Los Angeles',
         },
       }
       headers={'content-type':'application/json'}
