@@ -103,13 +103,13 @@
                             <span class="cinema"><b>Date:</b> {{ requestL.date }}</span>
                             <!--<span class="cinema"><b>Time:</b> {{ requestL.time }}</span>-->
                           </div>
-                            <a href = "{% url 'editRequest' requestL.id %}"><div class="ui right floated button">
+                            <a href = "{% url 'editRequest' requestL.id %}"><div class="ui small right floated button">
                                 <i class="edit icon"></i> Edit
                             </div></a>
                             <form class="ui form attached fluid compact right floated" action="/deleteRequest/" method="post">
                             {% csrf_token %}
                             <input type="text" name="requestID" value="{{ requestL.id }}" style="display:none">
-                            <button class="ui button submit right floated "><i class="remove icon"></i> Delete</button>
+                            <button class="ui small button submit right floated "><i class="remove icon"></i> Delete</button>
                              </form>
                         </div>
                       </div>
