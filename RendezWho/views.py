@@ -13,6 +13,14 @@ from django.contrib import messages
 import datetime
 import requests
 import json
+import logging
+
+try:
+    import http.client as http_client
+except ImportError:
+    # Python 2
+    import httplib as http_client
+http_client.HTTPConnection.debuglevel = 4
 
 def home(request):
     return render(request,'home.html')
@@ -367,7 +375,7 @@ def acceptRequest(request):
       }
       headers={'Content-Type':'application/json; charset=UTF-8'}
       d={'body':event}
-      response = requests.post(url,data=d,params={'access_token':user_id.extra_data['access_token']},headers=headers)
+      response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token']},headers=headers)
       print (response.json())
       #if response.json()['error']['code']!=400 or response.json()['error']['code']!=401:
        # Meeting.objects.filter(meetingID=mid).update(approved=True)
