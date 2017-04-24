@@ -291,7 +291,7 @@ def suggestions_algorithm(request):
       flag=1
       for date in dates_arr:
         if len(date)<5:
-          available_times[d1]=''
+          available_times[date]=''
           flag+=1
           continue
         var = 'time' + str(flag)
