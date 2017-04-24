@@ -352,20 +352,17 @@ def acceptRequest(request):
       str_end_time = str(date)+"T"+str(e_time)
       start_time= datetime.datetime.strptime(str_start_time,'%m/%d/%YT%H:%M')
       end_time= datetime.datetime.strptime(str_end_time,'%m/%d/%YT%H:%M')
-      event =
-      {
-      'summary':meeting.description,
-      'location':meeting.is_at,
-      'start':
-      {
-      "date":date,
-      'dateTime':start_time,
-      },
-      'end':
-      {
-      "date":date
-      'dateTime':end_time,
-      }
+      event = {
+        'summary' : meeting.description,
+        'location' : meeting.is_at,
+        'start' : {
+          "date":date,
+          'dateTime':start_time,
+        },
+        'end': {
+          "date":date,
+          'dateTime':end_time,
+        },
       }
       response = requests.post(url,data={'access_token':user_id.extra_data['access_token'],'body':event})
       Meeting.objects.filter(meetingID=mid).update(approved=True)
