@@ -365,7 +365,7 @@ def acceptRequest(request):
         },
       }
       headers={'content-type':'application/json'}
-      d={'body':json.dumps(event)}
+      d={'body':event}
       response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token']},headers=headers)
       print (response.json())
       #if response.json()['error']['code']!=400 or response.json()['error']['code']!=401:
