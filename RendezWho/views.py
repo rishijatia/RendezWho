@@ -241,7 +241,7 @@ def view_newsfeed(request):
     | Q(participants__in=(UserApp.objects.filter(user=request.user).only("connections"))))).order_by('-start_time')[:20]
     for i in (UserApp.objects.filter(user=request.user)):
       for e in i.connections.all():
-        print e
+        print e.user.username
     for entry in advanced_query:
       temp = {}
       temp['name1'] = entry.participants.all()[0].user.username
