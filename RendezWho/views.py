@@ -238,14 +238,28 @@ def view_newsfeed(request):
 
     top_twenty_newsfeed = []
     advanced_query = Meeting.objects.filter(Q(approved=True) & (Q(requester__in=(UserApp.objects.filter(user=request.user).only("connections"))) 
-    | Q(participants__in=(UserApp.objects.filter(user=request.user).only("connections"))).order_by('-start_time')
+    | Q(participants__in=(UserApp.objects.filter(user=request.user).only("connections"))))).order_by('-start_time')[:20]
+    for entry in advanced_query:
+      temp = {}
+      temp['name1'] = request.user.username
+      requester = entry.requester
+      if len(UserApp.objects.filter(user=request.user,connections__in=[requester]))>0:
+        temp['name2'] = entry.requester
+      else:
+        temp['name2']=entry.participants.all()[0]
+      temp['location']=entry.is_at
+      temp['start_time']=entry.start_time
+      temp['end_time']=entry.end_time
+      temp['date']=entry.date
+      top_twenty_newsfeed.append(temp)
+    print top_twenty_newsfeed
     for obj in UserApp.objects.filter(user=request.user):
       for unames in obj.connections.all():
         connections_list.append(unames.user.username)
     if request.method=="POST":
-      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r,'connections':connections_list})
+      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r,'connections':connections_list,'newsfeed':top_twenty_newsfeed})
     else:
-      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r,'connections':connections_list})
+      return render(request, 'newsfeed.html',{'ownerList':send_list,'requestList':request_list,'friendList':friend_r,'connections':connections_list,'newsfeed':top_twenty_newsfeed})
   else:
     return render(request,'login.html')
 
