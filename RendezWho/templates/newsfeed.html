@@ -30,7 +30,33 @@
         $( "#datepicker3" ).datepicker({minDate:dateToday});
         });
 
-     $('.ui.form').form({fields: {}});
+     $('.ui.form')
+                .form({
+                    fields: {
+                        title: {
+                            identifier: 'title',
+                            rules: [{
+                                type: 'empty',
+                                prompt: 'Please enter a title'
+                            }]
+                        },
+                        location: {
+                            identifier: 'location',
+                            rules: [{
+                                type: 'empty',
+                                prompt: 'Please enter a location'
+                            }]
+                        }
+                        date1: {
+                            identifier: 'date',
+                            rules: [{
+                                type: 'empty',
+                                prompt: 'Please enter a date'
+                            }]
+                        }
+                    }
+                });
+
      $('.ui.radio.checkbox').checkbox();
 
      $(function(){
@@ -69,27 +95,25 @@
     <div class="ui huge header center aligned" id="welcome"></div>
     <br>
     <div class="ui stackable grid">
-        <div class="ui stackable two column row">
-            <div class="column" style=" height: 100%; overflow: scroll;">
+            <div class="six column wide" style=" height: 100%; overflow: scroll;">
                 <div class="ui large feed">
+                  {% for news in newsfeed %}
                   <div class="event">
                     <div class="label">
                       <i class="user icon"></i>
                     </div>
                     <div class="content">
                       <div class="summary">
-                        <a class="user">
-                          Elliot Fu
-                        </a> added you as a friend
-                        <div class="date">
-                          1 Hour Ago
-                        </div>
+                        {{ news.name1 }} and {{ news.name2 }} are meeting at {{ news.location }} on {{ news.date }} from {{ news.start_time }} to {{ news.end_time }}.
                       </div>
                     </div>
                   </div>
+                     {% empty %}
+                      <div class="ui header medium"> No newsfeed updates to display :(</div>
+                    {% endfor %}
                 </div>
             </div>
-            <div class="column" style="height: 100%; overflow: scroll">
+            <div class="ten column wide" style="height: 100%; overflow: scroll">
                 <button class="add ui right floated large teal  button"> <i class="write icon"></i> New Request </button>
                 <div class="ui header large">Pending Requests</div>
                 <div class="ui divided items">
@@ -177,7 +201,6 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
     </div>
     <div class="ui modal">
       <i class="close icon"></i>
@@ -188,8 +211,8 @@
           <form class="ui form attached fluid segment compact" action="/matchRequest/" method = "post" style="background-color: rgba(255,255,255,0.35);">
               {% csrf_token %}
               <div class="ui grid">
-                  <div class="eight wide column">
-                      <div class="field">
+                  <div class="seven wide column">
+                      <div class="grouped fields">
                           <label class="ui inverted"> Your Connections </label>
                             {% for connection in connections %}
                             <div class="field">
@@ -198,11 +221,13 @@
                                   <label>{{ connection }}</label>
                               </div>
                             </div>
+                                {% empty %}
+                                <div class="ui header small">You need to make connections before you can set up meetings</div>
                             {% endfor %}
                       </div>    
                   </div>
-                  <div class="eight wide column">
-                      <div class="field">
+                  <div class="nine wide column">
+                      <div class=" required field">
                           <label class="ui inverted">Title</label>
                           <textarea name="title" rows="1"></textarea>
                       </div>
@@ -214,14 +239,14 @@
                                   <label>Public</label>
                               </div>
                           </div>
-                          <div class="field">
+                          <div class="required field">
                               <div class="ui radio checkbox">
                                   <input type="radio" name="type" value="private" tabindex="0" class="hidden">
                                   <label>Private</label>
                               </div>
                           </div>
                       </div>
-                      <div class="field">
+                      <div class="required field">
                           <label class="ui inverted">Location</label>
                           <textarea name="location" rows="1"></textarea>
                       </div>
@@ -319,7 +344,7 @@
                           </div>
                       </div>
                       <button class="ui fluid large teal submit button" type="submit">Suggest</button>
-
+                      <div class="ui error message"></div>
                   </div>
               </div>
           </form>
