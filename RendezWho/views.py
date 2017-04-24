@@ -12,7 +12,7 @@ from django.db.models import Q
 from django.contrib import messages
 import datetime
 import requests
- 
+import json
 
 def home(request):
     return render(request,'home.html')
@@ -364,9 +364,11 @@ def acceptRequest(request):
           'dateTime':end_time,
         },
       }
-      response = requests.post(url,data={'body':event},params={'access_token':user_id.extra_data['access_token']})
+      d={'body':event}
+      response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token']})
       print (response.json())
-      Meeting.objects.filter(meetingID=mid).update(approved=True)
+      if response.json()['code']==400 or response.json()['code']==401:
+        Meeting.objects.filter(meetingID=mid).update(approved=True)
       return HttpResponseRedirect('/newsfeed/')
 
 def send_match_request(request):
