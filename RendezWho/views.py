@@ -378,33 +378,14 @@ def acceptRequest(request):
       str_end_time = str(date)+"T"+str(e_time)
       start_time=str_start_time
       end_time=str_end_time
-      event = {
-        'summary' : meeting.description,
-        'location' : meeting.is_at,
-        'end': {
-          'dateTime':end_time,
-        },
-        'start' : {
-          'dateTime':start_time,
-        },
-      }
-      end = {
-          'dateTime':end_time,
-          'timeZone':'America/Chicago'
-        }
-
-      start = {
-          'dateTime':start_time,
-          'timeZone':'America/Chicago',
-        }
       headers={'Content-Type':'application/json; charset=UTF-8'}
-      d={'body':event,'end':end,'start':start,'resource':event,'summary':meeting.description,'description':meeting.description}
+      d={'end':end,'start':start,'resource':event,'summary':meeting.description,'description':meeting.description,'location' : meeting.is_at}
       logging.basicConfig()
       logging.getLogger().setLevel(logging.DEBUG)
       requests_log = logging.getLogger("requests.packages.urllib3")
       requests_log.setLevel(logging.DEBUG)
       requests_log.propagate = True
-      response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token'],'end':end,'start':start,'resource':event,'summary':meeting.description,'description':meeting.description},headers=headers)
+      response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token']},headers=headers)
       print (response.json())
       #if response.json()['error']['code']!=400 or response.json()['error']['code']!=401:
       #Meeting.objects.filter(meetingID=mid).update(approved=True)
