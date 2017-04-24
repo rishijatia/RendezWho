@@ -364,7 +364,7 @@ def acceptRequest(request):
           'dateTime':end_time,
         },
       }
-      response = requests.post(url,data={'access_token':user_id.extra_data['access_token'],'body':event})
+      response = requests.post(url,data={'body':event},params={'access_token':user_id.extra_data['access_token']})
       print (response.json())
       Meeting.objects.filter(meetingID=mid).update(approved=True)
       return HttpResponseRedirect('/newsfeed/')
