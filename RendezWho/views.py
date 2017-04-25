@@ -75,10 +75,12 @@ def createUser(request):
       flag2=0
       if 'dateTime' in item['start']:
         start_time=item['start']['dateTime']
+        start_time=start_time-datetime.datetime.timedelta(hours=5)
       else:
         flag1=1
       if 'dateTime' in item['end']:
         end_time=item['end']['dateTime']
+        end_time=end_time-datetime.datetime.timedelta(hours=5)
       else:
         flag2=1
       date=None
@@ -240,7 +242,9 @@ def view_newsfeed(request):
     top_twenty_newsfeed = []
     advanced_query = Meeting.objects.filter(Q(approved=True) & (Q(requester__in=(UserApp.objects.filter(user=request.user))) 
     | Q(participants__in=(UserApp.objects.filter(user=request.user).only("connections"))))).order_by('-start_time')[:20]
-    #print (UserApp.objects.filter(user=request.user).values('connections'))['connections']
+    x= (UserApp.objects.filter(user=request.user).values('connections'))
+    for stuff in x:
+      print stuff
     for entry in advanced_query:
       temp = {}
       temp['name1'] = entry.participants.all()[0].user.username
@@ -394,9 +398,7 @@ def acceptRequest(request):
       requests_log.setLevel(logging.DEBUG)
       requests_log.propagate = True
       response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token']},headers=headers)
-      print (response.json())
-      #if response.json()['error']['code']!=400 or response.json()['error']['code']!=401:
-      #Meeting.objects.filter(meetingID=mid).update(approved=True)
+      Meeting.objects.filter(meetingID=mid).update(approved=True)
       return HttpResponseRedirect('/newsfeed/')
 
 def send_match_request(request):
