@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Search</title>
     {% load staticfiles %}
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'temp.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'semantic/dist/semantic.min.css' %}" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -48,7 +49,7 @@
                             }]
                         },
                         date1: {
-                            identifier: 'date',
+                            identifier: 'date1',
                             rules: [{
                                 type: 'empty',
                                 prompt: 'Please enter a date'
@@ -67,10 +68,10 @@
 	});
  });
 </script>
-<div class="signupStyle">
-<div class="ui main container">
+<div class="signupStyle" style="height:100%">
+<div class="ui main container" style="height:100%">
     <div class="ui fixed inverted main menu">
-          <div class="ui main container" style="width:100%">
+          <div class="ui main container" style="width:100%; font-family:Noto Sans; ">
                 <a href="/newsfeed" class="title item">RendezWho?</a>
                 <div class="right menu">
                     <div class="ui simple dropdown item">
@@ -92,30 +93,25 @@
           </div>
     </div>
     <br><br><br>
-    <div class="ui huge header center aligned" id="welcome"></div>
+    <div class="ui huge header center aligned" id="welcome" style="font-family: Noto Sans;"></div>
     <br>
-    <div class="ui grid">
-            <div class="six wide column" style=" height: 100%; overflow: scroll;">
-                <div class="ui large feed">
+    <div class="ui grid" style="height:80%">
+            <div class="six wide column" style=" height: 100%; overflow: scroll; border-right: solid black 1px;">
+                <div class="ui divided items">
                   {% for news in newsfeed %}
-                  <div class="event">
-                    <div class="label">
-                      <i class="user icon"></i>
-                    </div>
-                    <div class="content">
-                      <div class="summary">
+                      <div class="item">
+                        <div class="summary">
                         {{ news.name1 }} and {{ news.name2 }} are meeting at {{ news.location }} on {{ news.date }} from {{ news.start_time }} to {{ news.end_time }}.
                       </div>
                     </div>
-                  </div>
                      {% empty %}
-                      <div class="ui header medium"> No newsfeed updates to display </div>
+                      <a href="/search" class="ui centered center aligned"><div class="ui header medium" style="font-family: Noto Sans;"> No newsfeed updates to display.<br><u>Search</u> for some friends. </div></a>
                     {% endfor %}
                 </div>
             </div>
-            <div class="ten wide column" style="height: 100%; overflow: scroll">
+            <div class="ten wide column" style="height: 100%; overflow: scroll; padding-left: 30px;">
                 <button class="add ui right floated large teal  button"> <i class="write icon"></i> New Request </button>
-                <div class="ui header large">Pending Requests</div>
+                <span class="ui header large " style="font-family: Noto Sans;">Pending Requests</span>
                 <div class="ui divided items">
                     {% for requestL in ownerList %}
                       <div class="item">
@@ -141,7 +137,7 @@
                         <div class="ui header small"> No pending requests </div>
                     {% endfor %}
                 </div>
-                <div class="ui header large">Invitations</div>
+                <div class="ui header large" style="font-family: Noto Sans;">Invitations</div>
                 <div class="ui divided items">
                     {% for requestL in requestList %}
                     <div class="item">
@@ -173,7 +169,7 @@
                         <div class="ui header small">No pending invitations</div>
                     {% endfor %}
                 </div>
-                <div class="ui header large">Connect Requests</div>
+                <div class="ui header large" style="font-family: Noto Sans;">Connect Requests</div>
                 <div class="ui divided items">
                     {% for connection in friendList %}
                     <div class="item">
@@ -204,7 +200,7 @@
     </div>
     <div class="ui modal">
       <i class="close icon"></i>
-      <div class="header">
+      <div class="header" style="font-family: Noto Sans;">
         New Request
       </div>
       <div class="content">
@@ -212,7 +208,7 @@
               {% csrf_token %}
               <div class="ui grid">
                   <div class="seven wide column">
-                      <div class="grouped fields">
+                      <div class="grouped required fields">
                           <label class="ui inverted"> Your Connections </label>
                             {% for connection in connections %}
                             <div class="field">

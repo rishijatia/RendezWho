@@ -8,36 +8,34 @@
     <link rel="stylesheet" type="text/css" href="{% static 'semantic/dist/semantic.min.css' %}" />
     <script   src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="{% static 'semantic/dist/semantic.min.js' %}"></script>
+    <script src="{% static 'interactive_bg/jquery.interactive_bg.js' %}"></script>
+    <style>
+        .ibg-bg {
+            position: absolute;
+        }
+    </style>
 </head>
 <body>
 <script>
     $(document)
         .ready(function() {
-            $('.ui.form')
-                .form({
-                    fields: {
-                        username: {
-                            identifier: 'username',
-                            rules: [{
-                                type: 'empty',
-                                prompt: 'Please enter your username'
-                            }]
-                        },
-                        password: {
-                            identifier: 'password',
-                            rules: [{
-                                type: 'empty',
-                                prompt: 'Please enter your password'
-                            }, {
-                                type: 'length[8]',
-                                prompt: 'Your password must be at least 8 characters'
-                            }]
-                        }
-                    }
-                });
+            $(".login").interactive_bg({
+               strength: 25,              // Movement Strength when the cursor is moved. The higher, the faster it will reacts to your cursor. The default value is 25.
+               scale: 1.15,               // The scale in which the background will be zoomed when hovering. Change this to 1 to stop scaling. The default value is 1.05.
+               animationSpeed: "100ms",   // The time it takes for the scale to animate. This accepts CSS3 time function such as "100ms", "2.5s", etc. The default value is "100ms".
+               contain: true,             // This option will prevent the scaled object/background from spilling out of its container. Keep this true for interactive background. Set it to false if you want to make an interactive object instead of a background. The default value is true.
+               wrapContent: false         // This option let you choose whether you want everything inside to reacts to your cursor, or just the background. Toggle it to true to have every elements inside reacts the same way. The default value is false
+             });
+            $(window).resize(function() {
+              $(".login > .ibg-bg").css({
+                width: $(window).outerWidth(),
+                height: $(window).outerHeight()
+              })
+            });
+            console.log("ello");
         });
 </script>
-<div class="login">
+<div class="login" data-ibg-bg="{% static 'media/notes.jpg' %}" style="position:absolute !important; z-index:0; width:100%">
     <div class="ui fixed inverted main menu">
         <div class="ui main container" style="width:100%">
             <a href="/login" class="title item">RendezWho?</a>
@@ -48,7 +46,7 @@
             </div>-->
         </div>
     </div>
-    <div class="ui centered page stackable padded grid auth" style="height:90%">
+    <div class="ui centered page stackable padded grid auth" style="height:90%; position:relative; top:0">
         <div class="row middle aligned content">
             <!--<div class="column eight wide left floated" class="bottomalign">
                  <h1 class="signlog">RendezWho?</h1>

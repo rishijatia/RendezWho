@@ -1,5 +1,14 @@
 .login {
-    background-image: url("media/notes.jpg");
-    background-size: cover;
+    position: absolute;
+    min-height: 100% !important;
+    width: 100% !important;
+    z-index: 0;
+}
+
+.signupStyle {
     height: 100%;
 }
+
+.ibg-bg {
+      position: absolute !important;
+    }

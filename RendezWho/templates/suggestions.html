@@ -50,15 +50,23 @@
     <div class="ui page auth">
         <div class="row middle content">
             <div class="column sixteen wide">
+                <div class="ui segment">
                 <form class="ui large form attached fluid segment compact" action="/match/" method = "post" style="background-color: rgba(255,255,255,0.35);">
                     {% csrf_token %}
-                    <div class="ui huge header"><b>Title:</b> {{ title }}</div>
-                    <div class="ui medium header"><b>Requesting:</b> {{ requesting_user }}</div>
-                    <div class="ui medium header"><b>Location:</b> {{ location }}</div>
-                    <input type="hidden" name="title" value="{{ title }}">
-                    <input type="hidden" name="requesting_user" value="{{ requesting_user }}">
-                    <input type="hidden" name="location" value="{{ location }}">
+                    <div class="field">
+                        <label>Title</label>
+                        <input type="text" name="title" value="{{ title }}" placeholder="{{ title }}" readonly="">
+                    </div>
+                    <div class="field">
+                        <label>Requesting</label>
+                        <input type="text" name="requesting_user" value="{{ requesting_user }}" placeholder="{{ requesting_user }}" readonly="">
+                    </div>
+                    <div class="field">
+                        <label>Location</label>
+                        <input type="text" name="location" value="{{ location }}" placeholder="{{ location }}" readonly="">
+                    </div>
                     <div class="ui medium header">{{ date1 }}</div>
+                    <div class="grouped fields">
                     <label for="fruit"><b>Suggested times:</b></label>
                     {% for time in times1 %}
                         <div class="field">
@@ -68,8 +76,10 @@
                             </div>
                         </div>
                     {% endfor %}
+                    </div>
                     {% if date2 != "" %}
                     <div class="ui medium header">{{ date2 }}</div>
+                    <div class="grouped fields">
                     <label for="fruit"><b>Suggested times:</b></label>
                     {% for time in times2 %}
                         <div class="field">
@@ -81,9 +91,11 @@
                     {% empty %}
                     <div class="ui medium header"> No matching times </div>
                     {% endfor %}
+                    </div>
                     {% endif %}
                     {% if date3 != "" %}
                     <div class="ui medium header">{{ date3 }}</div>
+                    <div class="grouped fields">
                     <label for="fruit"><b>Suggested times:</b></label>
                     {% for time in times3 %}
                         <div class="field">
@@ -95,9 +107,11 @@
                     {% empty %}
                     <div class="ui medium header"> No matching times </div>
                     {% endfor %}
+                    </div>
                     {% endif %}
                     <button class="ui fluid large teal submit button" type="submit">Send Request</button>
                 </form>
+                </div>
             </div>
         </div>
     </div>

@@ -52,34 +52,20 @@
     </div>
     <br><br><br>
       <div class="content">
+          <div class="ui segment">
           <form class="ui form attached fluid segment compact" action="{% url 'editRequest' schedule.id %}" method="post" style="background-color: rgba(255,255,255,0.35);">
               {% csrf_token %}
               <div class="field">
                   <label class="ui inverted">Title</label>
-                  <textarea name="title" rows="1">{{ schedule.title }}</textarea>
-              </div>
-              <div class="inline fields">
-                  <label for="fruit">Privacy</label>
-                  <div class="field">
-                      <div class="ui radio checkbox">
-                          <input type="radio" name="type" value="public" checked="" tabindex="0" class="hidden">
-                          <label>Public</label>
-                      </div>
-                  </div>
-                  <div class="field">
-                      <div class="ui radio checkbox">
-                          <input type="radio" name="type" value="private" tabindex="0" class="hidden">
-                          <label>Private</label>
-                      </div>
-                  </div>
+                  <input name="title" placeholer="{{ schedule.title }}" >
               </div>
               <div class="field">
                   <label class="ui inverted">To</label>
-                  <textarea name="person" rows="1" >{{ schedule.person }}</textarea>
+                  <input name="person" placeholder="{{ schedule.person }}" readonly="">
               </div>
               <div class="field">
                   <label class="ui inverted">Location</label>
-                  <textarea name="location" rows="1">{{ schedule.location }}</textarea>
+                  <input name="location" placeholder="{{ schedule.location }}">
               </div>
               <div class="field">
                   <label class="ui inverted">Date</label>
@@ -87,10 +73,11 @@
               </div>
               <div class="field">
                   <label class="ui inverted">Time</label>
-                  <textarea name="time" rows="1" >{{ schedule.time }}</textarea>
+                  <input name="time" placeholder="{{ schedule.time }}">
               </div>
               <button class="ui fluid large teal submit button" type="submit">Submit</button>
           </form>
+          </div>
       </div>
 </div>
 </div>
