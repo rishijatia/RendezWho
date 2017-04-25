@@ -189,7 +189,22 @@ def Logout(request):
  
 def my_profile(request):
   if request.user.is_authenticated():
-    return render(request, 'myProfile.html')
+    connections_list=[]
+    for obj in UserApp.objects.filter(user=request.user):
+      for unames in obj.connections.all():
+        connections_list.append(unames.user.username)
+    meeting_list=[]
+    for meeting in Meeting.objects.filter(Q(requester__user=request.user) | Q(participants__user=request.user)):
+      temp={}
+      temp['description']=meeting.description
+      temp['requester']=meeting.requester.user.username
+      temp['participant']=meeting.participants.all()[0].user.username
+      temp['location']=meeting.is_at
+      temp['date']=meeting.date
+      temp['start_time']=meeting.start_time
+      temp['end_time']=meeting.end_time
+      meeting_list.append(temp)
+    return render(request, 'myProfile.html',{'connections':connections_list,'meetings':meeting_list})
   else:
     return render(request,'login.html')
 
