@@ -314,7 +314,7 @@ def editRequest(request,scheduleID):
         schedule['time']=entry.start_time
         schedule['date']=entry.date
         schedule['person']=entry.participants.all()[0].user.username
-        schedule['location']=entry.location
+        schedule['location']=entry.is_at
       return render(request,'edit_page.html',{"schedule":schedule})
   else:
     return render(request,'login.html')
