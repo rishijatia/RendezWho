@@ -24,7 +24,10 @@
             $(function(){
                 $("#welcome").typed({
                     strings: ["Welcome {{ user.first_name }}!"],
-                    typeSpeed: 40
+                    typeSpeed: 50,
+                    loop: true,
+                    loopCount: null,
+                    showCursor: false
                 });
             });
             $('.menu .item').tab();
