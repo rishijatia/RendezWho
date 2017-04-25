@@ -75,13 +75,13 @@ def createUser(request):
       flag2=0
       if 'dateTime' in item['start']:
         start_time=item['start']['dateTime']
-        f_start_time = datetime.datetime.strptime(event_date,'%Y-%m-%dT%H:%M')
+        f_start_time = datetime.datetime.strptime(start_time,'%Y-%m-%dT%H:%M')
         start_time=f_start_time-datetime.timedelta(hours=5)
       else:
         flag1=1
       if 'dateTime' in item['end']:
         end_time=item['end']['dateTime']
-        f_end_time=datetime.datetime.strptime(event_date,'%Y-%m-%dT%H:%M')
+        f_end_time=datetime.datetime.strptime(end_time,'%Y-%m-%dT%H:%M')
         end_time=f_end_time-datetime.timedelta(hours=5)
       else:
         flag2=1
