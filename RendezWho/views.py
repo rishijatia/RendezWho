@@ -199,6 +199,10 @@ def my_profile(request):
       temp['description']=meeting.description
       temp['requester']=meeting.requester.user.username
       temp['participant']=meeting.participants.all()[0].user.username
+      if request.user.username==temp['requester']:
+        temp['name']=temp['participant']
+      else:
+        temp['name']=temp['requester']
       temp['location']=meeting.is_at
       temp['date']=meeting.date
       temp['start_time']=meeting.start_time
