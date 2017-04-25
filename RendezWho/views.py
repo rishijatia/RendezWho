@@ -303,9 +303,7 @@ def deleteRequest(request):
 def editRequest(request,scheduleID):
   if request.user.is_authenticated():
     if request.method=='POST':
-      unformatted_date=request.POST['date']
-      formatted_date = parser.parse(unformatted_date).strftime("%Y-%m-%d")
-      Meeting.objects.filter(meetingID=scheduleID).update(description=request.POST['title'],start_time=request.POST['time'],date=formatted_date)
+      Meeting.objects.filter(meetingID=scheduleID).update(description=request.POST['title'],location=request.POST['location'])
       return HttpResponseRedirect('/newsfeed/')
     else:
       objs=Meeting.objects.filter(meetingID=scheduleID)
@@ -315,9 +313,8 @@ def editRequest(request,scheduleID):
         schedule['id']=entry.meetingID
         schedule['time']=entry.start_time
         schedule['date']=entry.date
-        schedule['person']=entry.participants.user.username
-        schedule['location']="UIUC"
-      print schedule
+        schedule['person']=entry.participants.all()[0].user.username
+        schedule['location']=entry.location
       return render(request,'edit_page.html',{"schedule":schedule})
   else:
     return render(request,'login.html')
