@@ -204,6 +204,7 @@ def my_profile(request):
       temp['start_time']=meeting.start_time
       temp['end_time']=meeting.end_time
       meeting_list.append(temp)
+    print (connections_list,meeting_list)
     return render(request, 'myProfile.html',{'connections':connections_list,'meetings':meeting_list})
   else:
     return render(request,'login.html')
