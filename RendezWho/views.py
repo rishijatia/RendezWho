@@ -176,6 +176,7 @@ def listCalendar(request):
   for item in entries:
     val = str(item.activity) + ' ' + str(item.start_time) + ' ' + str(item.end_time)
     list_to_give.append(val)
+  print list_to_give
   return render(request,'gc.html',{'items':list_to_give})
 
  
