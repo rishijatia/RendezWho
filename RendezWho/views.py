@@ -371,9 +371,9 @@ def acceptRequest(request):
     if request.method=='POST':
       mid = request.POST['other_name']
       meeting = Meeting.objects.filter(meetingID=mid)[0]
+      user2 = meeting.requester.user
       url = 'https://www.googleapis.com/calendar/v3/calendars/primary/events'
       user_id = request.user.social_auth.filter(provider='google-oauth2')[0]
-      user2 = UserApp.objects.filter(user__username=mid)[0].user
       user_id2 = user2.social_auth.filter(provider='google-oauth2')[0]
       s_time = meeting.start_time
       e_time = meeting.end_time
