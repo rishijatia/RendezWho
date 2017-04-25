@@ -75,13 +75,12 @@ def createUser(request):
       flag2=0
       if 'dateTime' in item['start']:
         start_time=item['start']['dateTime']
-        f_start_time = datetime.datetime.strptime(start_time,'%Y-%m-%dT%H:%M')
-        start_time=f_start_time-datetime.timedelta(hours=5)
+        f_start_time = datetime.datetime.strptime(start_time[:len(start_time)-9],'%Y-%m-%dT%H:%M')
       else:
         flag1=1
       if 'dateTime' in item['end']:
         end_time=item['end']['dateTime']
-        f_end_time=datetime.datetime.strptime(end_time,'%Y-%m-%dT%H:%M')
+        f_end_time=datetime.datetime.strptime(end_time[:len(end_time)-9],'%Y-%m-%dT%H:%M')
         end_time=f_end_time-datetime.timedelta(hours=5)
       else:
         flag2=1
@@ -255,7 +254,6 @@ def view_newsfeed(request):
       temp['end_time']=entry.end_time
       temp['date']=entry.date
       top_twenty_newsfeed.append(temp)
-    print top_twenty_newsfeed
     for obj in UserApp.objects.filter(user=request.user):
       for unames in obj.connections.all():
         connections_list.append(unames.user.username)
