@@ -372,6 +372,8 @@ def acceptRequest(request):
       meeting = Meeting.objects.filter(meetingID=mid)[0]
       url = 'https://www.googleapis.com/calendar/v3/calendars/primary/events'
       user_id = request.user.social_auth.filter(provider='google-oauth2')[0]
+      user2 = UserApp.objects.filter(user__username=mid)[0].user
+      user_id2 = user2.social_auth.filter(provider='google-oauth2')[0]
       s_time = meeting.start_time
       e_time = meeting.end_time
       date = meeting.date
@@ -395,6 +397,7 @@ def acceptRequest(request):
       requests_log.setLevel(logging.DEBUG)
       requests_log.propagate = True
       response = requests.post(url,data=json.dumps(d),params={'access_token':user_id.extra_data['access_token']},headers=headers)
+      response2 = requests.post(url,data=json.dumps(d),params={'access_token':user_id2.extra_data['access_token']},headers=headers)
       Meeting.objects.filter(meetingID=mid).update(approved=True)
       return HttpResponseRedirect('/newsfeed/')
 
