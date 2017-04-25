@@ -67,10 +67,30 @@
               <a class="item" data-tab="second" style="width:50%">Scheduled Meetings</a>
             </div>
             <div class="ui bottom attached tab segment active" data-tab="first" style="height:85%; overflow: scroll;">
-              First
+             <div class="ui divided items">
+                  {% for connection in connections_list %}
+                      <div class="item">
+                        <div class="summary">
+                            {{connection}}
+                      </div>
+                    </div>
+                     {% empty %}
+                      <div class="ui header medium" style="font-family: Noto Sans;"> No Connections. </div>
+                    {% endfor %}
+                </div>
             </div>
             <div class="ui bottom attached tab segment" data-tab="second" style="height:85%; overflow: scroll;">
-              Second
+              <div class="ui divided items">
+                  {% for meeting in meetings_list %}
+                      <div class="item">
+                        <div class="summary">
+                            Meeting with {{ meeting.participant }} at {{meeting.location}} on {{meeting.date}}
+                      </div>
+                    </div>
+                     {% empty %}
+                      <div class="ui header medium" style="font-family: Noto Sans;"> No Connections. </div>
+                    {% endfor %}
+                </div>
             </div>
 
         </div>
