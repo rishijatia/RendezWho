@@ -303,7 +303,7 @@ def deleteRequest(request):
 def editRequest(request,scheduleID):
   if request.user.is_authenticated():
     if request.method=='POST':
-      Meeting.objects.filter(meetingID=scheduleID).update(description=request.POST['title'],location=request.POST['location'])
+      Meeting.objects.filter(meetingID=scheduleID).update(description=request.POST['title'],is_at=request.POST['location'])
       return HttpResponseRedirect('/newsfeed/')
     else:
       objs=Meeting.objects.filter(meetingID=scheduleID)
