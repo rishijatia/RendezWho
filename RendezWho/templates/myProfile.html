@@ -68,7 +68,7 @@
             </div>
             <div class="ui bottom attached tab segment active" data-tab="first" style="height:85%; overflow: scroll;">
              <div class="ui divided items">
-                  {% for connection in connections_list %}
+                  {% for connection in connections %}
                       <div class="item">
                         <div class="summary">
                             {{connection}}
@@ -81,7 +81,7 @@
             </div>
             <div class="ui bottom attached tab segment" data-tab="second" style="height:85%; overflow: scroll;">
               <div class="ui divided items">
-                  {% for meeting in meeting_list %}
+                  {% for meeting in meetings %}
                       <div class="item">
                         <div class="summary">
                             Meeting with {{ meeting.participant }} at {{meeting.location}} on {{meeting.date}}
