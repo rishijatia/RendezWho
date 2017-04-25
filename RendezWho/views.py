@@ -39,7 +39,6 @@ def createUser(request):
     'https://www.googleapis.com/calendar/v3/calendars/primary/events',
     params={'access_token':user_id.extra_data['access_token'], 'minTime': formatted_time}
   )
-  print response.headers,"HEADERS"
   u_app = UserApp.objects.filter(user=request.user)[0]
   Schedule_Entry.objects.filter(owner=u_app).delete()
   todays_date = datetime.datetime.now()
@@ -75,13 +74,14 @@ def createUser(request):
       flag2=0
       if 'dateTime' in item['start']:
         start_time=item['start']['dateTime']
-        start_time=start_time-datetime.timedelta(hours=5)
+        f_start_time = datetime.datetime.strptime(event_date,'%Y-%m-%dT%H:%M')
+        start_time=f_start_time-datetime.timedelta(hours=5)
       else:
         flag1=1
       if 'dateTime' in item['end']:
         end_time=item['end']['dateTime']
-        print(end_time)
-        end_time=end_time-datetime.timedelta(hours=5)
+        f_end_time=datetime.datetime.strptime(event_date,'%Y-%m-%dT%H:%M')
+        end_time=f_end_time-datetime.timedelta(hours=5)
       else:
         flag2=1
       date=None
