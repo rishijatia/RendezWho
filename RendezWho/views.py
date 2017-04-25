@@ -81,7 +81,6 @@ def createUser(request):
       if 'dateTime' in item['end']:
         end_time=item['end']['dateTime']
         f_end_time=datetime.datetime.strptime(end_time[:len(end_time)-9],'%Y-%m-%dT%H:%M')
-        end_time=f_end_time-datetime.timedelta(hours=5)
       else:
         flag2=1
       date=None
