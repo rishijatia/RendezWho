@@ -75,12 +75,12 @@ def createUser(request):
       flag2=0
       if 'dateTime' in item['start']:
         start_time=item['start']['dateTime']
-        start_time=start_time-datetime.datetime.timedelta(hours=5)
+        start_time=start_time-datetime.timedelta(hours=5)
       else:
         flag1=1
       if 'dateTime' in item['end']:
         end_time=item['end']['dateTime']
-        end_time=end_time-datetime.datetime.timedelta(hours=5)
+        end_time=end_time-datetime.timedelta(hours=5)
       else:
         flag2=1
       date=None
