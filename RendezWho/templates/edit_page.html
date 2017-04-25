@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Search</title>
     {% load staticfiles %}
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'temp.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'semantic/dist/semantic.min.css' %}" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -52,7 +53,7 @@
     </div>
     <br><br><br>
       <div class="content">
-          <div class="ui segment">
+          <div class="ui header large" style="font-family: Noto Sans;">Edit Request</div>
           <form class="ui form attached fluid segment compact" action="{% url 'editRequest' schedule.id %}" method="post" style="background-color: rgba(255,255,255,0.35);">
               {% csrf_token %}
               <div class="field">
@@ -77,7 +78,6 @@
               </div>
               <button class="ui fluid large teal submit button" type="submit">Submit</button>
           </form>
-          </div>
       </div>
 </div>
 </div>
