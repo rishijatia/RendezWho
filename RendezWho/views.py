@@ -49,6 +49,7 @@ def createUser(request):
     todays_datetime=todays_datetime[:todays_datetime.rfind(':')]
   todays_datetime=datetime.datetime.strptime(todays_datetime,'%Y-%m-%dT%H:%M')
   #todays_datetime = todays_datetime[:todays_datetime.rfind('.')]
+  print response.json()
   for item in response.json()['items']:
     flag=True
     if 'date' in item['end']:
