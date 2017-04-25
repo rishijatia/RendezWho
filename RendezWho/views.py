@@ -242,10 +242,8 @@ def view_newsfeed(request):
     top_twenty_newsfeed = []
     advanced_query = Meeting.objects.filter(Q(approved=True) & (Q(requester__in=(UserApp.objects.filter(user=request.user))) 
     | Q(participants__in=(UserApp.objects.filter(user=request.user).only("connections"))))).order_by('-start_time')[:20]
-    x= list(UserApp.objects.filter(user=request.user).only("connections"))
+    x= [item.connections.all() for item in list(UserApp.objects.filter(user=request.user))]
     print(x)
-    for stuff in x:
-      print stuff
     for entry in advanced_query:
       temp = {}
       temp['name1'] = entry.participants.all()[0].user.username
