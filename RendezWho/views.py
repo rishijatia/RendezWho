@@ -245,7 +245,7 @@ def view_newsfeed(request):
     #x= [item.connections.all().values for item in ]
     print(UserApp.objects.filter(user=request.user)[0].connections.all().values_list('user',flat=True))
     lis=UserApp.objects.filter(user=request.user)[0].connections.all().values_list('user',flat=True)
-    final_list = [UserApp.objects.filter(id=val)[0].user.username for val in lis]
+    final_list = [UserApp.objects.filter(user_id=val)[0].user.username for val in lis]
     print final_list
     for entry in advanced_query:
       temp = {}
