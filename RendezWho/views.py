@@ -80,6 +80,7 @@ def createUser(request):
         flag1=1
       if 'dateTime' in item['end']:
         end_time=item['end']['dateTime']
+        print(end_time)
         end_time=end_time-datetime.timedelta(hours=5)
       else:
         flag2=1
